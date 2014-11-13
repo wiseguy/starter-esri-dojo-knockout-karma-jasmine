@@ -9,22 +9,42 @@
  syncViewModels 
  */
 
-// o.createMap = function(node) {
+define(["core/config", "components/map/mapModel", "core/toolkitController", "core/coreController"],
 
-//    };
+    function(config, mapModel, toolkit, core) {
 
-//    o.getMap = function() {
-//        return o.map;
-//    }
+        var o = {};
 
-//    o.getBasemapDijit = function() {
-//        return o.basemapDijit;
-//    }
+        o.startup = function() {
 
-//    o.getLegendDijit = function() {
-//        return o.LegendDijit;
-//    }
+            var _this = this;
 
-//    o.getLegendDijit = function() {
-//        return o.LegendDijit;
-//    }
+            //looad the partial
+            var loadMapDeferred = toolkit.loadPartial("components/map/mapPartial.html");
+
+            loadMapDeferred.then(function(html) {
+
+                console.log("load startup");
+
+
+                toolkit.injectHtml(".app-container", html, "last");
+
+                //start model with default values
+                mapModel.startup();
+
+                //start model with default values
+                mapModel.bind(toolkit.getNodeList(".map-container")[0]);
+
+            });
+
+
+            return loadMapDeferred;
+
+        };
+
+
+
+
+        return o;
+
+    });

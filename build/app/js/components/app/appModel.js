@@ -1,0 +1,1 @@
+define(["ko","core/config"],function(n){var i={},t={};return t.title=n.observable(),console.log("apply bindings for app"),i.startup=function(){t.title("Aamir test")},i.bind=function(i){n.applyBindings(t,i)},i});

@@ -3,8 +3,8 @@ All dojo utilities implementation defined here.
 Can be swapped out for Jquery etc.
 */
 
-define(["dojo/dom", "dojo/query", "dojo/Deferred", "dojo/dom-construct"],
-    function(dom, dojoQuery, Deferred, domConstruct) {
+define(["dojo/dom", "dojo/query", "dojo/Deferred", "dojo/dom-construct", "dojo/_base/lang", "dojo/io-query", "core/config", "dojo/hash"],
+    function(dom, dojoQuery, Deferred, domConstruct, lang, ioQuery, config, hash) {
 
         var o = {};
 
@@ -36,6 +36,47 @@ define(["dojo/dom", "dojo/query", "dojo/Deferred", "dojo/dom-construct"],
         o.injectHtml = function(selector, html, type) {
             dojoQuery(selector).forEach(function(node) {
                 domConstruct.place(html, node, type);
+            });
+        };
+
+        o.stringToObject = function(string) {
+
+            return ioQuery.queryToObject(string);
+
+        };
+
+        o.objectToQuery = function(object) {
+
+            return ioQuery.objectToQuery(object);
+
+        };
+
+        o.mixin = function(targetObject, sourceObject) {
+            return lang.mixin(targetObject, sourceObject);
+        }
+
+
+        o.startDetectHashChange = function() {
+            require(["dojo/hash", "dojo/topic"], function(hash, topic) {
+                topic.subscribe("/dojo/hashchange", function(changedHash) {
+                    // Handle the hash change publish
+
+                });
+            });
+        };
+
+        o.updateHash = function(updatedObj) {
+            var hashString = o.objectToQuery(updatedObj);
+            hash(hashString);
+            //logic to update the config.appStateCurrent
+        },
+
+        o.hashChangeDetect = function(newState, oldState) {
+            //logic to detect change in hash
+
+            topic.publish("appStateChange", {
+                "type": "x",
+                "value": 11
             });
         }
 

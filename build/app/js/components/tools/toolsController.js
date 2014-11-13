@@ -1,0 +1,1 @@
+define(["core/config","components/tools/toolsModel","core/toolkitController","core/coreController"],function(o,t,n){var r={};return r.startup=function(){var o=n.loadPartial("components/tools/toolsPartial.html");return o.then(function(o){console.log("load startup"),n.injectHtml(".app-container",o,"last"),t.startup(),t.bind(n.getNodeList(".tools-container")[0])}),o},r});

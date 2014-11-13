@@ -1,0 +1,1 @@
+define(function(){var e={appStatePrevious:{v:"map",b:"streets",l:5,x:23.5,y:54.5},appStateCurrent:{v:"map",b:"streets",l:5,x:23.5,y:54.5},webmapId:"",mapDefault:{displayGraphicsOnPan:!0},services:{layers:[{id:"schools",url:"http://",outFields:["*"]}]},messages:{loading:"Loading...",error:"Something is wrong!"}};return e});

@@ -1,0 +1,1 @@
+define(["core/config","components/map/mapModel","core/toolkitController","core/coreController"],function(t,o,n){var r={};return r.startup=function(){var t=n.loadPartial("components/map/mapPartial.html");return t.then(function(t){console.log("load startup"),n.injectHtml(".app-container",t,"last"),o.startup(),o.bind(n.getNodeList(".map-container")[0])}),t},r});

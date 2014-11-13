@@ -22,6 +22,7 @@
         dojoConfig;
 
     baseUrl = "http://shj/apps-wiseguy/template-esri/src";
+    //baseUrl = "http://staging.geoent.com/esri";
 
     var pathPrefix = baseUrl || document.location.pathname.replace(/\/[^/]+$/, "");
 

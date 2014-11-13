@@ -16,12 +16,14 @@ define(["core/config", "components/app/appModel", "core/toolkitController", "cor
         var o = {};
 
         o.startup = function() {
+            var currentView;
             var _this = this;
-            _this.appStateInit();
-            //looad the partial
-            var loadApp = toolkit.loadPartial("components/app/appPartial.html");
 
-            loadApp.then(function(html) {
+            //looad the partial
+            var loadAppDeferred = toolkit.loadPartial("components/app/appPartial.html");
+
+            loadAppDeferred.then(function(html) {
+
                 console.log("load startup");
 
                 toolkit.injectHtml("body", html, "only");
@@ -30,31 +32,28 @@ define(["core/config", "components/app/appModel", "core/toolkitController", "cor
                 appModel.startup();
 
                 //start model with default values
-                appModel.bind(toolkit.getNodeById("appContainer"));
+                appModel.bind(toolkit.getNodeList(".app-container")[0]);
 
+                //load other components
+                //core.startModule("header");
+                //core.startModule("footer");                
+                core.startModule("tools");
 
+                //start the view that is in current app state
+
+                currentView = config.appStateCurrent.v;
+
+                core.startModule(currentView);
 
                 //now decide which part of the app to load based on url
             });
 
 
-            return loadApp;
-            //bind model
-
-            //load css
+            return loadAppDeferred;
 
         };
 
-        /**
-         * starts tracking the app state change in URL
-         * injects the default state
-         */
-        o.appStateInit = function() {
 
-
-
-            return true;
-        }
 
 
         return o;

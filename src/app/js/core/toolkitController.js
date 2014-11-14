@@ -1,10 +1,15 @@
 /**
 All dojo utilities implementation defined here. 
 Can be swapped out for Jquery etc.
+All esri/ and dojo/ stuff should be implemented here
 */
 
-define(["dojo/dom", "dojo/query", "dojo/Deferred", "dojo/dom-construct", "dojo/_base/lang", "dojo/io-query", "core/config", "dojo/hash"],
-    function(dom, dojoQuery, Deferred, domConstruct, lang, ioQuery, config, hash) {
+define(["dojo/dom", "dojo/query", "dojo/Deferred", "dojo/dom-construct", "dojo/_base/lang", "dojo/io-query", "core/config", "dojo/hash",
+        "esri/request", "dojo/parser", "dojo/ready", "dojo/_base/array", "esri/layers/ArcGISDynamicMapServiceLayer",
+        "esri/layers/FeatureLayer", "esri/layers/GraphicsLayer"
+    ],
+    function(dom, dojoQuery, Deferred, domConstruct, lang, ioQuery, config, hash, esriRequest, parser, ready, arrayUtil, ArcGISDynamicMapServiceLayer,
+        FeatureLayer, GraphicsLayer) {
 
         var o = {};
 
@@ -14,6 +19,29 @@ define(["dojo/dom", "dojo/query", "dojo/Deferred", "dojo/dom-construct", "dojo/_
 
         o.getNodeList = function(selector) {
             return dojoQuery(selector);
+        };
+
+        o.arrayMap = function(sourceArray, handlerFunc) {
+            var targetArray = arrayUtil.map(sourceArray, handlerFunc);
+            return targetArray;
+        };
+
+        o.getLayerConstructor = function(type) {
+            var constructor;
+
+            switch (type) {
+                case "dynamic":
+                    constructor = ArcGISDynamicMapServiceLayer;
+                    break;
+                case "graphic":
+                    constructor = GraphicsLayer;
+                    break;
+                case "feature":
+                    constructor = FeatureLayer;
+                    break;
+            }
+
+            return constructor;
         };
 
         o.loadPartial = function(loadStr) {
@@ -55,6 +83,32 @@ define(["dojo/dom", "dojo/query", "dojo/Deferred", "dojo/dom-construct", "dojo/_
             return lang.mixin(targetObject, sourceObject);
         }
 
+        o.getMapConstructor = function() {
+
+            var deferred = new Deferred();
+
+            require(["esri/map"], function(Map) {
+                deferred.resolve(Map);
+            });
+
+            return deferred;
+
+        };
+
+        o.getBasemapDijit = function() {
+            var deferred = new Deferred();
+
+            require(["esri/dijit/BasemapGallery"], function(BasemapGallery) {
+                deferred.resolve(BasemapGallery);
+            });
+
+            return deferred;
+
+        };
+
+        /**
+         * Hash / App State tracking
+         */
 
         o.startDetectHashChange = function() {
             require(["dojo/hash", "dojo/topic"], function(hash, topic) {
@@ -78,6 +132,17 @@ define(["dojo/dom", "dojo/query", "dojo/Deferred", "dojo/dom-construct", "dojo/_
                 "type": "x",
                 "value": 11
             });
+        }
+
+        /**
+         * Web Service Calls
+         */
+
+        o.requestJson = function(url, options) {
+
+            var deferred = esriRequest(url, options);
+
+            return deferred;
         }
 
         return o;

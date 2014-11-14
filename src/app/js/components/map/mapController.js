@@ -14,6 +14,13 @@ define(["core/config", "components/map/mapModel", "core/toolkitController", "cor
     function(config, mapModel, toolkit, core) {
 
         var o = {};
+        /*
+         * Private variables
+         */
+
+        o._map;
+        o._basemaps;
+        o._legend;
 
         o.startup = function() {
 
@@ -29,6 +36,7 @@ define(["core/config", "components/map/mapModel", "core/toolkitController", "cor
 
                 toolkit.injectHtml(".app-container", html, "last");
 
+                o.createUI();
                 //start model with default values
                 mapModel.startup();
 
@@ -42,8 +50,112 @@ define(["core/config", "components/map/mapModel", "core/toolkitController", "cor
 
         };
 
+        o.createUI = function() {
+            o.createMap();
+        };
+
+        o.createMap = function() {
+
+            var mapConstructor = toolkit.getMapConstructor();
+
+            mapConstructor.then(function(Map) {
+
+                var map = new Map("map", {
+                    basemap: "streets"
+                });
+
+                o._map = map;
+
+                map.on("load", function() {
+                    o.addLayers(map);
+                })
+
+                //debugger;
+            });
+
+        };
+
+        o.addLayers = function(map) {
+
+            console.log("add layers");
+            var mapLayers = [];
+
+            var mapLayers = toolkit.arrayMap(config.services.layers, function(layerItem) {
+
+                var mapLayer;
+                var url = layerItem.url;
+                var urlIsAbsolute = url && (url.indexOf("http://") + url.indexOf("https://") <= -2);
+                var mapServerPrefix = config.services.mapServerPrefix;
+
+                if (urlIsAbsolute) {
+                    url = mapServerPrefix + url;
+                }
+                //debugger;
+
+                var LayerConstructor = toolkit.getLayerConstructor(layerItem.type);
+                switch (layerItem.type) {
+                    case "dynamic":
+                        mapLayer = new LayerConstructor(url, layerItem);
+                        break;
+                    case "graphic":
+                        mapLayer = new LayerConstructor();
+                        break;
+                    case "feature":
+                        mapLayer = new LayerConstructor(url, layerItem);
+                        break;
+
+                }
+                return mapLayer;
+
+            });
+
+            var layersAddResult = map.on("layers-add-result", function() {
+
+                layersAddResult.remove();
+
+                console.log("layers added");
+
+                //map.addLayers
+                o.addBasemap(map);
+
+            });
 
 
+            map.addLayers(mapLayers);
+
+
+        };
+
+        o.addBasemap = function(map) {
+
+            toolkit.getBasemapDijit().then(function(BasemapGallery) {
+
+                var basemapGallery = new BasemapGallery({
+                    showArcGISBasemaps: true,
+                    map: map
+                }, toolkit.getNodeList(".basemap-gallery")[0]);
+
+                basemapGallery.startup();
+
+            });
+
+        };
+
+        /**
+         * Setters and Getters
+         */
+
+        o.getMap = function() {
+            return o._map;
+        }
+
+        o.getBasemap = function() {
+            return o._basemap;
+        }
+
+        o.getLegend = function() {
+            return o._getLegend;
+        }
 
         return o;
 

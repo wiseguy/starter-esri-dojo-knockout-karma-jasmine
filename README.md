@@ -1,3 +1,11 @@
+## This template is a startup for an application that needs a map and some tools
+# It is extensible
+
+## Instructions to start developing
+
+1. 
+2. 
+
 This Project should do the following:
 
 1. Follow Conventions made at the company
@@ -24,40 +32,3 @@ This Project should do the following:
 
 
 ## Folder Structure
-
-build
-src
-	app
-		
-
-		images
-			logo.jpg
-		css
-		js
-			libs
-				knockout.js
-			core
-				config.js - defines all app URL, messages, Layers, outFields
-				main.js - Bootup the library, requireloadCSS, check browser version, proceed if browser version is good else stop
-				ToolKitController.js - Implementation of Toolkit stuff should be done here
-				MappingController.js - Implementation of map stuff should be done here, new Map, new Layer, addLayer, knows what the map is
-
-				AppController.js - Start a module, Close a Module, showNotification, hideNotification, getAppState, setAppState, getBrowserVersion, 					syncViewModels
-				Start a module will set defaults for the module, initialize the model, load css, load the html to the body, 
-
-			components
-				compname1
-					compname1Partial.html
-					compname1Controller.js - quries a layer and gets graphics on map
-					compname1Model.js - has the model and events
-					compname1.css
-				compname2
-					compname2Partial.html
-					compname2Controller.js - hooks on to the change event of layer and updates the graphics list
-					compname2Model.js - has the model and events, clicking on button 
-					compname2.css
-
-	html
-		index.htm
-	tests
-		xxxSpec.js

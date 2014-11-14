@@ -28,7 +28,6 @@ define(["core/config", "components/app/appModel", "core/toolkitController", "cor
 
                 o.createUI(html);
 
-
                 //now decide which part of the app to load based on url
             });
 

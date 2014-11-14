@@ -27,6 +27,12 @@ define(["core/config", "components/tools/toolsModel", "core/toolkitController", 
                 console.log("load startup");
                 // debugger;
 
+                var checkIfNodeExists = (toolkit.getNodeList(".app-container").length == 1);
+                var selectorNode = ".app-container";
+                if (!checkIfNodeExists) {
+                    selectorNode = "body"; //during tests
+                }
+
                 toolkit.injectHtml(".app-container", html, "last");
 
                 //start model with default values

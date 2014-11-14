@@ -31,17 +31,7 @@ define(["core/config", "components/map/mapModel", "core/toolkitController", "cor
 
             loadMapDeferred.then(function(html) {
 
-                console.log("load startup");
-
-
-                toolkit.injectHtml(".app-container", html, "last");
-
-                o.createUI();
-                //start model with default values
-                mapModel.startup();
-
-                //start model with default values
-                mapModel.bind(toolkit.getNodeList(".map-container")[0]);
+                o.createUI(html);
 
             });
 
@@ -50,28 +40,43 @@ define(["core/config", "components/map/mapModel", "core/toolkitController", "cor
 
         };
 
-        o.createUI = function() {
+        o.createUI = function(html) {
+
+            console.log("create Map UI");
+
+            var checkIfNodeExists = (toolkit.getNodeList(".app-container").length == 1);
+
+            var selectorNode = ".app-container";
+            if (!checkIfNodeExists) {
+                selectorNode = "body"; //during tests
+            }
+            toolkit.injectHtml(selectorNode, html, "last");
+
+
+            //start model with default values
+            mapModel.startup();
+
+            //start model with default values
+            mapModel.bind(toolkit.getNodeList(".map-container")[0]);
+
             o.createMap();
         };
 
         o.createMap = function() {
 
-            var mapConstructor = toolkit.getMapConstructor();
+            var MapClass = toolkit.getMapClass();
 
-            mapConstructor.then(function(Map) {
-
-                var map = new Map("map", {
-                    basemap: "streets"
-                });
-
-                o._map = map;
-
-                map.on("load", function() {
-                    o.addLayers(map);
-                })
-
-                //debugger;
+            var map = new MapClass("map", {
+                basemap: "streets"
             });
+
+            o._map = map;
+
+            map.on("load", function() {
+                o.addLayers(map);
+            });
+
+            return map;
 
         };
 
@@ -127,17 +132,28 @@ define(["core/config", "components/map/mapModel", "core/toolkitController", "cor
         };
 
         o.addBasemap = function(map) {
+            console.log("Add basemap");
+            var BasemapGallery = toolkit.getBasemapDijit();
 
-            toolkit.getBasemapDijit().then(function(BasemapGallery) {
+            var basemapGallery = new BasemapGallery({
+                showArcGISBasemaps: true,
+                map: map
+            }, toolkit.getNodeList(".basemap-gallery")[0]);
 
-                var basemapGallery = new BasemapGallery({
-                    showArcGISBasemaps: true,
-                    map: map
-                }, toolkit.getNodeList(".basemap-gallery")[0]);
+            basemapGallery.startup();
 
-                basemapGallery.startup();
+            o.addLegend(map);
+        };
 
-            });
+        o.addLegend = function(map) {
+            console.log("Add Legend");
+            var Legend = toolkit.getLegendDijit();
+
+            var legend = new Legend({
+                map: map
+            }, toolkit.getNodeList(".legend")[0]);
+
+            legend.startup();
 
         };
 

@@ -26,24 +26,8 @@ define(["core/config", "components/app/appModel", "core/toolkitController", "cor
 
                 console.log("load startup");
 
-                toolkit.injectHtml("body", html, "only");
+                o.createUI(html);
 
-                //start model with default values
-                appModel.startup();
-
-                //start model with default values
-                appModel.bind(toolkit.getNodeList(".app-container")[0]);
-
-                //load other components
-                //core.startModule("header");
-                //core.startModule("footer");                
-                core.startModule("tools");
-
-                //start the view that is in current app state
-
-                currentView = config.appStateCurrent.v;
-
-                core.startModule(currentView);
 
                 //now decide which part of the app to load based on url
             });
@@ -53,8 +37,30 @@ define(["core/config", "components/app/appModel", "core/toolkitController", "cor
 
         };
 
+        o.createUI = function(html) {
 
+            console.log("create App UI");
 
+            toolkit.injectHtml("body", html, "only");
+
+            //start model with default values
+            appModel.startup();
+
+            //start model with default values
+            appModel.bind(toolkit.getNodeList(".app-container")[0]);
+
+            //load other components
+            //core.startModule("header");
+            //core.startModule("footer");                
+            core.startModule("tools");
+
+            //start the view that is in current app state
+
+            currentView = config.appStateCurrent.v;
+
+            core.startModule(currentView);
+
+        }
 
         return o;
 

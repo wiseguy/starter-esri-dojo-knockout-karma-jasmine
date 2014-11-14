@@ -6,10 +6,10 @@ All esri/ and dojo/ stuff should be implemented here
 
 define(["dojo/dom", "dojo/query", "dojo/Deferred", "dojo/dom-construct", "dojo/_base/lang", "dojo/io-query", "core/config", "dojo/hash",
         "esri/request", "dojo/parser", "dojo/ready", "dojo/_base/array", "esri/layers/ArcGISDynamicMapServiceLayer",
-        "esri/layers/FeatureLayer", "esri/layers/GraphicsLayer"
+        "esri/layers/FeatureLayer", "esri/layers/GraphicsLayer", "esri/map", "esri/dijit/BasemapGallery", "esri/dijit/Legend"
     ],
     function(dom, dojoQuery, Deferred, domConstruct, lang, ioQuery, config, hash, esriRequest, parser, ready, arrayUtil, ArcGISDynamicMapServiceLayer,
-        FeatureLayer, GraphicsLayer) {
+        FeatureLayer, GraphicsLayer, Map, BasemapGallery, Legend) {
 
         var o = {};
 
@@ -62,6 +62,8 @@ define(["dojo/dom", "dojo/query", "dojo/Deferred", "dojo/dom-construct", "dojo/_
          * @type - only, first, last, replace
          */
         o.injectHtml = function(selector, html, type) {
+            console.log("insert HTML for " + selector);
+
             dojoQuery(selector).forEach(function(node) {
                 domConstruct.place(html, node, type);
             });
@@ -83,26 +85,21 @@ define(["dojo/dom", "dojo/query", "dojo/Deferred", "dojo/dom-construct", "dojo/_
             return lang.mixin(targetObject, sourceObject);
         }
 
-        o.getMapConstructor = function() {
+        o.getMapClass = function() {
 
-            var deferred = new Deferred();
-
-            require(["esri/map"], function(Map) {
-                deferred.resolve(Map);
-            });
-
-            return deferred;
+            return Map;
 
         };
 
         o.getBasemapDijit = function() {
-            var deferred = new Deferred();
 
-            require(["esri/dijit/BasemapGallery"], function(BasemapGallery) {
-                deferred.resolve(BasemapGallery);
-            });
+            return BasemapGallery;
 
-            return deferred;
+        };
+
+        o.getLegendDijit = function() {
+
+            return Legend;
 
         };
 

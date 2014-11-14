@@ -2,21 +2,26 @@ define(["core/coreController", "core/toolkitController", "components/app/appCont
 
     function(core, toolkit, appController) {
 
-        describe("The partial ", function() {
-            it("appPartial is loaded", function() {
-                var startup = appController.startup();
-                startup.then(function() {
-                    expect(true).toBe(true);
+
+
+        describe("App Async ", function() {
+            var appPartialDeferred;
+
+            beforeEach(function(done) {
+                appPartialDeferred = toolkit.loadPartial("components/app/appPartial.html");
+                appPartialDeferred.then(function(html) {
+                    done(); // if this runs then its successful
                 });
             });
+
+            it("should support async execution to get appPartial.html", function(done) {
+                expect(true).toBe(true);
+                done();
+            });
+
         });
 
-        describe("The application ", function() {
-            it("state is initialized", function() {
-                var appStateInit = appController.appStateInit();
-                expect(appStateInit).toBe(true);
-            });
-        });
+
 
 
     })

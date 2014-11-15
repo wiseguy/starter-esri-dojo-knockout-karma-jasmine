@@ -42,13 +42,13 @@ define(["core/config", "core/toolkitController"], function(config, toolkit) {
     };
 
     o.updateHash = function(updateObject) {
-
+        var cloneAppStateCurrent = toolkit.clone(config.appStateCurrent);
         var newAppState = toolkit.mixin(config.appStateCurrent, updateObject);
         var hashString = toolkit.objectToQuery(newAppState);
         var hash = toolkit.getHash();
         hash(hashString);
         if (changeDetect) {
-            o.appStateCompare(config.appStateCurrent, newAppState);
+            o.appStateCompare(cloneAppStateCurrent, newAppState);
         } else {
             changeDetect = true;
         }
@@ -63,30 +63,30 @@ define(["core/config", "core/toolkitController"], function(config, toolkit) {
     };
 
     o.appStateCompare = function(oldState, newState) {
-        debugger;
+
+        var changesArray = [];
+
+        for (var prop in oldState) {
+
+            if (oldState[prop] != newState[prop]) {
+                changesArray.push(prop);
+            }
+
+        }
+
+        if (changesArray.length > 0) {
+            o.handleChanges(oldState, newState, changesArray);
+        }
 
         //when a change is found
 
-    },
+    };
 
-
-    /**
-     * Hash / App State tracking
-     */
+    o.handleChanges = function(oldState, newState, changesArray) {
 
 
 
-    o.hashChangeDetect = function(newState, oldState) {
-        //logic to detect change in hash
-
-        topic.publish("appStateChange", {
-            "type": "x",
-            "value": 11
-        });
     }
-
-
-
 
 
     return o;

@@ -9,9 +9,9 @@
  syncViewModels 
  */
 
-define(["core/config", "components/tools/toolsModel", "core/toolkitController", "core/coreController"],
+define(["core/config", "components/tools/toolsModel", "core/toolkitController", "core/coreController", "core/hashController"],
 
-    function(config, toolsModel, toolkit, core) {
+    function(config, toolsModel, toolkit, core, hash) {
 
         var o = {};
 
@@ -52,7 +52,11 @@ define(["core/config", "components/tools/toolsModel", "core/toolkitController", 
         o.handleClickGo = function() {
 
             //zoom the map to DC
-            alert("zoom to DC");
+
+            hash.updateHash({
+                x: 11,
+                y: 22
+            });
 
         };
 

@@ -51,6 +51,8 @@ define(["core/config", "components/app/appModel", "core/toolkitController", "cor
             //load other components
             //core.startModule("header");
             //core.startModule("footer");                
+
+
             core.startModule("tools");
 
             //start the view that is in current app state

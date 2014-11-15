@@ -31,6 +31,9 @@ define(["dojo/dom", "dojo/query", "dojo/Deferred", "dojo/dom-construct", "dojo/_
             return targetArray;
         };
 
+        o.clone = function(object) {
+            return lang.clone(object);
+        }
         /**
          * sourceProjection can be wm or ll
          */

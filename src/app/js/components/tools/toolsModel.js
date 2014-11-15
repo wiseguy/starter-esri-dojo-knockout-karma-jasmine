@@ -1,10 +1,13 @@
-define(["ko", "core/config"],
-    function(ko, config) {
+define(["ko", "core/config", "core/modelEventController"],
+    function(ko, config, modelEventController) {
 
         var o = {};
         var vm = {};
 
         vm.title = ko.observable();
+        vm.clickButton = function(clickedItem) {
+            modelEventController.handleClickGo(clickedItem);
+        };
 
         console.log("apply bindings for app");
 

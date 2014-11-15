@@ -1,5 +1,5 @@
 /** 
- * Decide which model will save the data
+ * This interface decides which model will save the data
  * to keep it in sync
  */
 define(["core/config", "core/toolkitController", "components/app/appModel", "components/map/mapModel",
@@ -12,5 +12,6 @@ define(["core/config", "core/toolkitController", "components/app/appModel", "com
 
     }
 
+    return o;
 
 });

@@ -49,6 +49,13 @@ define(["core/config", "components/tools/toolsModel", "core/toolkitController", 
         };
 
 
+        o.handleClickGo = function() {
+
+            //zoom the map to DC
+            alert("zoom to DC");
+
+        };
+
 
 
         return o;

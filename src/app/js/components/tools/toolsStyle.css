@@ -1,0 +1,8 @@
+.tools-container {
+  position: absolute;
+  right: 100px;
+  top: 10px;
+  width: 130px;
+  background-color: #00f;
+  z-index: 100;
+}

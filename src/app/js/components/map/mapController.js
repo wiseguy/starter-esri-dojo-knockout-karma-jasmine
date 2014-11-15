@@ -9,9 +9,11 @@
  syncViewModels 
  */
 
-define(["core/config", "components/map/mapModel", "core/toolkitController", "core/coreController"],
+define(["core/config", "components/map/mapModel", "core/toolkitController", "core/coreController",
+        "core/hashController"
+    ],
 
-    function(config, mapModel, toolkit, core) {
+    function(config, mapModel, toolkit, core, hash) {
 
         var o = {};
         /*
@@ -76,6 +78,8 @@ define(["core/config", "components/map/mapModel", "core/toolkitController", "cor
                 o.addLayers(map);
             });
 
+
+
             return map;
 
         };
@@ -123,6 +127,17 @@ define(["core/config", "components/map/mapModel", "core/toolkitController", "cor
                 //map.addLayers
                 o.addBasemap(map);
 
+                map.on("extent-change", function() {
+                    var center = map.extent.getCenter();
+                    var centerLL = toolkit.convertWM(center, 'wm'); //'ll'
+                    var level = map.getLevel();
+                    hash.updateHashWithoutChangeDetect({
+                        x: centerLL.x,
+                        y: centerLL.y,
+                        l: level
+                    });
+                });
+
             });
 
 
@@ -132,13 +147,15 @@ define(["core/config", "components/map/mapModel", "core/toolkitController", "cor
         };
 
         o.addBasemap = function(map) {
-            console.log("Add basemap");
+
+            console.log('Add basemap');
+
             var BasemapGallery = toolkit.getBasemapDijit();
 
             var basemapGallery = new BasemapGallery({
                 showArcGISBasemaps: true,
                 map: map
-            }, toolkit.getNodeList(".basemap-gallery")[0]);
+            }, toolkit.getNodeList('.basemap-gallery')[0]);
 
             basemapGallery.startup();
 

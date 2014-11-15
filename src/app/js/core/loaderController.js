@@ -1,4 +1,4 @@
-define(["core/config", "core/toolkitController", "core/modelController"], function(config, toolkit, modelController) {
+define(["core/config", "core/toolkitController", "core/modelSaveController"], function(config, toolkit, modelSaveController) {
 
     var o = {};
 

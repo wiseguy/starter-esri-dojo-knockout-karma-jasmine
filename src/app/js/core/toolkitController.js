@@ -6,10 +6,11 @@ All esri/ and dojo/ stuff should be implemented here
 
 define(["dojo/dom", "dojo/query", "dojo/Deferred", "dojo/dom-construct", "dojo/_base/lang", "dojo/io-query", "core/config", "dojo/hash",
         "esri/request", "dojo/parser", "dojo/ready", "dojo/_base/array", "esri/layers/ArcGISDynamicMapServiceLayer",
-        "esri/layers/FeatureLayer", "esri/layers/GraphicsLayer", "esri/map", "esri/dijit/BasemapGallery", "esri/dijit/Legend"
+        "esri/layers/FeatureLayer", "esri/layers/GraphicsLayer", "esri/map", "esri/dijit/BasemapGallery", "esri/dijit/Legend",
+        "dojo/hash", "dojo/topic", "esri/geometry/webMercatorUtils"
     ],
     function(dom, dojoQuery, Deferred, domConstruct, lang, ioQuery, config, hash, esriRequest, parser, ready, arrayUtil, ArcGISDynamicMapServiceLayer,
-        FeatureLayer, GraphicsLayer, Map, BasemapGallery, Legend) {
+        FeatureLayer, GraphicsLayer, Map, BasemapGallery, Legend, hash, topic, webMercatorUtils) {
 
         var o = {};
 
@@ -21,9 +22,34 @@ define(["dojo/dom", "dojo/query", "dojo/Deferred", "dojo/dom-construct", "dojo/_
             return dojoQuery(selector);
         };
 
+        o.getHash = function() {
+            return hash;
+        };
+
         o.arrayMap = function(sourceArray, handlerFunc) {
             var targetArray = arrayUtil.map(sourceArray, handlerFunc);
             return targetArray;
+        };
+
+        /**
+         * sourceProjection can be wm or ll
+         */
+        o.convertWM = function(geometry, sourceProjection) {
+
+            var transformedGeometry;
+
+            switch (sourceProjection) {
+                case 'wm':
+                    transformedGeometry = webMercatorUtils.webMercatorToGeographic(geometry);
+                    break;
+
+                case 'll':
+                    transformedGeometry = webMercatorUtils.geographicToWebMercator(geometry);
+                    break;
+            }
+
+            return transformedGeometry;
+
         };
 
         o.getLayerConstructor = function(type) {
@@ -81,9 +107,15 @@ define(["dojo/dom", "dojo/query", "dojo/Deferred", "dojo/dom-construct", "dojo/_
 
         };
 
+        o.topicSubscribe = function(eventString, handlerFunc) {
+
+            topic.publish(eventString, handlerFunc);
+
+        };
+
         o.mixin = function(targetObject, sourceObject) {
             return lang.mixin(targetObject, sourceObject);
-        }
+        };
 
         o.getMapClass = function() {
 
@@ -103,44 +135,9 @@ define(["dojo/dom", "dojo/query", "dojo/Deferred", "dojo/dom-construct", "dojo/_
 
         };
 
-        /**
-         * Hash / App State tracking
-         */
 
-        o.startDetectHashChange = function() {
-            require(["dojo/hash", "dojo/topic"], function(hash, topic) {
-                topic.subscribe("/dojo/hashchange", function(changedHash) {
-                    // Handle the hash change publish
 
-                });
-            });
-        };
 
-        o.updateHash = function(updatedObj) {
-            var hashString = o.objectToQuery(updatedObj);
-            hash(hashString);
-            //logic to update the config.appStateCurrent
-        },
-
-        o.hashChangeDetect = function(newState, oldState) {
-            //logic to detect change in hash
-
-            topic.publish("appStateChange", {
-                "type": "x",
-                "value": 11
-            });
-        }
-
-        /**
-         * Web Service Calls
-         */
-
-        o.requestJson = function(url, options) {
-
-            var deferred = esriRequest(url, options);
-
-            return deferred;
-        }
 
         return o;
 

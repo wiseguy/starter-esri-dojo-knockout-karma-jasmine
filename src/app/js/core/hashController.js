@@ -32,6 +32,7 @@ define(["core/config", "core/toolkitController"], function(config, toolkit) {
 
         toolkit.topicSubscribe("/dojo/hashchange", function(changedHash) {
             // Handle the hash change publish
+            debugger;
             if (!changeDetect) {
                 changeDetect = true;
                 return;
@@ -63,7 +64,7 @@ define(["core/config", "core/toolkitController"], function(config, toolkit) {
     };
 
     o.appStateCompare = function(oldState, newState) {
-
+        debugger;
         var changesArray = [];
 
         for (var prop in oldState) {
@@ -78,13 +79,62 @@ define(["core/config", "core/toolkitController"], function(config, toolkit) {
             o.handleChanges(oldState, newState, changesArray);
         }
 
+        return changesArray;
         //when a change is found
 
     };
 
+    /**
+     * Convert changed properties to array of descriptive names
+     */
     o.handleChanges = function(oldState, newState, changesArray) {
+        var changesNameArray = [];
+        debugger;
+        toolkit.arrayEach(changesArray, function(changeProperty) {
+            switch (changeProperty) {
+                case "b":
+                    if (toolkit.arrayIndex(changesNameArray, "basemap") < 0) {
+                        changesNameArray.push("basemap");
+                    }
+                    break;
+                case "x":
+                    if (toolkit.arrayIndex(changesNameArray, "coordinate") < 0) {
+                        changesNameArray.push("coordinate");
+                    }
+                    break;
+                case "y":
+                    if (toolkit.arrayIndex(changesNameArray, "coordinate") < 0) {
+                        changesNameArray.push("coordinate");
+                    }
+                    break;
+                case "l":
+                    if (toolkit.arrayIndex(changesNameArray, "level") < 0) {
+                        changesNameArray.push("level");
+                    }
+                    break;
 
+            }
 
+        });
+        debugger;
+        // var change = "none";
+
+        // var basemapChange = oldState.b !== newState.b;
+        // if (basemapChange) {
+        //     changedType = "basemap";
+        // };
+
+        // var coordChange = (oldState.x !== newState.x) || (oldState.y !== newState.y);
+        // if (coordChange) {
+        //     changedType = "coordinates";
+        // };
+
+        // var zoomLevel = oldState.l !== newState.l;
+        // if (basemapChange) {
+        //     changedType = "level";
+        // };
+
+        return changesNameArray;
 
     }
 

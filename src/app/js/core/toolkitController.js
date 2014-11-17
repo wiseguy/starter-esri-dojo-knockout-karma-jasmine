@@ -31,6 +31,15 @@ define(["dojo/dom", "dojo/query", "dojo/Deferred", "dojo/dom-construct", "dojo/_
             return targetArray;
         };
 
+        o.arrayEach = function(sourceArray, handlerFunc) {
+            arrayUtil.forEach(sourceArray, handlerFunc);
+        };
+
+        o.arrayIndex = function(sourceArray, findItem) {
+            return arrayUtil.indexOf(sourceArray, findItem);
+        };
+
+
         o.clone = function(object) {
             return lang.clone(object);
         }

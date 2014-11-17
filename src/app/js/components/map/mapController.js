@@ -67,9 +67,12 @@ define(["core/config", "components/map/mapModel", "core/toolkitController", "cor
         o.createMap = function() {
 
             var MapClass = toolkit.getMapClass();
+            var appCurrentState = config.appStateCurrent;
 
             var map = new MapClass("map", {
-                basemap: "streets"
+                basemap: appCurrentState.b,
+                center: [appCurrentState.y, appCurrentState.x],
+                zoom: appCurrentState.l
             });
 
             o._map = map;

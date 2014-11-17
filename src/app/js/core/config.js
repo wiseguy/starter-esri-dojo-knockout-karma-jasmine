@@ -16,7 +16,7 @@ define(function() {
         appStateCurrent: { //should be identical to appStatePrevious
             "v": "map",
             "b": "streets",
-            "l": 5,
+            "l": 8,
             "x": 23.5,
             "y": 54.5
         },

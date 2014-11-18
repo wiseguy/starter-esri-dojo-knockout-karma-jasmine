@@ -28,6 +28,10 @@ define(["core/config", "components/app/appModel", "core/toolkitController", "cor
 
                 o.createUI(html);
 
+                toolkit.registerFunctionWhenDomReady(function() {
+                    toolkit.parseDojo();
+                });
+
                 //now decide which part of the app to load based on url
             });
 
@@ -60,6 +64,9 @@ define(["core/config", "components/app/appModel", "core/toolkitController", "cor
             currentView = config.appStateCurrent.v;
 
             core.startModule(currentView);
+
+
+
 
         }
 

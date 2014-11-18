@@ -9,11 +9,11 @@
  syncViewModels 
  */
 
-define(["core/config", "components/tools/toolsModel", "core/toolkitController", "core/coreController", "core/hashController"],
+define(["exports", "core/config", "components/tools/toolsModel", "core/toolkitController", "core/coreController", "core/hashController"],
 
-    function(config, toolsModel, toolkit, core, hash) {
+    function(o, config, toolsModel, toolkit, core, hash) {
 
-        var o = {};
+        //var o = {};
 
         o.startup = function() {
 

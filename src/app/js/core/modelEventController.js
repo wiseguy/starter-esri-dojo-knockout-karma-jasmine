@@ -1,18 +1,16 @@
 /** 
  * This interface handles all events (clicks, mouseover) in the models *
  */
-define(["core/config", "core/toolkitController", "components/app/appController",
-    "components/map/mapController"
+define(["exports", "core/config", "core/toolkitController", "components/app/appController",
+    "components/map/mapController", "components/tools/toolsController"
 
-], function(config, toolkit, appController, mapController) {
-
-    var o = {};
+], function(o, config, toolkit, appController, mapController, toolsController) {
 
     o.handleClickGo = function(clickedItem) {
         // TODO : Get rid of require. Circular dependency?
-        require(["components/tools/toolsController"], function(toolsController) {
-            toolsController.handleClickGo(clickedItem);
-        });
+
+        toolsController.handleClickGo(clickedItem);
+
     }
 
     return o;

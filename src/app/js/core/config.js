@@ -10,15 +10,15 @@ define(function() {
             "v": "map",
             "b": "streets",
             "l": 8,
-            "x": 23.5,
-            "y": 54.5
+            "x": 54.74,
+            "y": 23.8
         },
         appStateCurrent: { //should be identical to appStatePrevious
             "v": "map",
             "b": "streets",
             "l": 8,
-            "x": 23.5,
-            "y": 54.5
+            "x": 54.74,
+            "y": 23.8
         },
 
         webmapId: "", //if webmap id used then that will be used to create the map

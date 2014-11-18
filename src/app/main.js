@@ -6,7 +6,7 @@
 (function() {
     'use strict';
     var baseUrl,
-        esriVersion = "3.10",
+        esriVersion = "3.11",
         loadFiles = {
             "js": [
                 "http://js.arcgis.com/" + esriVersion + "/",
@@ -14,8 +14,8 @@
             ],
             "css": [
                 "app/css/app.css",
-                "http://js.arcgis.com/" + esriVersion + "/js/esri/css/esri.css",
-                "http://js.arcgis.com/" + esriVersion + "/js/dojo/dijit/themes/tundra/tundra.css"
+                "http://js.arcgis.com/" + esriVersion + "/esri/css/esri.css",
+                "http://js.arcgis.com/" + esriVersion + "/dijit/themes/tundra/tundra.css"
             ]
         },
         version = "0.1",
@@ -96,7 +96,7 @@
         }
         //load css
         for (var k = 0; k < loadFiles.css.length; k += 1) {
-            loadStyle(loadFiles.css[i]);
+            loadStyle(loadFiles.css[k]);
         }
     };
 

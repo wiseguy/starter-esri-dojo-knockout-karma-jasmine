@@ -5,14 +5,25 @@ All esri/ and dojo/ stuff should be implemented here
 */
 
 define(["dojo/dom", "dojo/query", "dojo/Deferred", "dojo/dom-construct", "dojo/_base/lang", "dojo/io-query", "core/config", "dojo/hash",
-        "esri/request", "dojo/parser", "dojo/ready", "dojo/_base/array", "esri/layers/ArcGISDynamicMapServiceLayer",
+        "esri/request", "dojo/ready", "dojo/_base/array", "esri/layers/ArcGISDynamicMapServiceLayer",
         "esri/layers/FeatureLayer", "esri/layers/GraphicsLayer", "esri/map", "esri/dijit/BasemapGallery", "esri/dijit/Legend",
         "dojo/hash", "dojo/topic", "esri/geometry/webMercatorUtils"
     ],
-    function(dom, dojoQuery, Deferred, domConstruct, lang, ioQuery, config, hash, esriRequest, parser, ready, arrayUtil, ArcGISDynamicMapServiceLayer,
+    function(dom, dojoQuery, Deferred, domConstruct, lang, ioQuery, config, hash, esriRequest, ready, arrayUtil, ArcGISDynamicMapServiceLayer,
         FeatureLayer, GraphicsLayer, Map, BasemapGallery, Legend, hash, topic, webMercatorUtils) {
 
         var o = {};
+
+        o.registerFunctionWhenDomReady = function(func) {
+            ready(func);
+        };
+
+        o.parseDojo = function() {
+            require(["dojox/mobile/parser", "dijit/TitlePane", "dijit/layout/ContentPane", "dijit/form/Button"], function(parser) {
+                //using mobile parser because regular one doesnt work with html tags manifest attribute
+                parser.parse();
+            })
+        };
 
         o.getNodeById = function(id) {
             return dom.byId(id);
@@ -121,7 +132,7 @@ define(["dojo/dom", "dojo/query", "dojo/Deferred", "dojo/dom-construct", "dojo/_
 
         o.topicSubscribe = function(eventString, handlerFunc) {
 
-            topic.publish(eventString, handlerFunc);
+            topic.subscribe(eventString, handlerFunc);
 
         };
 

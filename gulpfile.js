@@ -36,6 +36,8 @@ gulp.task('default', function() {
     // place code for your default task here
 });
 
+/*********Build************/
+
 gulp.task('build-delete', function(cb) {
     console.log("deleting");
     del([app_dir.build + '**'], cb)
@@ -85,6 +87,9 @@ gulp.task('build-minify-image', function() {
 
 gulp.task('build', ['build-minify-css', 'build-uglify-js', 'build-minify-html', 'build-minify-image']);
 
+
+/*********Serve************/
+
 gulp.task('serve', function() {
     console.log(app_dir.src + 'index.htm')
     browserSync({
@@ -106,7 +111,7 @@ gulp.task('serve', function() {
 });
 
 
-/*********DEVELOP************/
+/*********Watch************/
 
 
 
@@ -137,7 +142,7 @@ gulp.task('autoprefix-css', ['compile-stylus'], function() {
         .pipe(gulp.dest(app_dir.src))
 });
 
-gulp.task('develop', function() {
+gulp.task('watch', function() {
     // watch jade and style
     gulp.watch(app_dir.src + '**/*.jade', ['compile-jade']);
     gulp.watch(app_dir.src + '**/*.styl', ['autoprefix-css']);

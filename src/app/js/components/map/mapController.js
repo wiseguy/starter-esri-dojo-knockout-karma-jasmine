@@ -44,6 +44,7 @@ define(["core/config", "components/map/mapModel", "core/toolkitController", "cor
 
         o.createUI = function(html) {
 
+
             console.log("create Map UI");
 
             var checkIfNodeExists = (toolkit.getNodeList(".app-container").length == 1);
@@ -71,7 +72,7 @@ define(["core/config", "components/map/mapModel", "core/toolkitController", "cor
 
             var map = new MapClass("map", {
                 basemap: appCurrentState.b,
-                center: [appCurrentState.y, appCurrentState.x],
+                center: [appCurrentState.x, appCurrentState.y],
                 zoom: appCurrentState.l
             });
 
@@ -153,6 +154,8 @@ define(["core/config", "components/map/mapModel", "core/toolkitController", "cor
 
             console.log('Add basemap');
 
+
+
             var BasemapGallery = toolkit.getBasemapDijit();
 
             var basemapGallery = new BasemapGallery({
@@ -163,10 +166,14 @@ define(["core/config", "components/map/mapModel", "core/toolkitController", "cor
             basemapGallery.startup();
 
             o.addLegend(map);
+
+
         };
 
         o.addLegend = function(map) {
+
             console.log("Add Legend");
+
             var Legend = toolkit.getLegendDijit();
 
             var legend = new Legend({
@@ -192,6 +199,16 @@ define(["core/config", "components/map/mapModel", "core/toolkitController", "cor
         o.getLegend = function() {
             return o._getLegend;
         }
+
+        o.setBasemap = function(basemapName) {
+            var basemapId = "basemap_2";
+            o._basemaps.select(basemapId);
+        };
+
+        o.centerAndZoom = function(centerLL, level) {
+            o._map.centerAndZoom(centerLL, level);
+        };
+
 
         return o;
 

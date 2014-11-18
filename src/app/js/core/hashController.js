@@ -1,11 +1,11 @@
-define(["core/config", "core/toolkitController"], function(config, toolkit) {
+define(["exports", "core/config", "core/toolkitController", "components/map/mapController"], function(exports, config, toolkit, mapController) {
 
-    var o = {};
-    var changeDetect = true;
+
+    var identifyChangesInHash = true;
     /**
      * Uses the URL state, if not present then uses default from config
      */
-    o.startAppStateTracking = function() {
+    exports.startAppStateTracking = function() {
 
         var urlSplitByHash = window.document.location.href.split("#"),
             appStateFromURL;
@@ -17,66 +17,88 @@ define(["core/config", "core/toolkitController"], function(config, toolkit) {
             //config.appStateCurrent = toolkit.mixin(appStateFromURL, config.appStateCurrent); //override the default app state by mixing with URL state
             config.appStateCurrent = appStateFromURL; //override the default app state by mixing with URL state
 
-            // o.appStateCompare(config.appStatePrevious, appStateFromURL);
+            // exports.appStateCompare(config.appStatePrevious, appStateFromURL);
 
         } else {
-            o.updateHash(config.appStateCurrent); //default
+
+            exports.updateHashWithoutChangeDetect(config.appStateCurrent); //default
+
         }
 
-        o.startDetectHashChange();
+        exports.startDetectUrlChange();
 
         return true;
     };
 
-    o.startDetectHashChange = function() {
+    /**
+     *Detect hash change for browser back/foward button click
+     */
+    exports.startDetectUrlChange = function() {
+
 
         toolkit.topicSubscribe("/dojo/hashchange", function(changedHash) {
-            // Handle the hash change publish
-            debugger;
-            if (!changeDetect) {
-                changeDetect = true;
+
+            var appStateCurrent = config.appStateCurrent;
+
+            // debugger;
+            if (!identifyChangesInHash) { //updateHashWithoutChangeDetect was called               
                 return;
             }
+
+            if (identifyChangesInHash) {
+                var newAppState = toolkit.stringToObject(changedHash);
+                exports.appStateCompare(appStateCurrent, newAppState);
+            }
+
+
 
         });
 
     };
 
-    o.updateHash = function(updateObject) {
-        var cloneAppStateCurrent = toolkit.clone(config.appStateCurrent);
-        var newAppState = toolkit.mixin(config.appStateCurrent, updateObject);
+    /**
+     * API to call when hash is to be updated.
+     * changeDetect determines whether update is done silently or follows through to execute some code
+     */
+    exports.updateHash = function(updateObject) {
+        var appStateCurrent = config.appStateCurrent;
+        var newAppState = toolkit.mixin(toolkit.clone(appStateCurrent), updateObject);
         var hashString = toolkit.objectToQuery(newAppState);
         var hash = toolkit.getHash();
+
+        config.appStatePrevious = toolkit.clone(appStateCurrent);
+        config.appStateCurrent = newAppState;
+
+
         hash(hashString);
-        if (changeDetect) {
-            o.appStateCompare(cloneAppStateCurrent, newAppState);
-        } else {
-            changeDetect = true;
-        }
-    };
-
-    o.updateHashWithoutChangeDetect = function(updateObject) {
-
-        changeDetect = false;
-
-        o.updateHash(updateObject);
+        //debugger;
+        identifyChangesInHash = true; // enable identifying changes in Url
 
     };
 
-    o.appStateCompare = function(oldState, newState) {
-        debugger;
+
+    exports.updateHashWithoutChangeDetect = function(updateObject) {
+
+        identifyChangesInHash = false; // disable identifying Url change
+
+        exports.updateHash(updateObject);
+
+    };
+
+    exports.appStateCompare = function(oldState, newState) {
+
         var changesArray = [];
 
         for (var prop in oldState) {
 
-            if (oldState[prop] != newState[prop]) {
+            if (oldState[prop].toString() !== newState[prop].toString()) {
                 changesArray.push(prop);
             }
 
         }
 
         if (changesArray.length > 0) {
-            o.handleChanges(oldState, newState, changesArray);
+            exports.handleChanges(oldState, newState, changesArray);
         }
 
         return changesArray;
@@ -87,9 +109,9 @@ define(["core/config", "core/toolkitController"], function(config, toolkit) {
     /**
      * Convert changed properties to array of descriptive names
      */
-    o.handleChanges = function(oldState, newState, changesArray) {
+    exports.handleChanges = function(oldState, newState, changesArray) {
         var changesNameArray = [];
-        debugger;
+
         toolkit.arrayEach(changesArray, function(changeProperty) {
             switch (changeProperty) {
                 case "b":
@@ -112,33 +134,31 @@ define(["core/config", "core/toolkitController"], function(config, toolkit) {
                         changesNameArray.push("level");
                     }
                     break;
-
             }
 
         });
-        debugger;
-        // var change = "none";
 
-        // var basemapChange = oldState.b !== newState.b;
-        // if (basemapChange) {
-        //     changedType = "basemap";
-        // };
 
-        // var coordChange = (oldState.x !== newState.x) || (oldState.y !== newState.y);
-        // if (coordChange) {
-        //     changedType = "coordinates";
-        // };
-
-        // var zoomLevel = oldState.l !== newState.l;
-        // if (basemapChange) {
-        //     changedType = "level";
-        // };
+        exports.updateUIfromChanges(oldState, newState, changesNameArray);
 
         return changesNameArray;
 
-    }
+    };
+
+    exports.updateUIfromChanges = function(oldState, newState, changesNameArray) {
+
+        if (toolkit.arrayIndex(changesNameArray, "basemap") > -1) {
+            mapController.setBasemap(newState.b);
+        }
+
+        if (toolkit.arrayIndex(changesNameArray, "coordinate") > -1) {
+            mapController.centerAndZoom([parseFloat(newState.x), parseFloat(newState.y)], parseFloat(newState.l));
+        }
 
 
-    return o;
+    };
+
+
+    return exports;
 
 });

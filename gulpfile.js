@@ -11,7 +11,7 @@ var stylus = require('gulp-stylus');
 var jade = require('gulp-jade');
 var autoprefixer = require('gulp-autoprefixer');
 
-
+var coffee = require('gulp-coffee');
 var uglify = require('gulp-uglify');
 var minifycss = require('gulp-minify-css');
 var minifyhtml = require('gulp-minify-html');
@@ -23,6 +23,7 @@ var $ = require('gulp-load-plugins')();
 
 var app_dir = {
     src: __dirname + "/src/",
+    tests: __dirname + "/tests/",
     build: __dirname + "/build/",
     css: "**/*.css",
     js: "**/*.js",
@@ -39,12 +40,12 @@ gulp.task('default', function() {
 /*********Build************/
 
 gulp.task('build-delete', function(cb) {
-    console.log("deleting");
+    console.log(">>>>>>>> deleting");
     del([app_dir.build + '**'], cb)
 });
 
 gulp.task('build-copy-clean', ['build-delete'], function() {
-    console.log("cleaning up the build folder");
+    console.log(">>>>>>>> cleaning up the build folder");
     return gulp.src(app_dir.src + '**')
         .pipe(gulp.dest(app_dir.build))
 });
@@ -57,14 +58,14 @@ gulp.task('build-minify-css', ['build-copy-clean'], function() {
 });
 
 gulp.task('build-uglify-js', ['build-copy-clean'], function() {
-    console.log("Uglifying JS");
+    console.log(">>>>>>>> Uglifying JS");
     return gulp.src(app_dir.build + app_dir.js)
         .pipe($.uglify())
         .pipe(gulp.dest(app_dir.build))
 });
 
 gulp.task('build-minify-html', ['build-copy-clean'], function() {
-    console.log("Minifying HTML");
+    console.log(">>>>>>>> Minifying HTML");
     var opts = {
         comments: true,
         spare: true
@@ -75,7 +76,7 @@ gulp.task('build-minify-html', ['build-copy-clean'], function() {
 });
 
 gulp.task('build-minify-image', function() {
-    console.log("Minifying Images");
+    console.log(">>>>>>>> Minifying Images");
     return gulp.src(app_dir.src + app_dir.images + "/**/*")
         .pipe(imagemin({
             optimizationLevel: 3,
@@ -85,8 +86,14 @@ gulp.task('build-minify-image', function() {
         .pipe(gulp.dest(app_dir.build + app_dir.images))
 });
 
-gulp.task('build', ['build-minify-css', 'build-uglify-js', 'build-minify-html', 'build-minify-image']);
+gulp.task('build-compile-coffee', function() {
+    console.log(">>>>>>>> Compile Coffeescript");
+    return gulp.src(app_dir.tests + "**/*.coffee") // path to your file
+        .pipe(coffee())
+        .pipe(gulp.dest(app_dir.tests));
+});
 
+gulp.task('build', ['build-minify-css', 'build-uglify-js', 'build-minify-html', 'build-minify-image', 'build-compile-coffee']);
 
 /*********Serve************/
 

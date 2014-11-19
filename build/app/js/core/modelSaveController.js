@@ -1,0 +1,1 @@
+define(["core/config","core/toolkitController","components/app/appModel","components/map/mapModel","components/tools/toolsModel"],function(){var o={};return o.statesList=function(){},o});

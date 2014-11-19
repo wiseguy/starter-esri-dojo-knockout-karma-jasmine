@@ -32,3 +32,9 @@ This Project should do the following:
 
 
 ## Folder Structure
+
+## Packages to install
+npm install
+npm install -g gulp
+npm install -g coffee-script
+npm install -g karma-cli

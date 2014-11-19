@@ -2,8 +2,6 @@ define(["core/coreController", "core/toolkitController", "components/app/appCont
 
     function(core, toolkit, appController) {
 
-
-
         describe("App Async ", function() {
             var appPartialDeferred;
 
@@ -21,7 +19,4 @@ define(["core/coreController", "core/toolkitController", "components/app/appCont
 
         });
 
-
-
-
-    })
+    });

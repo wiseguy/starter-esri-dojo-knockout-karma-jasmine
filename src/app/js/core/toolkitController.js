@@ -4,18 +4,38 @@ Can be swapped out for Jquery etc.
 All esri/ and dojo/ stuff should be implemented here
 */
 
-define(["dojo/dom", "dojo/query", "dojo/Deferred", "dojo/dom-construct", "dojo/_base/lang", "dojo/io-query", "core/config", "dojo/hash",
+define(["dojo/dom", "dojo/dom-attr", "dojo/dom-class", "dojo/html", "dojo/query", "dojo/Deferred", "dojo/dom-construct", "dojo/_base/lang", "dojo/io-query", "core/config", "dojo/hash",
         "esri/request", "dojo/ready", "dojo/_base/array", "esri/layers/ArcGISDynamicMapServiceLayer",
         "esri/layers/FeatureLayer", "esri/layers/GraphicsLayer", "esri/map", "esri/dijit/BasemapGallery", "esri/dijit/Legend",
-        "dojo/hash", "dojo/topic", "esri/geometry/webMercatorUtils"
+        "dojo/hash", "dojo/topic", "esri/geometry/webMercatorUtils", "dojo/sniff"
     ],
-    function(dom, dojoQuery, Deferred, domConstruct, lang, ioQuery, config, hash, esriRequest, ready, arrayUtil, ArcGISDynamicMapServiceLayer,
-        FeatureLayer, GraphicsLayer, Map, BasemapGallery, Legend, hash, topic, webMercatorUtils) {
+    function(dom, domAttr, domClass, html, dojoQuery, Deferred, domConstruct, lang, ioQuery, config, hash, esriRequest, ready, arrayUtil, ArcGISDynamicMapServiceLayer,
+        FeatureLayer, GraphicsLayer, Map, BasemapGallery, Legend, hash, topic, webMercatorUtils, sniff) {
 
         var o = {};
 
+        o.addClass = function(node, className) {
+            domClass.add(node, className);
+        };
+
+        o.removeClass = function(node, className) {
+            domClass.remove(node, className);
+        };
+
         o.registerFunctionWhenDomReady = function(func) {
             ready(func);
+        };
+
+        o.sniff = function(browserId) {
+            return sniff(browserId);
+        };
+
+        o.setNodeHtml = function(node, htmlString) {
+            return html.set(node, htmlString);
+        };
+
+        o.setNodeAttr = function(node, attribute, value) {
+            return domAttr.set(node, attribute, value);
         };
 
         o.parseDojo = function() {
@@ -44,6 +64,11 @@ define(["dojo/dom", "dojo/query", "dojo/Deferred", "dojo/dom-construct", "dojo/_
 
         o.arrayEach = function(sourceArray, handlerFunc) {
             arrayUtil.forEach(sourceArray, handlerFunc);
+        };
+
+        o.arraySome = function(sourceArray, handlerFunc) {
+            var testArray = arrayUtil.some(sourceArray, handlerFunc);
+            return testArray;
         };
 
         o.arrayIndex = function(sourceArray, findItem) {
@@ -116,6 +141,10 @@ define(["dojo/dom", "dojo/query", "dojo/Deferred", "dojo/dom-construct", "dojo/_
             dojoQuery(selector).forEach(function(node) {
                 domConstruct.place(html, node, type);
             });
+        };
+
+        o.createDom = function(nodeStr, options, targetNode) {
+            return domConstruct.create(nodeStr, options, targetNode);
         };
 
         o.stringToObject = function(string) {

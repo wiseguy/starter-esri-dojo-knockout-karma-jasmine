@@ -9,11 +9,10 @@
         esriVersion = "3.11",
         loadFiles = {
             "js": [
-                "http://js.arcgis.com/" + esriVersion + "/",
-
+                "http://js.arcgis.com/" + esriVersion + "/"
             ],
             "css": [
-                "app/css/app.css",
+                "../app/css/app.css",
                 "http://js.arcgis.com/" + esriVersion + "/esri/css/esri.css",
                 "http://js.arcgis.com/" + esriVersion + "/dijit/themes/tundra/tundra.css"
             ]

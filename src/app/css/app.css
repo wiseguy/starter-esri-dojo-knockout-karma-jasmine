@@ -7,6 +7,17 @@ body,
   height: 100%;
   width: 100%;
 }
+.appAlertDialog {
+  position: absolute;
+  left: 50%;
+  margin-left: -100px;
+  width: 200px;
+  min-height: 30px;
+  background-color: #fff;
+  top: 200px;
+  font-size: 12px;
+  padding: 10px;
+}
 /*App Stylus*/
 .app-container {
   width: 100%;

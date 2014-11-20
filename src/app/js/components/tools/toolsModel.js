@@ -6,27 +6,44 @@ define(["ko", "core/config", "core/modelEventController"],
 
         vm.title = ko.observable();
 
+        /**
+         * set defaults
+         */
+        o.startup = function() {
+
+            vm.title("Aamir test");
+
+        };
+
+        /**
+         * handle events
+         */
         vm.clickButton = function(clickedItem) {
             modelEventController.handleClickGo(clickedItem);
         };
 
         vm.addMap = function() {
             modelEventController.addMap();
-        }
+        };
 
-        console.log("apply bindings for app");
-
-        o.startup = function() {
-            //set defaults
-            vm.title("Aamir test");
-
+        vm.removeMap = function() {
+            modelEventController.removeMap();
         };
 
 
+
+        /**
+         * bind to DOM
+         */
         o.bind = function(node) {
+            console.log("apply bindings for tools");
             ko.applyBindings(vm, node);
         };
 
+
+        /**
+         * API to get and set model
+         */
         o.getModel = function() {
             return vm;
         };

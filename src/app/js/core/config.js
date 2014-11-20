@@ -5,7 +5,7 @@ defines all app URL, messages, Layers, outFields
 define(function() {
 
     var o = {
-        maxMaps: 3,
+        maxMaps: 4,
         browsersCompatible: [{
             id: "ie",
             name: "Internet Explorer",

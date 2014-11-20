@@ -16,5 +16,10 @@ define(["exports", "core/config", "core/toolkitController", "components/app/appC
 
     }
 
+    o.removeMap = function(clickedItem) {
+        mapController.removeMap(); //hardcoded to test
+
+    }
+
     return o;
 });

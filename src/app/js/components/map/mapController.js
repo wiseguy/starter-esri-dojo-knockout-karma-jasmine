@@ -92,20 +92,41 @@ define(["core/config", "components/map/mapModel", "core/toolkitController", "cor
             //increment the currentMap
             var positionInView = 0;
             var allMapNodes;
+            var currentTotalMaps = o._currentTotalMaps;
+
+            //do we need to open a hidden map?
+            if ((o._currentMapPosition + 1) < o._currentTotalMaps) {
+                o.showMap();
+                return;
+            }
+
+            //did we reach the max?
+            if (o._currentTotalMaps === o._maxMaps) {
+                alert("can not open more maps");
+                return;
+            }
+
+
+
 
             o._currentTotalMaps += 1;
             positionInView = o._currentTotalMaps - 1;
+            o._currentMapPosition = positionInView;
 
-            allMapNodes = toolkit.getNodeList(".map");
-            toolkit.arrayEach(allMapNodes, function(node) {
-                toolkit.removeClass(node, "show-1");
-                toolkit.removeClass(node, "show-2");
-                toolkit.removeClass(node, "show-3");
-
-                toolkit.addClass(node, "show-" + o._currentTotalMaps);
+            /* toolkit.getNodeList(".map").removeClass(function(index, css) {
+                return (css.match(/(^|\s)show-\S+/g) || []).join(' '); //remove show-* classes
             });
+*/
+            while (currentTotalMaps > 0) {
 
-            debugger;
+                toolkit.getNodeList(".map").removeClass("show-" + currentTotalMaps);
+
+                currentTotalMaps -= 1;
+
+            }
+
+            toolkit.getNodeList(".map").addClass("show-" + o._currentTotalMaps);
+
             o.createMap(positionInView);
         };
         /**
@@ -172,7 +193,7 @@ define(["core/config", "components/map/mapModel", "core/toolkitController", "cor
             var layersAddResult = map.on("layers-add-result", function() {
 
                 layersAddResult.remove();
-
+                map.resize();
                 console.log("layers added");
 
                 //map.addLayers
@@ -222,13 +243,63 @@ define(["core/config", "components/map/mapModel", "core/toolkitController", "cor
             console.log("Add Legend");
 
             var Legend = toolkit.getLegendDijit();
-            debugger;
+
             var legend = new Legend({
                 map: map
             }, toolkit.getNodeList(".legend")[map.positionInView]);
 
 
             legend.startup();
+
+        };
+
+        o.removeMap = function(node) {
+            //is only 1 map remaining?
+
+            if (o._currentMapPosition == 0) {
+                alert("at least one map needs to exist");
+                return;
+            }
+
+            var currentTotalMaps = o._currentTotalMaps;
+
+            var mapNode = toolkit.getNodeList(".map")[o._currentMapPosition];
+
+            o._currentMapPosition -= 1;
+            //o._currentTotalMaps -= 1;
+
+
+            while (currentTotalMaps > 0) {
+
+                toolkit.getNodeList(".map").removeClass("show-" + currentTotalMaps);
+
+                currentTotalMaps -= 1;
+
+            }
+
+            toolkit.getNodeList(".map").addClass("show-" + (o._currentMapPosition + 1));
+
+            toolkit.addClass(mapNode, "dijitHidden");
+
+
+        };
+
+        o.showMap = function() {
+
+            var mapNode = toolkit.getNodeList(".map")[o._currentMapPosition + 1];
+
+            toolkit.getNodeList(".map").removeClass("show-" + (o._currentMapPosition + 1));
+
+            toolkit.getNodeList(".map").addClass("show-" + (o._currentMapPosition + 2));
+
+            toolkit.removeClass(mapNode, "dijitHidden");
+
+            o._currentMapPosition += 1;
+
+        };
+
+        o.hideMap = function() {
+
 
         };
 

@@ -1,3 +1,10 @@
 div.tools-container()
 	div.tools()
-		button(data-bind="click:clickButton" data-dojo-type="dijit/form/Button" data-dojo-props="iconClass:'dijitEditorIcon dijitEditorIconCut', showLabel: true" type="button") Go
+		span(data-bind="click:clickButton")
+			button(data-dojo-type="dijit/form/Button" data-dojo-props="iconClass:'dijitEditorIcon dijitEditorIconCut', showLabel: true" type="button") Go
+		span(data-bind="click:addMap")
+			button(data-dojo-type="dijit/form/Button" data-dojo-props="iconClass:'dijitEditorIcon dijitEditorIconCut', showLabel: true" type="button") Add Map
+		div(class="share-container")
+			div(class="addthis_sharing_toolbox")
+			//-a(href="http://www.addthis.com/bookmark.php?v=20" class="addthis_button")
+			//-	img(src="http://s7.addthis.com/static/btn/v2/lg-share-en.gif" width="125" height="16" border="0" alt="Share")

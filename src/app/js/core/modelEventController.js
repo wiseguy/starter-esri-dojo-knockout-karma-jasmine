@@ -7,9 +7,12 @@ define(["exports", "core/config", "core/toolkitController", "components/app/appC
 ], function(o, config, toolkit, appController, mapController, toolsController) {
 
     o.handleClickGo = function(clickedItem) {
-        // TODO : Get rid of require. Circular dependency?
-
         toolsController.handleClickGo(clickedItem);
+
+    };
+
+    o.addMap = function(clickedItem) {
+        mapController.addMap(); //hardcoded to test
 
     }
 

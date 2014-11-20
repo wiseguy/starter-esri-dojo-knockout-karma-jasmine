@@ -16,6 +16,7 @@ This Project should do the following:
 6. Use Jade
 7. Use Stylus
 8. Use Gulp
+9. AddThis
 
 
 ## App Workflow

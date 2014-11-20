@@ -27,19 +27,10 @@ define(["exports", "core/config", "components/tools/toolsModel", "core/toolkitCo
                 console.log("load startup");
                 // debugger;
 
-                var checkIfNodeExists = (toolkit.getNodeList(".app-container").length == 1);
-                var selectorNode = ".app-container";
-                if (!checkIfNodeExists) {
-                    selectorNode = "body"; //during tests
-                }
 
-                toolkit.injectHtml(".app-container", html, "last");
 
-                //start model with default values
-                toolsModel.startup();
 
-                //start model with default values
-                toolsModel.bind(toolkit.getNodeList(".tools-container")[0]);
+                o.createUI(html);
 
             });
 
@@ -48,10 +39,43 @@ define(["exports", "core/config", "components/tools/toolsModel", "core/toolkitCo
 
         };
 
+        o.createUI = function(html) {
+
+            var selectorNode = ".app-container";
+            var checkIfNodeExists = (toolkit.getNodeList(".app-container").length == 1);
+            if (!checkIfNodeExists) {
+                selectorNode = "body"; //during tests
+            }
+
+            toolkit.injectHtml(selectorNode, html, "last");
+
+
+
+            //start model with default values
+            toolsModel.startup();
+
+            //start model with default values
+            toolsModel.bind(toolkit.getNodeList(".tools-container")[0]);
+
+            o.addShare();
+
+        };
+
+        o.addShare = function() {
+
+            core.addShare();
+
+            // setTimeout(function() {
+            //     debugger;
+            //     window.addthis.init();
+            // }, 3000);
+
+        };
 
         o.handleClickGo = function() {
 
             //zoom the map to DC
+            alert("touch removed111");
 
             hash.updateHash({
                 x: 11,

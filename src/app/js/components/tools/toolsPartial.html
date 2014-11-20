@@ -1,6 +1,10 @@
 
 <div class="tools-container">
-  <div class="tools">
-    <button data-bind="click:clickButton" data-dojo-type="dijit/form/Button" data-dojo-props="iconClass:'dijitEditorIcon dijitEditorIconCut', showLabel: true" type="button">Go</button>
+  <div class="tools"><span data-bind="click:clickButton">
+      <button data-dojo-type="dijit/form/Button" data-dojo-props="iconClass:'dijitEditorIcon dijitEditorIconCut', showLabel: true" type="button">Go</button></span><span data-bind="click:addMap">
+      <button data-dojo-type="dijit/form/Button" data-dojo-props="iconClass:'dijitEditorIcon dijitEditorIconCut', showLabel: true" type="button">Add Map</button></span>
+    <div class="share-container">
+      <div class="addthis_sharing_toolbox"></div>
+    </div>
   </div>
 </div>

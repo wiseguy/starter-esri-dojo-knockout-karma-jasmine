@@ -5,9 +5,14 @@ define(["ko", "core/config", "core/modelEventController"],
         var vm = {};
 
         vm.title = ko.observable();
+
         vm.clickButton = function(clickedItem) {
             modelEventController.handleClickGo(clickedItem);
         };
+
+        vm.addMap = function() {
+            modelEventController.addMap();
+        }
 
         console.log("apply bindings for app");
 

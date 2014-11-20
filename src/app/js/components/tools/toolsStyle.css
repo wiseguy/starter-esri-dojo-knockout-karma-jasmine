@@ -4,3 +4,8 @@
   top: 10px;
   z-index: 100;
 }
+.share-container {
+  width: 200px;
+  height: 30px;
+  background-color: #f00;
+}

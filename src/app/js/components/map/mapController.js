@@ -19,7 +19,9 @@ define(["core/config", "components/map/mapModel", "core/toolkitController", "cor
         /*
          * Private variables
          */
-
+        o._currentMapPosition = 0; //0 index
+        o._currentTotalMaps = 0; //start with 1
+        o._maxMaps = config.maxMaps; //starts with 1
         o._map;
         o._basemaps;
         o._legend;
@@ -30,10 +32,15 @@ define(["core/config", "components/map/mapModel", "core/toolkitController", "cor
 
             //looad the partial
             var loadMapDeferred = toolkit.loadPartial("components/map/mapPartial.html");
+            var loadMapInstanceDeferred = toolkit.loadPartial("components/map/mapInstancePartial.html");
 
-            loadMapDeferred.then(function(html) {
+            var allDeferred = toolkit.allPromises([loadMapDeferred, loadMapInstanceDeferred])
 
-                o.createUI(html);
+
+            allDeferred.then(function(results) {
+                var html = results[0];
+                var mapInstanceHtml = results[1];
+                o.createUI(html, mapInstanceHtml);
 
             });
 
@@ -42,7 +49,13 @@ define(["core/config", "components/map/mapModel", "core/toolkitController", "cor
 
         };
 
-        o.createUI = function(html) {
+        /**
+         * How many instances of the map instace html will be added?
+         */
+
+        o.createUI = function(html, mapInstanceHtml) {
+
+            var maxMaps = o._maxMaps;
 
 
             console.log("create Map UI");
@@ -55,6 +68,13 @@ define(["core/config", "components/map/mapModel", "core/toolkitController", "cor
             }
             toolkit.injectHtml(selectorNode, html, "last");
 
+            var mapsContainerNode = ".map-container";
+
+            while (maxMaps > 0) {
+
+                toolkit.injectHtml(mapsContainerNode, mapInstanceHtml, "last");
+                maxMaps = maxMaps - 1;
+            }
 
             //start model with default values
             mapModel.startup();
@@ -62,27 +82,54 @@ define(["core/config", "components/map/mapModel", "core/toolkitController", "cor
             //start model with default values
             mapModel.bind(toolkit.getNodeList(".map-container")[0]);
 
-            o.createMap();
+            o.addMap();
         };
+        /**
+         *change current selected map,
+         */
+        o.addMap = function() {
+            //Remove the show-1, show-2 classes
+            //increment the currentMap
+            var positionInView = 0;
+            var allMapNodes;
 
-        o.createMap = function() {
+            o._currentTotalMaps += 1;
+            positionInView = o._currentTotalMaps - 1;
+
+            allMapNodes = toolkit.getNodeList(".map");
+            toolkit.arrayEach(allMapNodes, function(node) {
+                toolkit.removeClass(node, "show-1");
+                toolkit.removeClass(node, "show-2");
+                toolkit.removeClass(node, "show-3");
+
+                toolkit.addClass(node, "show-" + o._currentTotalMaps);
+            });
+
+            debugger;
+            o.createMap(positionInView);
+        };
+        /**
+         *createMap needs the map id,
+         */
+        o.createMap = function(positionInView) {
 
             var MapClass = toolkit.getMapClass();
             var appCurrentState = config.appStateCurrent;
-
-            var map = new MapClass("map", {
+            var mapNode = toolkit.getNodeList(".map")[positionInView];
+            toolkit.removeClass(mapNode, "dijitHidden");
+            var map = new MapClass(mapNode, {
                 basemap: appCurrentState.b,
                 center: [appCurrentState.x, appCurrentState.y],
                 zoom: appCurrentState.l
             });
+
+            map.positionInView = positionInView;
 
             o._map = map;
 
             map.on("load", function() {
                 o.addLayers(map);
             });
-
-
 
             return map;
 
@@ -161,7 +208,7 @@ define(["core/config", "components/map/mapModel", "core/toolkitController", "cor
             var basemapGallery = new BasemapGallery({
                 showArcGISBasemaps: true,
                 map: map
-            }, toolkit.getNodeList('.basemap-gallery')[0]);
+            }, toolkit.getNodeList('.basemap-gallery')[map.positionInView]);
 
             basemapGallery.startup();
 
@@ -175,10 +222,11 @@ define(["core/config", "components/map/mapModel", "core/toolkitController", "cor
             console.log("Add Legend");
 
             var Legend = toolkit.getLegendDijit();
-
+            debugger;
             var legend = new Legend({
                 map: map
-            }, toolkit.getNodeList(".legend")[0]);
+            }, toolkit.getNodeList(".legend")[map.positionInView]);
+
 
             legend.startup();
 

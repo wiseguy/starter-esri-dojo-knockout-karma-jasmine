@@ -22,7 +22,7 @@ define(["core/config", "core/toolkitController", "core/hashController"], functio
         this.initProxy();
         this.initPreCallback();
         this.initCors();
-
+        this.addShare();
 
         this.startModule("app");
 
@@ -104,6 +104,45 @@ define(["core/config", "core/toolkitController", "core/hashController"], functio
         return validBrowsers;
 
 
+    };
+
+    o.addShare = function() {
+
+        window.addthis_config = {
+            pubid: config.addThisProfileId,
+            templates: {
+                twitter: 'check out http://www.blueraster.com',
+            },
+            url_transforms: {
+                shorten: {
+                    twitter: 'bitly',
+                    facebook: 'bitly'
+                }
+            },
+            shorteners: {
+                bitly: {}
+            }
+        }
+
+        //add share script
+        o.loadScript(config.shareUrl);
+
+        // setTimeout(function() {
+        //     console.log("fdfds");
+        //     window.addthis.init();
+        // }, 3000);
+
+    };
+
+    o.loadScript = function(src, attrs) {
+        var s = document.createElement('script');
+        s.setAttribute('src', src);
+        for (var key in attrs) {
+            if (attrs.hasOwnProperty(key)) {
+                s.setAttribute(key, attrs[key]);
+            }
+        }
+        document.getElementsByTagName('head')[0].appendChild(s);
     };
 
     o.initProxy = function() {

@@ -19,6 +19,9 @@ define(["core/config", "components/map/mapModel", "core/toolkitController", "cor
         /*
          * Private variables
          */
+        o._initialized = false;
+        o._isView = true;
+
         o._currentMapPosition = 0; //0 index
         o._currentTotalMaps = 0; //start with 1
         o._maxMaps = config.maxMaps; //starts with 1
@@ -26,9 +29,29 @@ define(["core/config", "components/map/mapModel", "core/toolkitController", "cor
         o._basemaps;
         o._legend;
 
+
+        /*
+         * Common methods for controllers
+         */
+
+        o.isInitialized = function() {
+            return o._initialized;
+        }
+
+        o.isView = function() {
+            return o._isView;
+        }
+
         o.startup = function() {
 
             var _this = this;
+
+            if (o._initialized) {
+                return
+            } else {
+                o._initialized = true;
+            }
+
 
             //looad the partial
             var loadMapDeferred = toolkit.loadPartial("components/map/mapPartial.html");
@@ -49,9 +72,7 @@ define(["core/config", "components/map/mapModel", "core/toolkitController", "cor
 
         };
 
-        /**
-         * How many instances of the map instace html will be added?
-         */
+
 
         o.createUI = function(html, mapInstanceHtml) {
 
@@ -77,13 +98,18 @@ define(["core/config", "components/map/mapModel", "core/toolkitController", "cor
             }
 
             //start model with default values
-            mapModel.startup();
+            mapModel.initialize();
 
             //start model with default values
             mapModel.bind(toolkit.getNodeList(".map-container")[0]);
 
             o.addMap();
         };
+
+        /*
+         * Custom methods for controllers
+         */
+
         /**
          *change current selected map,
          */
@@ -222,14 +248,12 @@ define(["core/config", "components/map/mapModel", "core/toolkitController", "cor
 
             console.log('Add basemap');
 
-
-
             var BasemapGallery = toolkit.getBasemapDijit();
-
+            //debugger;
             var basemapGallery = new BasemapGallery({
                 showArcGISBasemaps: true,
                 map: map
-            }, toolkit.getNodeList('.basemap-gallery')[map.positionInView]);
+            }, toolkit.getNodeList('.basemap-gallery')[0]); //this is always 0
 
             basemapGallery.startup();
 
@@ -327,6 +351,7 @@ define(["core/config", "components/map/mapModel", "core/toolkitController", "cor
         o.centerAndZoom = function(centerLL, level) {
             o._map.centerAndZoom(centerLL, level);
         };
+
 
 
         return o;

@@ -1,30 +1,39 @@
-define(["ko", "core/config"],
-    function(ko, config) {
+define(["ko", "core/config", "core/modelEventController"],
+    function(ko, config, modelEventController) {
 
         var o = {};
         var vm = {};
 
         vm.title = ko.observable();
 
-
-
         /**
          * set defaults
          */
         o.initialize = function() {
-            //set defaults
-            vm.title("Aamir test");
+
+            vm.title("Dashboard");
 
         };
+
+        /**
+         * handle events
+         */
+        /* vm.selectView = function(view) {
+
+            modelEventController.selectView(config.viewLinks);
+
+        }*/
+
 
 
         /**
          * bind to DOM
          */
         o.bind = function(node) {
-            console.log("apply bindings for map");
+            console.log("apply bindings for tools");
             ko.applyBindings(vm, node);
         };
+
 
         /**
          * API to get and set model

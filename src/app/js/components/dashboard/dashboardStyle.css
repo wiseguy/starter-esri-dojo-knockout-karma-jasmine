@@ -1,0 +1,8 @@
+.dashboard-container {
+  background-color: #ff0 !important;
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  top: 60px;
+}

@@ -8,7 +8,7 @@ define(["ko", "core/config"],
 
         console.log("apply bindings for app");
 
-        o.startup = function() {
+        o.initialize = function() {
             //set defaults
             vm.title("Aamir test");
 

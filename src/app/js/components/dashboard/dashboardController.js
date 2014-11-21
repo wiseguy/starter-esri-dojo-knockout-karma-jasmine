@@ -9,15 +9,15 @@
  syncViewModels 
  */
 
-define(["exports", "core/config", "components/tools/toolsModel", "core/toolkitController", "core/coreController", "core/hashController"],
+define(["exports", "core/config", "components/dashboard/dashboardModel", "core/toolkitController", "core/coreController", "core/hashController"],
 
-    function(o, config, toolsModel, toolkit, core, hash) {
+    function(o, config, dashboardModel, toolkit, core, hash) {
 
         /*
          * Private variables
          */
         o._initialized = false;
-        o._isView = false;
+        o._isView = true;
 
         /*
          * Common methods for controllers
@@ -35,10 +35,16 @@ define(["exports", "core/config", "components/tools/toolsModel", "core/toolkitCo
 
             var _this = this;
 
-            //looad the partial
-            var loadToolsDeferred = toolkit.loadPartial("components/tools/toolsPartial.html");
+            if (o._initialized) {
+                return
+            } else {
+                o._initialized = true;
+            }
 
-            loadToolsDeferred.then(function(html) {
+            //looad the partial
+            var loadDashboardDeferred = toolkit.loadPartial("components/dashboard/dashboardPartial.html");
+
+            loadDashboardDeferred.then(function(html) {
 
                 console.log("load startup");
                 // debugger;
@@ -51,14 +57,11 @@ define(["exports", "core/config", "components/tools/toolsModel", "core/toolkitCo
             });
 
 
-            return loadToolsDeferred;
+            return loadDashboardDeferred;
 
         };
 
 
-        /*
-         * Custom methods for controllers
-         */
 
         o.createUI = function(html) {
 
@@ -73,36 +76,18 @@ define(["exports", "core/config", "components/tools/toolsModel", "core/toolkitCo
 
 
             //start model with default values
-            toolsModel.initialize();
+            dashboardModel.initialize();
 
             //start model with default values
-            toolsModel.bind(toolkit.getNodeList(".tools-container")[0]);
+            dashboardModel.bind(toolkit.getNodeList(".dashboard-container")[0]);
 
-            o.addShare();
 
         };
+
 
         /*
          * Custom methods for controllers
          */
-
-        o.addShare = function() {
-
-            core.addShare();
-
-        };
-
-        o.handleClickGo = function() {
-
-            //zoom the map to DC
-            hash.updateHash({
-                x: 11,
-                y: 22
-            });
-
-        };
-
-
 
         return o;
 

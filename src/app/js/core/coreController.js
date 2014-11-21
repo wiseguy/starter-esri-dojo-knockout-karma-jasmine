@@ -1,6 +1,6 @@
-define(["core/config", "core/toolkitController", "core/hashController"], function(config, toolkit, hashController) {
+define(["exports", "core/config", "core/toolkitController", "core/hashController"], function(o, config, toolkit, hashController) {
 
-    var o = {};
+    //var o = {};
 
 
     o.startup = function() {
@@ -22,7 +22,7 @@ define(["core/config", "core/toolkitController", "core/hashController"], functio
         this.initProxy();
         this.initPreCallback();
         this.initCors();
-        this.addShare();
+        //this.addShare();
 
         this.startModule("app");
 
@@ -108,29 +108,10 @@ define(["core/config", "core/toolkitController", "core/hashController"], functio
 
     o.addShare = function() {
 
-        window.addthis_config = {
-            pubid: config.addThisProfileId,
-            templates: {
-                twitter: 'check out http://www.blueraster.com',
-            },
-            url_transforms: {
-                shorten: {
-                    twitter: 'bitly',
-                    facebook: 'bitly'
-                }
-            },
-            shorteners: {
-                bitly: {}
-            }
-        }
+        window.addthis_config = config.addthis_config;
 
         //add share script
-        o.loadScript(config.shareUrl);
-
-        // setTimeout(function() {
-        //     console.log("fdfds");
-        //     window.addthis.init();
-        // }, 3000);
+        o.loadScript(config.addthis_url);
 
     };
 
@@ -159,9 +140,35 @@ define(["core/config", "core/toolkitController", "core/hashController"], functio
 
     o.startModule = function(moduleId) {
 
+
+
         require(["components/" + moduleId + "/" + moduleId + "Controller"], function(module) {
 
+            console.log("STARTED MODULE " + module);
+
+            var isView = module.isView();
+
             module.startup();
+
+            if (isView) {
+                //switch to the module if its a view
+
+
+
+                toolkit.arrayEach(config.viewLinks, function(viewLink) {
+                    if (viewLink.id === moduleId) {
+                        //debugger;
+                        toolkit.getNodeList("." + viewLink.id + "-container").removeClass("dijitHidden");
+                    } else {
+                        //debugger;
+                        toolkit.getNodeList("." + viewLink.id + "-container").addClass("dijitHidden");
+                    }
+                });
+
+
+
+            }
+
         });
 
     };
@@ -171,6 +178,16 @@ define(["core/config", "core/toolkitController", "core/hashController"], functio
         require(["components/" + moduleId + "/" + moduleId + "Controller"], function(module) {
             module.stop();
         });
+
+    };
+
+    o.blockModule = function(node) {
+        //inject the blocking div in the node
+
+    };
+
+    o.resumeModule = function(node) {
+        //set the blocking div to display none
 
     };
 

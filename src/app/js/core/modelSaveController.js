@@ -3,13 +3,13 @@
  * to keep it in sync
  */
 define(["core/config", "core/toolkitController", "components/app/appModel", "components/map/mapModel",
-    "components/tools/toolsModel"
-], function(config, toolkit, appModel, mapModel, toolsModel) {
+    "components/tools/toolsModel", "components/header/headerModel"
+], function(config, toolkit, appModel, mapModel, toolsModel, headerModel) {
 
     var o = {};
 
-    o.statesList = function() {
-
+    o.updateView = function(viewsList) {
+        headerModel.set("viewLinks", viewsList);
     }
 
     return o;

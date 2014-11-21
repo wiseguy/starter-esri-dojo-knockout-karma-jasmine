@@ -9,7 +9,7 @@ define(["ko", "core/config", "core/modelEventController"],
         /**
          * set defaults
          */
-        o.startup = function() {
+        o.initialize = function() {
 
             vm.title("Aamir test");
 
@@ -44,11 +44,11 @@ define(["ko", "core/config", "core/modelEventController"],
         /**
          * API to get and set model
          */
-        o.getModel = function() {
-            return vm;
+        o.get = function(name) {
+            return vm[name]();
         };
 
-        o.setModel = function(name, value) {
+        o.set = function(name, value) {
             vm[name](value);
         };
 

@@ -39,3 +39,9 @@ npm install
 npm install -g gulp
 npm install -g coffee-script
 npm install -g karma-cli
+
+------------
+
+Block UI
+back/forward button
+Parse Dojo layout if dashboard selected first

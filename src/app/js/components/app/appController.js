@@ -14,9 +14,26 @@ define(["core/config", "components/app/appModel", "core/toolkitController", "cor
     function(config, appModel, toolkit, core) {
 
         var o = {};
+        /*
+         * Private variables
+         */
+        o._initialized = false;
+        o._isView = false;
+
+        /*
+         * Common methods for controllers
+         */
+
+        o.isInitialized = function() {
+            return o._initialized;
+        }
+
+        o.isView = function() {
+            return o._isView;
+        }
 
         o.startup = function() {
-            var currentView;
+
             var _this = this;
 
             //looad the partial
@@ -42,12 +59,14 @@ define(["core/config", "components/app/appModel", "core/toolkitController", "cor
 
         o.createUI = function(html) {
 
+            var activeViewId;
+
             console.log("create App UI");
 
             toolkit.injectHtml("body", html, "only");
 
             //start model with default values
-            appModel.startup();
+            appModel.initialize();
 
             //start model with default values
             appModel.bind(toolkit.getNodeList(".app-container")[0]);
@@ -56,19 +75,20 @@ define(["core/config", "components/app/appModel", "core/toolkitController", "cor
             //core.startModule("header");
             //core.startModule("footer");                
 
-
+            core.startModule("header");
             core.startModule("tools");
 
             //start the view that is in current app state
 
-            currentView = config.appStateCurrent.v;
+            activeViewId = config.appStateCurrent.v;
 
-            core.startModule(currentView);
-
-
-
+            core.startModule(activeViewId);
 
         }
+
+        /*
+         * Custom methods for controllers
+         */
 
         return o;
 

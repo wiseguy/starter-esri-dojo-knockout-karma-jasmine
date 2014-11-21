@@ -6,6 +6,17 @@ define(function() {
 
     var o = {
         maxMaps: 4,
+
+        viewLinks: [{
+            "id": "dashboard",
+            "label": "Dashboard",
+            "selected": false
+        }, {
+            "id": "map",
+            "label": "Map",
+            "selected": false
+        }],
+
         browsersCompatible: [{
             id: "ie",
             name: "Internet Explorer",
@@ -55,9 +66,24 @@ define(function() {
 
         },
 
-        addThisProfileId: "546cfa2d5c9aaea9",
-        //shareUrl: "http://s7.addthis.com/js/250/addthis_widget.js",
-        shareUrl: "http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-546cfa2d5c9aaea9&async=1",
+        addthis_config: {
+
+            pubid: "ra-546cfa2d5c9aaea9",
+            templates: {
+                twitter: 'check out http://www.blueraster.com',
+            },
+            url_transforms: {
+                shorten: {
+                    twitter: 'bitly',
+                    facebook: 'bitly'
+                }
+            },
+            shorteners: {
+                bitly: {}
+            }
+        },
+
+        addthis_url: "http://s7.addthis.com/js/300/addthis_widget.js#domready=1",
 
         services: {
             mapServerPrefix: "https://gisdev.sanacloud.com/arcgis/rest/services/",

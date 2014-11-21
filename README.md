@@ -1,3 +1,23 @@
+## Purpose 
+A starter app that follows conventions
+
+## Features
+
+## Dependency
+AddThis, Esri, Dojo
+Karma, Jasmine
+
+## Structure and Explanation
+
+
+## How to add new modules
+
+## Setting up the app
+
+## Setting up tests
+
+
+
 ## This template is a startup for an application that needs a map and some tools
 # It is extensible
 

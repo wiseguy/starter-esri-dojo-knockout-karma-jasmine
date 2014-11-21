@@ -78,6 +78,8 @@ define(["exports", "core/config", "components/tools/toolsModel", "core/toolkitCo
             //start model with default values
             toolsModel.bind(toolkit.getNodeList(".tools-container")[0]);
 
+            toolkit.parseDojo(toolkit.getNodeList(".tools-container")[0]);
+
             o.addShare();
 
         };

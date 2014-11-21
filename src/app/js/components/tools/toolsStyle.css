@@ -2,7 +2,7 @@
   position: absolute;
   right: 250px;
   top: 5px;
-  z-index: 100;
+  z-index: 200 !important;
 }
 .share-container {
   width: 300px;

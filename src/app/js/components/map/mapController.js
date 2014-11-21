@@ -103,6 +103,8 @@ define(["core/config", "components/map/mapModel", "core/toolkitController", "cor
             //start model with default values
             mapModel.bind(toolkit.getNodeList(".map-container")[0]);
 
+            toolkit.parseDojo(toolkit.getNodeList(".map-container")[0]);
+
             o.addMap();
         };
 

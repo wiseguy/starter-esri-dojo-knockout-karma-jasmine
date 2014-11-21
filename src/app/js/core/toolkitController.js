@@ -42,11 +42,16 @@ define(["dojo/promise/all", "dojo/dom", "dojo/dom-attr", "dojo/dom-class", "dojo
             return domAttr.set(node, attribute, value);
         };
 
-        o.parseDojo = function() {
-            require(["dojox/mobile/parser", "dijit/TitlePane", "dijit/layout/ContentPane", "dijit/form/Button"], function(parser) {
-                //using mobile parser because regular one doesnt work with html tags manifest attribute
-                parser.parse();
-            })
+        o.parseDojo = function(node) {
+            require(["dojox/mobile/parser", "dojox/mobile", "dojox/mobile/compat", "dijit/TitlePane", "dijit/layout/ContentPane", "dijit/form/Button"],
+                function(parser) {
+                    //using mobile parser because regular one doesnt work with html tags manifest attribute
+                    if (node) {
+                        parser.parse();
+                    } else {
+                        parser.parse(node);
+                    }
+                })
         };
 
         o.getNodeById = function(id) {

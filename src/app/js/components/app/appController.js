@@ -36,6 +36,12 @@ define(["core/config", "components/app/appModel", "core/toolkitController", "cor
 
             var _this = this;
 
+            if (o._initialized) {
+                return
+            } else {
+                o._initialized = true;
+            }
+
             //looad the partial
             var loadAppDeferred = toolkit.loadPartial("components/app/appPartial.html");
 
@@ -45,9 +51,11 @@ define(["core/config", "components/app/appModel", "core/toolkitController", "cor
 
                 o.createUI(html);
 
-                toolkit.registerFunctionWhenDomReady(function() {
-                    toolkit.parseDojo();
-                });
+                // toolkit.registerFunctionWhenDomReady(function() {
+                //     toolkit.parseDojo();
+                // });
+
+
 
                 //now decide which part of the app to load based on url
             });

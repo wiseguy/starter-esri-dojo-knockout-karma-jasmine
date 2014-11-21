@@ -53,13 +53,17 @@ define(["core/config",
         };
 
         o.parseDojo = function(node) {
-            require(["dojox/mobile/parser", "dojox/mobile", "dojox/mobile/compat", "dijit/TitlePane", "dijit/layout/ContentPane", "dijit/form/Button"],
+
+            var nodeToParse = node;
+            require(["dojox/mobile/parser", "dojox/mobile", "dojox/mobile/compat",
+                    "dijit/TitlePane", "dijit/layout/ContentPane", "dijit/form/Button"
+                ],
                 function(parser) {
                     //using mobile parser because regular one doesnt work with html tags manifest attribute
-                    if (node) {
+                    if (!nodeToParse) {
                         parser.parse();
                     } else {
-                        parser.parse(node);
+                        parser.parse(nodeToParse);
                     }
                 })
         };

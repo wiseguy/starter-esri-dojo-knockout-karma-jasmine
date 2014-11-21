@@ -9,13 +9,12 @@
  syncViewModels 
  */
 
-define(["core/config", "components/map/mapModel", "core/toolkitController", "core/coreController",
+define(["exports", "core/config", "components/map/mapModel", "core/toolkitController", "core/coreController",
         "core/hashController", "core/onEventController"
     ],
 
-    function(config, mapModel, toolkit, core, hash, onEventController) {
+    function(o, config, mapModel, toolkit, core, hash, onEventController) {
 
-        var o = {};
         /*
          * Private variables
          */
@@ -104,7 +103,6 @@ define(["core/config", "components/map/mapModel", "core/toolkitController", "cor
             mapModel.bind(toolkit.getNodeList(".map-container")[0]);
 
             console.log("parsing map");
-
             toolkit.parseDojo(toolkit.getNodeList(".map-container")[0]);
 
             o.addMap();

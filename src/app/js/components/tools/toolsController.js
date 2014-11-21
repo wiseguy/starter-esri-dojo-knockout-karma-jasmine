@@ -79,7 +79,6 @@ define(["exports", "core/config", "components/tools/toolsModel", "core/toolkitCo
             toolsModel.bind(toolkit.getNodeList(".tools-container")[0]);
 
             console.log("parsing tools");
-
             toolkit.parseDojo(toolkit.getNodeList(".tools-container")[0]);
 
             o.addShare();

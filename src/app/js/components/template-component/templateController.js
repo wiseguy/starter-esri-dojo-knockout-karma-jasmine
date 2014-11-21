@@ -9,8 +9,8 @@
  syncViewModels 
  */
 
-define(["exports", "core/config", "components/header/headerModel", "core/toolkitController", "core/coreController", "core/hashController",
-        "core/modelSaveController"
+define(["exports", "core/config", "components/header/headerModel", "core/toolkitController",
+        "core/coreController", "core/hashController", "core/modelSaveController"
     ],
 
     function(o, config, headerModel, toolkit, core, hash, modelSaveController) {

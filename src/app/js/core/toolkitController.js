@@ -1,16 +1,26 @@
 /**
 All dojo utilities implementation defined here. 
 Can be swapped out for Jquery etc.
-All esri/ and dojo/ stuff should be implemented here
+All esri / and dojo / stuff should be implemented here
 */
 
-define(["dojo/promise/all", "dojo/dom", "dojo/dom-attr", "dojo/dom-class", "dojo/html", "dojo/query", "dojo/Deferred", "dojo/dom-construct", "dojo/_base/lang", "dojo/io-query", "core/config", "dojo/hash",
-        "esri/request", "dojo/ready", "dojo/_base/array", "esri/layers/ArcGISDynamicMapServiceLayer",
-        "esri/layers/FeatureLayer", "esri/layers/GraphicsLayer", "esri/map", "esri/dijit/BasemapGallery", "esri/dijit/Legend",
-        "dojo/hash", "dojo/topic", "esri/geometry/webMercatorUtils", "dojo/sniff"
+define(["core/config",
+        /*Dojo*/
+        "dojo/promise/all", "dojo/dom", "dojo/dom-attr", "dojo/dom-class", "dojo/html", "dojo/query",
+        "dojo/Deferred", "dojo/dom-construct", "dojo/_base/lang", "dojo/io-query", "dojo/hash",
+        "dojo/ready", "dojo/_base/array", "dojo/sniff", "dojo/hash", "dojo/topic",
+        /*Esri*/
+        "esri/request", "esri/layers/ArcGISDynamicMapServiceLayer", "esri/layers/FeatureLayer", "esri/layers/GraphicsLayer",
+        "esri/map", "esri/dijit/BasemapGallery", "esri/dijit/Legend", "esri/geometry/webMercatorUtils"
     ],
-    function(all, dom, domAttr, domClass, html, dojoQuery, Deferred, domConstruct, lang, ioQuery, config, hash, esriRequest, ready, arrayUtil, ArcGISDynamicMapServiceLayer,
-        FeatureLayer, GraphicsLayer, Map, BasemapGallery, Legend, hash, topic, webMercatorUtils, sniff) {
+    function(config,
+        /*Dojo*/
+        all, dom, domAttr, domClass, html, dojoQuery,
+        Deferred, domConstruct, lang, ioQuery, hash,
+        ready, arrayUtil, sniff, hash, topic,
+        /*Esri*/
+        esriRequest, ArcGISDynamicMapServiceLayer, FeatureLayer, GraphicsLayer,
+        Map, BasemapGallery, Legend, webMercatorUtils) {
 
         var o = {};
 

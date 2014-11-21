@@ -10,10 +10,10 @@
  */
 
 define(["core/config", "components/map/mapModel", "core/toolkitController", "core/coreController",
-        "core/hashController"
+        "core/hashController", "core/onEventController"
     ],
 
-    function(config, mapModel, toolkit, core, hash) {
+    function(config, mapModel, toolkit, core, hash, onEventController) {
 
         var o = {};
         /*
@@ -234,14 +234,7 @@ define(["core/config", "components/map/mapModel", "core/toolkitController", "cor
                 o.addBasemap(map);
 
                 map.on("extent-change", function() {
-                    var center = map.extent.getCenter();
-                    var centerLL = toolkit.convertWM(center, 'wm'); //'ll'
-                    var level = map.getLevel();
-                    hash.updateHashWithoutChangeDetect({
-                        x: centerLL.x,
-                        y: centerLL.y,
-                        l: level
-                    });
+                    onEventController.extentChange(map);
                 });
 
                 core.resumeModule();

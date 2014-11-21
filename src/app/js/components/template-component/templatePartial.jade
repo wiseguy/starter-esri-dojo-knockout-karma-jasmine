@@ -1,0 +1,4 @@
+div.header-container()
+	div.menu-container(data-bind="foreach:viewLinks")
+		span.menu-item(data-bind="html:label,click:$root.selectView,css:{selected:selected}" class="clickable")
+

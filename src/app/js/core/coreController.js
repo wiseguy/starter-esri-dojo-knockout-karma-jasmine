@@ -39,7 +39,6 @@ define(["exports", "core/config", "core/toolkitController", "core/hashController
             "class": "dijitHidden appAlertDialog"
         }, toolkit.getNodeList("body")[0]);
 
-
     };
 
     o.showMessageDialog = function(message) {
@@ -193,6 +192,7 @@ define(["exports", "core/config", "core/toolkitController", "core/hashController
         }
 
         toolkit.placeDom(o._blockingNode, targetNode, "last");
+
         toolkit.removeClass(o._blockingNode, "dijitHidden");
 
     };

@@ -142,18 +142,22 @@ define(["dojo/promise/all", "dojo/dom", "dojo/dom-attr", "dojo/dom-class", "dojo
         /**
          * @selector - css selector
          * @html - html string
-         * @type - only, first, last, replace
+         * @pos - only, first, last, replace
          */
-        o.injectHtml = function(selector, html, type) {
+        o.injectHtml = function(selector, html, pos) {
             console.log("insert HTML for " + selector);
 
             dojoQuery(selector).forEach(function(node) {
-                domConstruct.place(html, node, type);
+                domConstruct.place(html, node, pos);
             });
         };
 
         o.createDom = function(nodeStr, options, targetNode) {
             return domConstruct.create(nodeStr, options, targetNode);
+        };
+
+        o.placeDom = function(nodeOrHtml, refNode, type) {
+            return domConstruct.place(nodeOrHtml, refNode, type);
         };
 
         o.stringToObject = function(string) {

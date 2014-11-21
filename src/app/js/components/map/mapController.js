@@ -103,6 +103,8 @@ define(["core/config", "components/map/mapModel", "core/toolkitController", "cor
             //start model with default values
             mapModel.bind(toolkit.getNodeList(".map-container")[0]);
 
+            console.log("parsing map");
+
             toolkit.parseDojo(toolkit.getNodeList(".map-container")[0]);
 
             o.addMap();
@@ -122,6 +124,8 @@ define(["core/config", "components/map/mapModel", "core/toolkitController", "cor
             var allMapNodes;
             var currentTotalMaps = o._currentTotalMaps;
 
+
+
             //do we need to open a hidden map?
             if ((o._currentMapPosition + 1) < o._currentTotalMaps) {
                 o.showMap();
@@ -130,12 +134,14 @@ define(["core/config", "components/map/mapModel", "core/toolkitController", "cor
 
             //did we reach the max?
             if (o._currentTotalMaps === o._maxMaps) {
+                core.resumeModule();
                 alert("can not open more maps");
                 return;
             }
 
 
-
+            //block map interaction
+            core.blockModule(toolkit.getNodeList(".map-container")[0]);
 
             o._currentTotalMaps += 1;
             positionInView = o._currentTotalMaps - 1;
@@ -237,6 +243,8 @@ define(["core/config", "components/map/mapModel", "core/toolkitController", "cor
                         l: level
                     });
                 });
+
+                core.resumeModule();
 
             });
 

@@ -81,6 +81,8 @@ define(["exports", "core/config", "components/dashboard/dashboardModel", "core/t
             //start model with default values
             dashboardModel.bind(toolkit.getNodeList(".dashboard-container")[0]);
 
+            console.log("dashboard header");
+
             toolkit.parseDojo(toolkit.getNodeList(".dashboard-container")[0]);
 
 

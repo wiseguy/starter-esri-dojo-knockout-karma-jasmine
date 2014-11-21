@@ -77,6 +77,7 @@ define(["exports", "core/config", "components/header/headerModel", "core/toolkit
             //start model with default values
             headerModel.bind(toolkit.getNodeList(".header-container")[0]);
 
+            console.log("parsing header");
             toolkit.parseDojo(toolkit.getNodeList(".header-container")[0]);
 
 

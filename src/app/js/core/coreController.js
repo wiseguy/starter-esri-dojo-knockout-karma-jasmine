@@ -2,6 +2,7 @@ define(["exports", "core/config", "core/toolkitController", "core/hashController
 
     //var o = {};
 
+    o._blockingNode;
 
     o.startup = function() {
 
@@ -181,14 +182,24 @@ define(["exports", "core/config", "core/toolkitController", "core/hashController
 
     };
 
-    o.blockModule = function(node) {
+    o.blockModule = function(targetNode) {
         //inject the blocking div in the node
+
+        //create the blocker if necessary
+        if (!o._blockingNode) {
+            o._blockingNode = toolkit.createDom("div", {
+                "class": "blocker dijitHidden"
+            });
+        }
+
+        toolkit.placeDom(o._blockingNode, targetNode, "last");
+        toolkit.removeClass(o._blockingNode, "dijitHidden");
 
     };
 
-    o.resumeModule = function(node) {
-        //set the blocking div to display none
-
+    o.resumeModule = function() {
+        //hide blocker
+        toolkit.addClass(o._blockingNode, "dijitHidden");
     };
 
 

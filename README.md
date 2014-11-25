@@ -1,67 +1,64 @@
 ## Purpose 
-A starter app that follows conventions
+This is a starter app that follows conventions documented in the docs folder. 
 
-## Features
+## Libraries / Dependencies
+1. Esri JavaScript API
+2. Dojo
+3. KnockoutJS
+4. Jasmine
+5. Karma
+6. NodeJS
 
-## Dependency
-AddThis, Esri, Dojo
-Karma, Jasmine
+## How to Use
+1. Install NodeJS
+2. Run the following commands from the root folder
+	npm install
+	npm install -g gulp
+	npm install -g coffee-script
+	npm install -g karma-cli
+3. Open src/app/main.js and set the baseUrl to http URL to the src folder
+4. Run the command 'gulp build' to have your code optimized in the build folder
 
-## Structure and Explanation
+## What do you get?
+1. Share, using AddThis
+2. Browser Check
+3. Google Analytics
+4. Multiple Views
+5. Multiple Maps
+6. A notification API
+	core.showMessageDialog(messageHTML);
+	core.hideMessageDialog(messageHTML);
+7. A blocking API
+	core.blockModule(node or ID);
+	core.resumeModule(node or ID);
+8. A URL update API
 
+## What goes where? Folder Structure
+1. src/app/js/components - UI components. May be part of the View linked to the menu
+2. src/app/js/core
+	config.js
+	coreController.js - All esri/xxxx and dojo/xxxx modules should be required here
 
 ## How to add new modules
-
-## Setting up the app
-
-## Setting up tests
-
-
-
-## This template is a startup for an application that needs a map and some tools
-# It is extensible
-
-## Instructions to start developing
-
-1. 
+1. Make a copy of the template folder
 2. 
 
-This Project should do the following:
+## Rules to keep the Application scalable
+1. All updates to Models happen in ModelSaveController.js
+2. All events binded to models gets channelled through ModelEventCOntroller.js
+3. All dojo/on events get channelled through onEventController.js
+4. Do NOT write topic.publish / topic.subscribe
+5. Use 'exports' to avoid circular dependency. Example hashController.js
+6. Keep your styl file in the module folder but include it in app.styl
+7. The folder name of module and prefix should match. 
 
-1. Follow Conventions made at the company
-2. Keep Tests in mind, write tests first using Jasmine, and Run using Karma
-3. Be built in the MVVM Library KnockoutJS
-4. Set Standards for Folder structures
-5. Support the App state in URL
-6. Use Jade
-7. Use Stylus
-8. Use Gulp
-9. AddThis
-
-
-## App Workflow
-
-1. Renders page with inline styl
-2. Reads current URL
+## How to Test
+1. Write Tests in CoffeeScript
+2. Run karma start
+3. Write tests in *Spec.js file
 
 
-## Modules
-
-1. Main.js - Loads CSS, Jquery & Require / Dojo
-2. ToolkitController.js - gets 
-3. MappingController.js - gets 
 
 
-## Folder Structure
 
-## Packages to install
-npm install
-npm install -g gulp
-npm install -g coffee-script
-npm install -g karma-cli
 
-------------
-
-Block UI
-back/forward button
-Parse Dojo layout if dashboard selected first

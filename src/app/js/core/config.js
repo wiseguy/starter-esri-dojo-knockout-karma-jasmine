@@ -85,6 +85,8 @@ define(function() {
 
         addthis_url: "http://s7.addthis.com/js/300/addthis_widget.js#domready=1",
 
+        analytics_url: "",
+
         services: {
             mapServerPrefix: "https://gisdev.sanacloud.com/arcgis/rest/services/",
             layers: [{

@@ -7,7 +7,7 @@ define(["exports", "core/config", "core/toolkitController", "components/app/appC
 ], function(o, config, toolkit, appController, mapController, toolsController, headerController) {
 
     o.handleClickGo = function(clickedItem) {
-
+        // ga('send', 'pageview');        
         toolsController.handleClickGo(clickedItem);
 
     };
@@ -25,6 +25,13 @@ define(["exports", "core/config", "core/toolkitController", "components/app/appC
     }
 
     o.selectView = function(view) {
+        ga('send', {
+            'hitType': 'pageview', // Required.
+            'eventCategory': 'link', // Required.
+            'eventAction': 'click', // Required.
+            'eventLabel': view.label,
+            'eventValue': 1
+        });
 
         headerController.selectView(view);
 

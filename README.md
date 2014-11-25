@@ -23,6 +23,7 @@ This is a starter app that follows conventions documented in the docs folder.
 1. Share, using AddThis
 2. Browser Check
 3. Google Analytics
+	https://developers.google.com/analytics/devguides/collection/analyticsjs/events
 4. Multiple Views
 5. Multiple Maps
 6. A notification API
@@ -57,6 +58,9 @@ This is a starter app that follows conventions documented in the docs folder.
 2. Run karma start
 3. Write tests in *Spec.js file
 
+
+## Flow
+main.js --> coreController.js --> appController.js --> current view
 
 
 

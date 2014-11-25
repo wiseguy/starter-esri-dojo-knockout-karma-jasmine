@@ -81,7 +81,11 @@ define(["exports", "core/config", "components/tools/toolsModel", "core/toolkitCo
             console.log("parsing tools");
             toolkit.parseDojo(toolkit.getNodeList(".tools-container")[0]);
 
-            o.addShare();
+            //dom dependant initialization
+            if (config.plugins.share) {
+                o.addShare();
+            }
+
 
         };
 

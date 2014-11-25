@@ -66,11 +66,18 @@ define(function() {
 
         },
 
+        plugins: {
+            analytics: true,
+            share: true
+        },
+
+        analytics_id: "UA-57085825-1",
+
         addthis_config: {
 
             pubid: "ra-546cfa2d5c9aaea9",
             templates: {
-                twitter: 'check out http://www.blueraster.com',
+                twitter: 'check out http://www.bluerpaster.com',
             },
             url_transforms: {
                 shorten: {

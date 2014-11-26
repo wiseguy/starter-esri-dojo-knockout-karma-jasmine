@@ -42,7 +42,7 @@ body {
   right: 0;
   left: 0;
   bottom: 0;
-  top: 60px;
+  top: 50px;
 }
 /*Header Stylus*/
 .header-container {
@@ -50,7 +50,7 @@ body {
   left: 0;
   top: 0;
   right: 0;
-  height: 60px;
+  height: 50px;
   z-index: 100;
   background-color: #008000;
 }
@@ -67,7 +67,7 @@ body {
   right: 0;
   left: 0;
   bottom: 0;
-  top: 60px;
+  top: 50px;
 }
 .map {
   -moz-box-sizing: border-box;

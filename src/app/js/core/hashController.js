@@ -55,38 +55,47 @@ define(["exports", "core/config", "core/toolkitController", "core/coreController
 
                 var appStateCurrent = config.appStateCurrent;
                 var appStatePrevious = config.appStatePrevious;
-                var newAppState;
+
                 // 
 
                 if (watchHashChange) {
                     // 
-                    if (!isBrowserNavigation) {
-                        console.log("hash update by user interaction");
-                        //if UI interaction
-                        exports.appStateCompare(appStatePrevious, appStateCurrent);
-                        // debugger;
-                    } else {
-                        console.log("hash update by browser navigation");
-                        breakLoop = true;
-                        //if back/forward in browser
-                        newAppState = toolkit.stringToObject(changedHash);
+                    exports.hashChangeExecute(appStatePrevious, appStateCurrent);
 
-                        if (Object.keys(newAppState).length === 0) {
-                            return;
-                        }
-
-                        exports.appStateCompare(appStateCurrent, newAppState);
-
-                        config.appStateCurrent = toolkit.clone(newAppState);
-                        config.appStatePrevious = toolkit.clone(appStateCurrent);
-                        // debugger;
-                    }
                 }
 
                 isBrowserNavigation = true;
                 watchHashChange = true;
 
             });
+
+        };
+
+        exports.hashChangeExecute = function(appStatePrevious, appStateCurrent) {
+            var newAppState;
+            var hash = toolkit.getHash();
+            if (!isBrowserNavigation) {
+                console.log("hash update by user interaction");
+                //if UI interaction
+                exports.appStateCompare(appStatePrevious, appStateCurrent);
+                // debugger;
+            } else {
+
+                console.log("hash update by browser navigation");
+                breakLoop = true;
+                //if back/forward in browser
+                newAppState = toolkit.stringToObject(hash());
+
+                if (Object.keys(newAppState).length === 0) {
+                    return;
+                }
+
+                exports.appStateCompare(appStateCurrent, newAppState);
+
+                config.appStateCurrent = toolkit.clone(newAppState);
+                config.appStatePrevious = toolkit.clone(appStateCurrent);
+                // debugger;
+            }
 
         };
 

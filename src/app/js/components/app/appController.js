@@ -9,7 +9,7 @@
  syncViewModels 
  */
 
-define(["core/config", "components/app/appModel", "core/toolkitController", "core/coreController"],
+define(["core/config", "components/app/appModel", "core/toolkitController", "core/coreController", "bootstrap"],
 
     function(config, appModel, toolkit, core) {
 

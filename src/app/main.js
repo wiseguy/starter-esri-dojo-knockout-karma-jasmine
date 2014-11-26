@@ -8,14 +8,17 @@
     var baseUrl,
         esriVersion = "3.11",
         loadFiles = {
-            "js": [
-                "http://js.arcgis.com/" + esriVersion + "/"
-            ],
             "css": [
                 "../app/css/app.css",
                 "http://js.arcgis.com/" + esriVersion + "/esri/css/esri.css",
-                "http://js.arcgis.com/" + esriVersion + "/dijit/themes/tundra/tundra.css"
+                "http://js.arcgis.com/" + esriVersion + "/dijit/themes/tundra/tundra.css",
+                "../app/css/bootstrap.css"
+            ],
+            "js": [
+                "http://js.arcgis.com/" + esriVersion + "/",
+                "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"
             ]
+
         },
         version = "0.1",
         dojoConfig;
@@ -54,7 +57,8 @@
             location: pathPrefix + "/app/js"
         }],
         aliases: [ //use for version specific files
-            ["ko", "libs/knockout-3.2.0"]
+            ["ko", "libs/knockout-3.2.0"],
+            ["bootstrap", "libs/bootstrap.min"]
         ],
         deps: [
             "core/coreController",
@@ -90,14 +94,15 @@
 
     var loadConfiguration = function() {
         console.log("loadConfiguration");
-        //load js
-        for (var i = 0; i < loadFiles.js.length; i += 1) {
-            loadScript(loadFiles.js[i]);
-        }
         //load css
         for (var k = 0; k < loadFiles.css.length; k += 1) {
             loadStyle(loadFiles.css[k]);
         }
+        //load js
+        for (var i = 0; i < loadFiles.js.length; i += 1) {
+            loadScript(loadFiles.js[i]);
+        }
+
     };
 
     if (document.readyState === "loaded") {

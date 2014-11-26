@@ -33,7 +33,7 @@ define(["exports", "core/config", "core/toolkitController", "components/app/appC
             'eventValue': 1
         });
 
-        headerController.selectView(view);
+        headerController.selectView(view.id);
 
     }
 

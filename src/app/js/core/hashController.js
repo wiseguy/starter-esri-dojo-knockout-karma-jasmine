@@ -1,9 +1,14 @@
-define(["exports", "core/config", "core/toolkitController", "core/coreController", "components/map/mapController"],
+define(["exports", "core/config", "core/toolkitController", "core/coreController", "components/map/mapController",
+        "components/header/headerController"
+    ],
 
-    function(exports, config, toolkit, core, mapController) {
+    function(exports, config, toolkit, core, mapController, headerController) {
 
 
-        var identifyChangesInHash = true;
+        var watchHashChange = true;
+        var isBrowserNavigation = true;
+        var breakLoop = false;
+
         /**
          * Uses the URL state, if not present then uses default from config
          */
@@ -39,21 +44,47 @@ define(["exports", "core/config", "core/toolkitController", "core/coreController
 
 
             toolkit.topicSubscribe("/dojo/hashchange", function(changedHash) {
+                console.log("hash change handler");
 
-                var appStateCurrent = config.appStateCurrent;
-                var appStatePrevious = config.appStatePrevious;
-
-                // debugger;
-                if (!identifyChangesInHash) { //updateHashWithoutChangeDetect was called               
+                if (!watchHashChange) {
+                    isBrowserNavigation = true;
+                    watchHashChange = true; // enable identifying changes in Url
+                    console.log("ended hash change handler since updateHashWithoutChangeDetect was called");
                     return;
                 }
 
-                if (identifyChangesInHash) {
-                    // var newAppState = toolkit.stringToObject(changedHash);
-                    exports.appStateCompare(appStatePrevious, appStateCurrent);
+                var appStateCurrent = config.appStateCurrent;
+                var appStatePrevious = config.appStatePrevious;
+                var newAppState;
+                // 
+
+                if (watchHashChange) {
+                    // 
+                    if (!isBrowserNavigation) {
+                        console.log("hash update by user interaction");
+                        //if UI interaction
+                        exports.appStateCompare(appStatePrevious, appStateCurrent);
+                        // debugger;
+                    } else {
+                        console.log("hash update by browser navigation");
+                        breakLoop = true;
+                        //if back/forward in browser
+                        newAppState = toolkit.stringToObject(changedHash);
+
+                        if (Object.keys(newAppState).length === 0) {
+                            return;
+                        }
+
+                        exports.appStateCompare(appStateCurrent, newAppState);
+
+                        config.appStateCurrent = toolkit.clone(newAppState);
+                        config.appStatePrevious = toolkit.clone(appStateCurrent);
+                        // debugger;
+                    }
                 }
 
-
+                isBrowserNavigation = true;
+                watchHashChange = true;
 
             });
 
@@ -64,6 +95,15 @@ define(["exports", "core/config", "core/toolkitController", "core/coreController
          * changeDetect determines whether update is done silently or follows through to execute some code
          */
         exports.updateHash = function(updateObject) {
+            //debugger;
+            if (breakLoop) {
+                console.log("breaking the loop");
+                breakLoop = false;
+                return;
+            }
+
+            console.log("updateHash");
+
             var appStateCurrent = config.appStateCurrent;
             var newAppState = toolkit.mixin(toolkit.clone(appStateCurrent), updateObject);
             var hashString = toolkit.objectToQuery(newAppState);
@@ -72,17 +112,25 @@ define(["exports", "core/config", "core/toolkitController", "core/coreController
             config.appStatePrevious = toolkit.clone(appStateCurrent);
             config.appStateCurrent = newAppState;
 
-
-            hash(hashString);
             //debugger;
-            identifyChangesInHash = true; // enable identifying changes in Url
+            isBrowserNavigation = false;
+            //console.log(hashString);
+            //debugger;
+            hash(hashString);
 
         };
 
 
         exports.updateHashWithoutChangeDetect = function(updateObject) {
+            if (breakLoop) {
+                console.log("breaking the loop");
+                breakLoop = false;
+                return;
+            }
 
-            identifyChangesInHash = false; // disable identifying Url change
+            console.log("updateHashWithoutChangeDetect");
+
+            watchHashChange = false; // disable identifying Url change
 
             exports.updateHash(updateObject);
 
@@ -91,7 +139,7 @@ define(["exports", "core/config", "core/toolkitController", "core/coreController
         exports.appStateCompare = function(oldState, newState) {
 
             var changesArray = [];
-            //debugger;
+
             for (var prop in oldState) {
 
                 if (oldState[prop].toString() !== newState[prop].toString()) {
@@ -164,12 +212,15 @@ define(["exports", "core/config", "core/toolkitController", "core/coreController
             }
 
             if (toolkit.arrayIndex(changesNameArray, "view") > -1) {
+                headerController.selectView(newState.v);
                 core.startModule(newState.v);
             }
 
-
         };
 
+        exports.isUpdateByBrowser = function() {
+            return isBrowserNavigation;
+        }
 
         return exports;
 

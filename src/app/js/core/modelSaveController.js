@@ -9,6 +9,9 @@ define(["core/config", "core/toolkitController", "components/app/appModel", "com
     var o = {};
 
     o.updateView = function(viewsList) {
+        // debugger;
+        // headerModel.set("viewLinks", []);
+        // headerModel.setArray("viewLinks", viewsList);
         headerModel.set("viewLinks", viewsList);
     }
 

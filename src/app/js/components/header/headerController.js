@@ -65,9 +65,9 @@ define(["exports", "core/config", "components/header/headerModel", "core/toolkit
             var selectedViewId = config.appStateCurrent.v;
             toolkit.arrayEach(config.viewLinks, function(viewLink) {
                 if (viewLink.id === selectedViewId) {
-                    viewLink.selected = true;
+                    viewLink["selected"] = true;
                 } else {
-                    viewLink.false = true;
+                    viewLink["selected"] = false;
                 }
             });
 
@@ -88,14 +88,14 @@ define(["exports", "core/config", "components/header/headerModel", "core/toolkit
          * Custom methods for controllers
          */
 
-        o.selectView = function(view) {
+        o.selectView = function(viewId) {
 
             var viewLinks = headerModel.get("viewLinks");
             headerModel.set("viewLinks", []);
 
 
             toolkit.arrayEach(viewLinks, function(viewLink) {
-                if (viewLink === view) {
+                if (viewLink.id === viewId) {
                     viewLink.selected = true;
                     o.switchView(viewLink.id)
                 } else {
@@ -108,7 +108,7 @@ define(["exports", "core/config", "components/header/headerModel", "core/toolkit
         };
 
         o.switchView = function(viewId) {
-
+            //debugger;
             hash.updateHash({
                 v: viewId
             });

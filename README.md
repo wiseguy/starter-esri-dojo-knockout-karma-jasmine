@@ -33,6 +33,8 @@ This is a starter app that follows conventions documented in the docs folder.
 	core.blockModule(node or ID);
 	core.resumeModule(node or ID);
 8. A URL update API
+9. Touch Events
+10. Responsive Layout
 
 ## What goes where? Folder Structure
 1. src/app/js/components - UI components. May be part of the View linked to the menu
@@ -44,7 +46,7 @@ This is a starter app that follows conventions documented in the docs folder.
 1. Make a copy of the template folder
 2. 
 
-## Rules to keep the Application scalable
+## Rules to keep the Application scalable and inline with user expectation
 1. All updates to Models happen in ModelSaveController.js
 2. All events binded to models gets channelled through ModelEventCOntroller.js
 3. All dojo/on events get channelled through onEventController.js
@@ -52,6 +54,7 @@ This is a starter app that follows conventions documented in the docs folder.
 5. Use 'exports' to avoid circular dependency. Example hashController.js
 6. Keep your styl file in the module folder but include it in app.styl
 7. The folder name of module and prefix should match. 
+8. Use combination on and touch events
 
 ## How to Test
 1. Write Tests in CoffeeScript

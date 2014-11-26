@@ -1,5 +1,5 @@
-define(["ko", "core/config", "core/modelEventController"],
-    function(ko, config, modelEventController) {
+define(["ko", "core/config", "core/modelEventController", "core/toolkitController"],
+    function(ko, config, modelEventController, toolkit) {
 
         var o = {};
         var vm = {};
@@ -12,6 +12,7 @@ define(["ko", "core/config", "core/modelEventController"],
         o.initialize = function() {
 
             vm.viewLinks(config.viewLinks);
+
 
         };
 
@@ -48,6 +49,12 @@ define(["ko", "core/config", "core/modelEventController"],
 
         o.set = function(name, value) {
             vm[name](value);
+        };
+
+        o.setArray = function(name, arrayList) {
+            toolkit.arrayEach(arrayList, function(value) {
+                vm[name].push(value);
+            });
         };
 
         return o;

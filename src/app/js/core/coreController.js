@@ -164,7 +164,7 @@ define(["exports", "core/config", "core/toolkitController", "core/hashController
 
         require(["components/" + moduleId + "/" + moduleId + "Controller"], function(module) {
 
-            console.log("STARTED MODULE " + module);
+            console.log("STARTED MODULE " + moduleId);
 
             var isView = module.isView();
 

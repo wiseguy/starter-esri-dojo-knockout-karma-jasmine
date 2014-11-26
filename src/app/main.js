@@ -20,7 +20,7 @@
         version = "0.1",
         dojoConfig;
 
-    baseUrl = "http://shj/apps-wiseguy/template-esri/src";
+    baseUrl = "http://shj.blueraster.com/apps-wiseguy/template-esri/src";
     //baseUrl = "http://staging.geoent.com/esri";
 
     var pathPrefix = baseUrl || document.location.pathname.replace(/\/[^/]+$/, "");
@@ -35,6 +35,7 @@
 
     // dojoConfig definition
     dojoConfig = {
+        hashPollFrequency: 50,
         parseOnLoad: false,
         isDebug: false,
         async: true,

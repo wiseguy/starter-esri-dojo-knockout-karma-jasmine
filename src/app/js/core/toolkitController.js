@@ -8,7 +8,7 @@ define(["core/config",
         /*Dojo*/
         "dojo/promise/all", "dojo/dom", "dojo/dom-attr", "dojo/dom-class", "dojo/html", "dojo/query",
         "dojo/Deferred", "dojo/dom-construct", "dojo/_base/lang", "dojo/io-query", "dojo/hash",
-        "dojo/ready", "dojo/_base/array", "dojo/sniff", "dojo/hash", "dojo/topic",
+        "dojo/ready", "dojo/_base/array", "dojo/sniff", "dojo/hash", "dojo/topic", "dojo/on",
         /*Esri*/
         "esri/request", "esri/layers/ArcGISDynamicMapServiceLayer", "esri/layers/FeatureLayer", "esri/layers/GraphicsLayer",
         "esri/map", "esri/dijit/BasemapGallery", "esri/dijit/Legend", "esri/geometry/webMercatorUtils"
@@ -17,7 +17,7 @@ define(["core/config",
         /*Dojo*/
         all, dom, domAttr, domClass, html, dojoQuery,
         Deferred, domConstruct, lang, ioQuery, hash,
-        ready, arrayUtil, sniff, hash, topic,
+        ready, arrayUtil, sniff, hash, topic, on,
         /*Esri*/
         esriRequest, ArcGISDynamicMapServiceLayer, FeatureLayer, GraphicsLayer,
         Map, BasemapGallery, Legend, webMercatorUtils) {
@@ -74,6 +74,10 @@ define(["core/config",
 
         o.getNodeList = function(selector) {
             return dojoQuery(selector);
+        };
+
+        o.getOn = function() {
+            return on;
         };
 
         o.getHash = function() {

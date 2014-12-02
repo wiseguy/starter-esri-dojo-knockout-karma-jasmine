@@ -47,6 +47,12 @@ define(["ko", "core/config", "core/modelEventController"],
             vm[name](value);
         };
 
+        o.setArray = function(name, arrayList) {
+            toolkit.arrayEach(arrayList, function(value) {
+                vm[name].push(value);
+            });
+        };
+
         return o;
 
 

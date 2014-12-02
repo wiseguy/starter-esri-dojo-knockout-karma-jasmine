@@ -25,6 +25,7 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
         o._maxMaps = config.maxMaps; //starts with 1
         o._map;
         o._maps = [];
+        o._mapsExtentChangeEvent = [];
         o._basemaps;
         o._legend;
 
@@ -224,7 +225,7 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
             var layersAddResult = map.on("layers-add-result", function() {
 
                 layersAddResult.remove();
-                map.resize();
+                //map.resize();
                 console.log("layers added");
 
                 //map.addLayers
@@ -234,9 +235,11 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
                     o.addLegend(map);
                 }
 
-                map.on("extent-change", function() {
+                var extentChangeHandler = toolkit.getOn().pausable(map, "extent-change", function() {
                     onEventController.extentChange(map);
                 });
+
+                o._mapsExtentChangeEvent.push(extentChangeHandler);
 
                 core.resumeModule();
 
@@ -279,7 +282,7 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
             legend.startup();
 
-            o.resizeMaps();
+            o.resizeActiveMaps();
 
         };
 
@@ -309,16 +312,22 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
             toolkit.getNodeList(".map").addClass("show-" + (o._currentMapPosition + 1));
 
+            o._mapsExtentChangeEvent[o._currentMapPosition + 1].pause();
+
             toolkit.addClass(mapNode, "dijitHidden");
 
-            o.resizeMaps();
+            o._mapsExtentChangeEvent[o._currentMapPosition + 1].resume();
+
+            o.resizeActiveMaps();
 
         };
 
-        o.resizeMaps = function() {
+        o.resizeActiveMaps = function() {
 
-            toolkit.arrayEach(o._maps, function(theMap) {
-                theMap.resize();
+            toolkit.arrayEach(o._maps, function(theMap, i) {
+                if (i <= o._currentMapPosition) {
+                    theMap.resize();
+                }
             });
 
         };
@@ -335,7 +344,7 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
             o._currentMapPosition += 1;
 
-            o.resizeMaps();
+            o.resizeActiveMaps();
 
         };
 

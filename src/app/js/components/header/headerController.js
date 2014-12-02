@@ -17,7 +17,10 @@ define(["exports", "core/config", "components/header/headerModel", "core/toolkit
 
         //var o = {};
         o._initialized = false;
-        o._isView = false;
+
+        o.isInitialized = function() {
+            return o._initialized;
+        }
 
         o.startup = function() {
 
@@ -118,13 +121,7 @@ define(["exports", "core/config", "components/header/headerModel", "core/toolkit
 
         }
 
-        o.isInitialized = function() {
-            return o._initialized;
-        }
 
-        o.isView = function() {
-            return o._isView;
-        }
 
 
 

@@ -5,13 +5,14 @@ define(["ko", "core/config", "core/modelEventController"],
         var vm = {};
 
         vm.title = ko.observable();
-
+        vm.isActive = ko.observable();
         /**
          * set defaults
          */
         o.initialize = function() {
 
             vm.title("Dashboard");
+            vm.isActive(true);
 
         };
 

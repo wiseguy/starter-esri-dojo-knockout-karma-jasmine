@@ -43,10 +43,6 @@ define(["ko", "core/config", "core/modelEventController", "core/toolkitControlle
             return vm[name]();
         };
 
-        /*o.getObservable = function(name) {
-            return vm[name];
-        };*/
-
         o.set = function(name, value) {
             vm[name](value);
         };

@@ -18,7 +18,7 @@ define(["core/config", "components/app/appModel", "core/toolkitController", "cor
          * Private variables
          */
         o._initialized = false;
-        o._isView = false;
+
 
         /*
          * Common methods for controllers
@@ -28,9 +28,6 @@ define(["core/config", "components/app/appModel", "core/toolkitController", "cor
             return o._initialized;
         }
 
-        o.isView = function() {
-            return o._isView;
-        }
 
         o.startup = function() {
 

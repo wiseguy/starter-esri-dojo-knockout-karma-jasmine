@@ -17,7 +17,6 @@ define(["exports", "core/config", "components/tools/toolsModel", "core/toolkitCo
          * Private variables
          */
         o._initialized = false;
-        o._isView = false;
 
         /*
          * Common methods for controllers
@@ -27,9 +26,6 @@ define(["exports", "core/config", "components/tools/toolsModel", "core/toolkitCo
             return o._initialized;
         }
 
-        o.isView = function() {
-            return o._isView;
-        }
 
         o.startup = function() {
 
@@ -104,7 +100,8 @@ define(["exports", "core/config", "components/tools/toolsModel", "core/toolkitCo
             //zoom the map to DC
             hash.updateHash({
                 x: 11,
-                y: 22
+                y: 22,
+                v: "map"
             });
 
         };

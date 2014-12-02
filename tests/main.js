@@ -50,7 +50,8 @@ var dojoConfig = {
     ],
 
     aliases: [ //use for version specific files, to make update easy
-        ["ko", "libs/knockout-3.2.0"]
+        ["ko", "libs/knockout-3.2.0"],
+        ["bootstrap", "libs/bootstrap.min"]
     ],
 
     async: true

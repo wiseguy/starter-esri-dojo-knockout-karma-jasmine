@@ -164,12 +164,14 @@ define(["exports", "core/config", "core/toolkitController", "core/hashController
 
         require(["components/" + moduleId + "/" + moduleId + "Controller"], function(module) {
 
-            console.log("STARTED MODULE " + moduleId);
+            console.log("STARTED MODULE " + module);
 
-            var isView = module.isView();
+
 
             module.startup();
 
+            /*
+var isView = module.isView();
             if (isView) {
                 //switch to the module if its a view
 
@@ -187,7 +189,7 @@ define(["exports", "core/config", "core/toolkitController", "core/hashController
 
 
 
-            }
+            }*/
 
         });
 

@@ -8,14 +8,22 @@ define(["exports", "core/config", "core/toolkitController", "core/hashController
 
     o.extentChange = function(map) {
 
+        var appCurrentState = config.appStateCurrent;
+        var positionInView = map.positionInView;
         var center = map.extent.getCenter();
         var centerLL = toolkit.convertWM(center, 'wm'); //'ll'
         var level = map.getLevel();
+        var updatedX = appCurrentState.x.split("!");
+        updatedX[positionInView] = centerLL.x.toString();
+        var updatedY = appCurrentState.y.split("!");
+        updatedY[positionInView] = centerLL.y.toString();
+        var updatedL = appCurrentState.l.split("!");
+        updatedL[positionInView] = level.toString();
 
         hash.updateHashWithoutChangeDetect({
-            x: centerLL.x,
-            y: centerLL.y,
-            l: level
+            x: updatedX.join("!"),
+            y: updatedY.join("!"),
+            l: updatedL.join("!")
         });
 
     };

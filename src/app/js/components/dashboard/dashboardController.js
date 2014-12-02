@@ -17,7 +17,6 @@ define(["exports", "core/config", "components/dashboard/dashboardModel", "core/t
          * Private variables
          */
         o._initialized = false;
-        o._isView = true;
 
         /*
          * Common methods for controllers
@@ -27,9 +26,6 @@ define(["exports", "core/config", "components/dashboard/dashboardModel", "core/t
             return o._initialized;
         }
 
-        o.isView = function() {
-            return o._isView;
-        }
 
         o.startup = function() {
 

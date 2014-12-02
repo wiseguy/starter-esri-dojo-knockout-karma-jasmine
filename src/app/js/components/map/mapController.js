@@ -19,12 +19,12 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
          * Private variables
          */
         o._initialized = false;
-        o._isView = true;
 
         o._currentMapPosition = 0; //0 index
         o._currentTotalMaps = 0; //start with 1
         o._maxMaps = config.maxMaps; //starts with 1
         o._map;
+        o._maps = [];
         o._basemaps;
         o._legend;
 
@@ -37,9 +37,6 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
             return o._initialized;
         }
 
-        o.isView = function() {
-            return o._isView;
-        }
 
         o.startup = function() {
 
@@ -168,18 +165,20 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
             var MapClass = toolkit.getMapClass();
             var appCurrentState = config.appStateCurrent;
+
             var mapNode = toolkit.getNodeList(".map")[positionInView];
             toolkit.removeClass(mapNode, "dijitHidden");
+
             var map = new MapClass(mapNode, {
                 basemap: appCurrentState.b,
-                center: [appCurrentState.x, appCurrentState.y],
-                zoom: appCurrentState.l
+                center: [appCurrentState.x.split("!")[positionInView], appCurrentState.y.split("!")[positionInView]],
+                zoom: appCurrentState.l.split("!")[positionInView]
             });
 
             map.positionInView = positionInView;
 
             o._map = map;
-
+            o._maps[positionInView] = map;
             map.on("load", function() {
                 o.addLayers(map);
             });
@@ -229,7 +228,11 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
                 console.log("layers added");
 
                 //map.addLayers
-                o.addBasemap(map);
+                if (map.positionInView == 0) { //only add basemap for first map
+                    o.addBasemap(map);
+                } else {
+                    o.addLegend(map);
+                }
 
                 map.on("extent-change", function() {
                     onEventController.extentChange(map);
@@ -255,7 +258,7 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
                 showArcGISBasemaps: true,
                 map: map
             }, toolkit.getNodeList('.basemap-gallery')[0]); //this is always 0
-
+            toolkit.removeClass(toolkit.getNodeList('.basemap-gallery-titlepane-holder')[0], "dijitHidden");
             basemapGallery.startup();
 
             o.addLegend(map);
@@ -275,6 +278,8 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
 
             legend.startup();
+
+            o.resizeMaps();
 
         };
 
@@ -306,6 +311,15 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
             toolkit.addClass(mapNode, "dijitHidden");
 
+            o.resizeMaps();
+
+        };
+
+        o.resizeMaps = function() {
+
+            toolkit.arrayEach(o._maps, function(theMap) {
+                theMap.resize();
+            });
 
         };
 
@@ -320,6 +334,8 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
             toolkit.removeClass(mapNode, "dijitHidden");
 
             o._currentMapPosition += 1;
+
+            o.resizeMaps();
 
         };
 
@@ -349,8 +365,14 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
             o._basemaps.select(basemapId);
         };
 
-        o.centerAndZoom = function(centerLL, level) {
-            o._map.centerAndZoom(centerLL, level);
+        o.centerAndZoom = function(xList, yList, lList, mapIndex) {
+            var changedMapPosition = mapIndex;
+            var centerX = parseFloat(xList.split("!")[changedMapPosition]);
+            var centerY = parseFloat(yList.split("!")[changedMapPosition]);
+            var centerLL = [centerX, centerY];
+            var level = parseInt(lList.split("!")[changedMapPosition]);
+
+            o._maps[changedMapPosition].centerAndZoom(centerLL, level);
         };
 
 

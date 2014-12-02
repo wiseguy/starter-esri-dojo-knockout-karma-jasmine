@@ -213,18 +213,50 @@ define(["exports", "core/config", "core/toolkitController", "core/coreController
         exports.updateUIfromChanges = function(oldState, newState, changesNameArray) {
 
             if (toolkit.arrayIndex(changesNameArray, "basemap") > -1) {
+                console.log("set basemap");
                 mapController.setBasemap(newState.b);
             }
 
-            if (toolkit.arrayIndex(changesNameArray, "coordinate") > -1) {
-                mapController.centerAndZoom([parseFloat(newState.x), parseFloat(newState.y)], parseFloat(newState.l));
+            if (toolkit.arrayIndex(changesNameArray, "coordinate") > -1 || toolkit.arrayIndex(changesNameArray, "level") > -1) {
+                var mapIndex = -1;
+                if (exports.detectChangeIndex(oldState.x, newState.x) > -1) {
+                    mapIndex = exports.detectChangeIndex(oldState.x, newState.x);
+                }
+                if (exports.detectChangeIndex(oldState.y, newState.y) > -1) {
+                    mapIndex = exports.detectChangeIndex(oldState.y, newState.y);
+                }
+                if (exports.detectChangeIndex(oldState.l, newState.l) > -1) {
+                    mapIndex = exports.detectChangeIndex(oldState.l, newState.l);
+                }
+                console.log("set center and level");
+                mapController.centerAndZoom(newState.x, newState.y, newState.l, mapIndex);
             }
 
+
             if (toolkit.arrayIndex(changesNameArray, "view") > -1) {
+                console.log("set view");
                 headerController.selectView(newState.v);
                 core.startModule(newState.v);
             }
 
+        };
+
+        exports.detectChangeIndex = function(oldStr, newStr) { //separated by !
+
+            var changeIndex = -1;
+            var oldStrArray = oldStr.split("!");
+            var newStrArray = newStr.split("!");
+
+            var foundChange = toolkit.arraySome(oldStrArray, function(oldItem, i) {
+                if (oldItem !== newStrArray[i]) {
+                    changeIndex = i;
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+
+            return changeIndex;
         };
 
         exports.isUpdateByBrowser = function() {

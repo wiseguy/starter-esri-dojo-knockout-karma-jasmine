@@ -5,6 +5,7 @@ define(["ko", "core/config"],
         var vm = {};
 
         vm.title = ko.observable();
+        vm.isActive = ko.observable();
 
 
 
@@ -13,7 +14,8 @@ define(["ko", "core/config"],
          */
         o.initialize = function() {
             //set defaults
-            vm.title("Aamir test");
+            vm.title("Map");
+            vm.isActive(true);
 
         };
 

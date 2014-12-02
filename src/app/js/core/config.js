@@ -7,6 +7,18 @@ define(function() {
     var o = {
         maxMaps: 4,
 
+        appStateCurrent: {
+            "v": "map",
+            "b": "streets",
+            "x": "54.74!-77.03!-0.12!-122.4", //! separated x values
+            "y": "23.8!38.7!51.50!37.78", //! separated y values
+            "l": "8!9!10!7",
+            "m": 0, //total map
+            "a": 0 // active map
+        },
+
+        appStatePrevious: {}, // to keep track of previous
+
         viewLinks: [{
             "id": "dashboard",
             "label": "Dashboard",
@@ -39,23 +51,6 @@ define(function() {
             max: 0
         }],
 
-        appStatePrevious: { //should be identical to appStateCurrent
-            "v": "map",
-            "b": "streets",
-            "l": 8,
-            "x": 54.74,
-            "y": 23.8,
-            "m": 0
-        },
-        appStateCurrent: { //should be identical to appStatePrevious
-            "v": "map",
-            "b": "streets",
-            "l": 8,
-            "x": 54.74,
-            "y": 23.8,
-            "m": 0
-        },
-
         webmapId: "", //if webmap id used then that will be used to create the map
 
         totalMaps: 4,
@@ -77,7 +72,7 @@ define(function() {
 
             pubid: "ra-546cfa2d5c9aaea9",
             templates: {
-                twitter: 'check out http://www.bluerpaster.com',
+                twitter: 'check out http://www.blueraster.com',
             },
             url_transforms: {
                 shorten: {

@@ -82,6 +82,7 @@ define(["exports", "core/config", "core/toolkitController", "core/coreController
             } else {
 
                 console.log("hash update by browser navigation");
+                // This creates a circle where all events listening to changes get fired, so prevent this by using breakloop
                 breakLoop = true;
                 //if back/forward in browser
                 newAppState = toolkit.stringToObject(hash());
@@ -131,6 +132,7 @@ define(["exports", "core/config", "core/toolkitController", "core/coreController
 
 
         exports.updateHashWithoutChangeDetect = function(updateObject) {
+
             if (breakLoop) {
                 console.log("breaking the loop");
                 breakLoop = false;
@@ -198,6 +200,10 @@ define(["exports", "core/config", "core/toolkitController", "core/coreController
                         if (toolkit.arrayIndex(changesNameArray, "view") < 0) {
                             changesNameArray.push("view");
                         }
+                    case "m":
+                        if (toolkit.arrayIndex(changesNameArray, "totalmaps") < 0) {
+                            changesNameArray.push("totalmaps");
+                        }
                         break;
                 }
 
@@ -219,14 +225,14 @@ define(["exports", "core/config", "core/toolkitController", "core/coreController
 
             if (toolkit.arrayIndex(changesNameArray, "coordinate") > -1 || toolkit.arrayIndex(changesNameArray, "level") > -1) {
                 var mapIndex = -1;
-                if (exports.detectChangeIndex(oldState.x, newState.x) > -1) {
-                    mapIndex = exports.detectChangeIndex(oldState.x, newState.x);
+                if (exports.detectMapIndex(oldState.x, newState.x) > -1) {
+                    mapIndex = exports.detectMapIndex(oldState.x, newState.x);
                 }
-                if (exports.detectChangeIndex(oldState.y, newState.y) > -1) {
-                    mapIndex = exports.detectChangeIndex(oldState.y, newState.y);
+                if (exports.detectMapIndex(oldState.y, newState.y) > -1) {
+                    mapIndex = exports.detectMapIndex(oldState.y, newState.y);
                 }
-                if (exports.detectChangeIndex(oldState.l, newState.l) > -1) {
-                    mapIndex = exports.detectChangeIndex(oldState.l, newState.l);
+                if (exports.detectMapIndex(oldState.l, newState.l) > -1) {
+                    mapIndex = exports.detectMapIndex(oldState.l, newState.l);
                 }
                 console.log("set center and level");
                 mapController.centerAndZoom(newState.x, newState.y, newState.l, mapIndex);
@@ -236,12 +242,20 @@ define(["exports", "core/config", "core/toolkitController", "core/coreController
             if (toolkit.arrayIndex(changesNameArray, "view") > -1) {
                 console.log("set view");
                 headerController.selectView(newState.v);
-                core.startModule(newState.v);
+                core.startModule(newState.v); //starts only if it wasnt created before
+            }
+
+            if (toolkit.arrayIndex(changesNameArray, "totalmaps") > -1) {
+                console.log("set totalmaps");
+                mapController.changeTotalMaps(newState.m);
             }
 
         };
 
-        exports.detectChangeIndex = function(oldStr, newStr) { //separated by !
+        /*
+         * Find which map has changed
+         */
+        exports.detectMapIndex = function(oldStr, newStr) { //separated by !
 
             var changeIndex = -1;
             var oldStrArray = oldStr.split("!");

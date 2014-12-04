@@ -74,7 +74,7 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
         o.createUI = function(html, mapInstanceHtml) {
 
             var maxMaps = o._maxMaps;
-
+            var totalMapsToCreate = config.appStateCurrent.m;
 
             console.log("create Map UI");
 
@@ -103,13 +103,60 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
             console.log("parsing map");
             toolkit.parseDojo(toolkit.getNodeList(".map-container")[0]);
 
-            o.addMap();
+            while (totalMapsToCreate > 0) {
+                o.addMap();
+                totalMapsToCreate -= 1;
+            }
+
+
+
         };
 
-        /*
-         * Custom methods for controllers
-         */
+        /**************************************
+         * Custom methods for this controller
+         **************************************/
 
+
+        /**
+         *was map incremented or decremented?,
+         */
+        o.changeTotalMaps = function(newMapCount) {
+
+            var currentTotalMaps = o._currentTotalMaps;
+            if (newMapCount < currentTotalMaps) { //decreased
+                o.removeMap();
+            } else { //increased
+                o.addMap();
+            }
+
+        };
+
+        o.incrementMap = function() {
+
+            var currentTotalMaps = config.appStateCurrent.m;
+            if (currentTotalMaps === o._maxMaps) {
+                alert("can not open more maps");
+                return;
+            }
+
+            hash.updateHash({
+                m: parseInt(currentTotalMaps) + 1
+            });
+
+
+        };
+
+        o.decrementMap = function() {
+            var currentTotalMaps = config.appStateCurrent.m;
+            if (currentTotalMaps === 1) {
+                alert("at least one map needs to exist");
+                return;
+            }
+
+            hash.updateHash({
+                m: parseInt(currentTotalMaps) - 1
+            });
+        };
         /**
          *change current selected map,
          */
@@ -119,8 +166,6 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
             var positionInView = 0;
             var allMapNodes;
             var currentTotalMaps = o._currentTotalMaps;
-
-
 
             //do we need to open a hidden map?
             if ((o._currentMapPosition + 1) < o._currentTotalMaps) {
@@ -135,9 +180,9 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
                 return;
             }
 
-
             //block map interaction
-            core.blockModule(toolkit.getNodeList(".map-container")[0]);
+            // core.blockModule(toolkit.getNodeList(".map-container")[0]);
+            core.blockModule(toolkit.getNodeList(".tools-container")[0]);
 
             o._currentTotalMaps += 1;
             positionInView = o._currentTotalMaps - 1;
@@ -229,7 +274,8 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
                 console.log("layers added");
 
                 //map.addLayers
-                if (map.positionInView == 0) { //only add basemap for first map
+
+                if (map.positionInView == 0 || config.basemapForEachMap) { //only add basemap for first map
                     o.addBasemap(map);
                 } else {
                     o.addLegend(map);
@@ -259,10 +305,53 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
             //debugger;
             var basemapGallery = new BasemapGallery({
                 showArcGISBasemaps: true,
-                map: map
+                map: map,
+                onLoad: function() {
+                    toolkit.arrayEach(basemapGallery.basemaps, function(basemap) {
+                        switch (basemap.title.toLowerCase()) {
+                            case "imagery": //basemap_8
+                                basemap.name = "satellite";
+                                break;
+                            case "imagery with labels":
+                                basemap.name = "hybrid"; //basemap_7
+                                break;
+                            case "streets":
+                                basemap.name = "streets"; //basemap_6
+                                break;
+                            case "topographic":
+                                basemap.name = "topo"; //basemap_5
+                                break;
+                            case "terrain with labels":
+                                basemap.name = "terrain"; //basemap_4 //terrain is NOT a standard name
+                                break;
+                            case "light gray canvas":
+                                basemap.name = "gray"; //basemap_3
+                                break;
+                            case "national geographic":
+                                basemap.name = "national-geographic"; //basemap_2
+                                break;
+                            case "oceans":
+                                basemap.name = "oceans"; //basemap_1
+                                break;
+                            case "openstreetmap":
+                                basemap.name = "osm"; //basemap_0
+                                break;
+                        }
+
+                    });
+                }
             }, toolkit.getNodeList('.basemap-gallery')[0]); //this is always 0
-            toolkit.removeClass(toolkit.getNodeList('.basemap-gallery-titlepane-holder')[0], "dijitHidden");
+
+            toolkit.removeClass(toolkit.getNodeList('.basemap-gallery-titlepane-holder')[map.positionInView], "dijitHidden");
+
             basemapGallery.startup();
+
+            map.basemapGallery = basemapGallery;
+
+            basemapGallery.on("selection-change", function() {
+                var basemap = basemapGallery.getSelected();
+                onEventController.setBasemap(basemap, o._maps, map);
+            });
 
             o.addLegend(map);
 
@@ -369,9 +458,34 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
             return o._getLegend;
         }
 
+        /**
+         * Called when hash value for basemap changes
+         */
         o.setBasemap = function(basemapName) {
-            var basemapId = "basemap_2";
-            o._basemaps.select(basemapId);
+
+
+            toolkit.arrayEach(o._maps, function(map) {
+                //debugger;
+                //setBasemap(basemapName);
+
+
+                if (!map.basemapGallery) { //for maps that dont have a basemapGallery
+
+                    map.setBasemap(basemapName);
+
+                } else { //for maps that HAVE a basemapGallery
+
+                    var selectedBasemap;
+                    toolkit.arraySome(map.basemapGallery.basemaps, function(basemap) {
+                        selectedBasemap = basemap;
+                        return (basemap.name === basemapName);
+                    });
+                    map.basemapGallery.select(selectedBasemap.id);
+
+                }
+
+            })
+
         };
 
         o.centerAndZoom = function(xList, yList, lList, mapIndex) {

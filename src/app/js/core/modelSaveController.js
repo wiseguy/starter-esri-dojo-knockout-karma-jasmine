@@ -11,8 +11,8 @@ define(["core/config", "core/toolkitController", "components/app/appModel", "com
 
     o.updateView = function(viewsList) {
 
-        headerModel.set("viewLinks", []);
-        headerModel.setArray("viewLinks", viewsList);
+        //headerModel.set("viewLinks", []);
+        headerModel.set("viewLinks", viewsList);
 
         toolkit.arrayEach(viewsList, function(view) {
             eval(view.id + "Model").set("isActive", view.selected);

@@ -14,13 +14,13 @@ define(["exports", "core/config", "core/toolkitController", "components/app/appC
 
     o.addMap = function(clickedItem) {
 
-        mapController.addMap(); //hardcoded to test
+        mapController.incrementMap();
 
     }
 
     o.removeMap = function(clickedItem) {
 
-        mapController.removeMap(); //hardcoded to test
+        mapController.decrementMap();
 
     }
 

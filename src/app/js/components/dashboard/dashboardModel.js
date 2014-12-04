@@ -44,13 +44,14 @@ define(["ko", "core/config", "core/modelEventController"],
         };
 
         o.set = function(name, value) {
-            vm[name](value);
-        };
-
-        o.setArray = function(name, arrayList) {
-            toolkit.arrayEach(arrayList, function(value) {
-                vm[name].push(value);
-            });
+            if (value instanceof Array) {
+                vm[name]([]); //empty first
+                toolkit.arrayEach(value, function(v) {
+                    vm[name].push(v);
+                });
+            } else {
+                vm[name](value);
+            }
         };
 
         return o;

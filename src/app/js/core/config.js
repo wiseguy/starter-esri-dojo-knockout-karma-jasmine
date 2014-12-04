@@ -7,13 +7,15 @@ define(function() {
     var o = {
         maxMaps: 4,
 
+        basemapForEachMap: false,
+
         appStateCurrent: {
             "v": "map",
             "b": "streets",
             "x": "54.74!-77.03!-0.12!-122.4", //! separated x values
             "y": "23.8!38.7!51.50!37.78", //! separated y values
             "l": "8!9!10!7",
-            "m": 0, //total map
+            "m": 1, //total maps
             "a": 0 // active map
         },
 

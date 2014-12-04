@@ -36,7 +36,14 @@ define(["ko", "core/config"],
         };
 
         o.set = function(name, value) {
-            vm[name](value);
+            if (value instanceof Array) {
+                vm[name]([]); //empty first
+                toolkit.arrayEach(value, function(v) {
+                    vm[name].push(v);
+                });
+            } else {
+                vm[name](value);
+            }
         };
 
         return o;

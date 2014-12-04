@@ -200,6 +200,7 @@ define(["exports", "core/config", "core/toolkitController", "core/coreController
                         if (toolkit.arrayIndex(changesNameArray, "view") < 0) {
                             changesNameArray.push("view");
                         }
+                        break;
                     case "m":
                         if (toolkit.arrayIndex(changesNameArray, "totalmaps") < 0) {
                             changesNameArray.push("totalmaps");

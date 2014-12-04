@@ -149,7 +149,7 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
         o.decrementMap = function() {
             var currentTotalMaps = config.appStateCurrent.m;
             if (currentTotalMaps === 1) {
-                alert("at least one map needs to exist");
+                alert("at least one map needs to exist decrementMap");
                 return;
             }
 

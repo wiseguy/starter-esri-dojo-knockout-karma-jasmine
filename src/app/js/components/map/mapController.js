@@ -10,10 +10,10 @@
  */
 
 define(["exports", "core/config", "components/map/mapModel", "core/toolkitController", "core/coreController",
-        "core/hashController", "core/onEventController"
+        "core/hashController", "core/onEventController", "core/modelEventController"
     ],
 
-    function(o, config, mapModel, toolkit, core, hash, onEventController) {
+    function(o, config, mapModel, toolkit, core, hash, onEventController, modelEventController) {
 
         /*
          * Private variables
@@ -58,6 +58,7 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
 
             allDeferred.then(function(results) {
+
                 var html = results[0];
                 var mapInstanceHtml = results[1];
                 o.createUI(html, mapInstanceHtml);
@@ -118,14 +119,16 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
 
         /**
-         *was map incremented or decremented?,
+         *was map incremented or decremented?, hashController fires this
          */
         o.changeTotalMaps = function(newMapCount) {
 
-            var currentTotalMaps = o._currentTotalMaps;
-            if (newMapCount < currentTotalMaps) { //decreased
+            var currentTotalMaps = o._currentTotalMaps; //config.appStateCurrent.m; //o._currentTotalMaps;
+            if (parseInt(newMapCount) < parseInt(currentTotalMaps)) { //decreased
+                debugger;
                 o.removeMap();
             } else { //increased
+                debugger;
                 o.addMap();
             }
 
@@ -133,34 +136,46 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
         o.incrementMap = function() {
 
-            var currentTotalMaps = config.appStateCurrent.m;
+            var currentTotalMaps = o._currentTotalMaps; //config.appStateCurrent.m;
             if (currentTotalMaps === o._maxMaps) {
                 alert("can not open more maps");
                 return;
             }
-
-            hash.updateHash({
-                m: parseInt(currentTotalMaps) + 1
+            //make the new map active
+            hash.updateApp({
+                m: parseInt(currentTotalMaps) + 1,
+                a: parseInt(currentTotalMaps)
             });
 
 
         };
 
         o.decrementMap = function() {
-            var currentTotalMaps = config.appStateCurrent.m;
+            var currentTotalMaps = o._currentTotalMaps; //config.appStateCurrent.m;
             if (currentTotalMaps === 1) {
                 alert("at least one map needs to exist decrementMap");
                 return;
             }
 
-            hash.updateHash({
+            var lastMapNode = toolkit.getNodeList(".map")[parseInt(currentTotalMaps) - 1];
+            var isRemovedMapAlsoActive = toolkit.containsClass(lastMapNode, "selected-map");
+
+            var hashObj = {
                 m: parseInt(currentTotalMaps) - 1
-            });
+            }
+
+            if (isRemovedMapAlsoActive) {
+                hashObj.a = parseInt(currentTotalMaps) - 2;
+            }
+
+            hash.updateApp(hashObj);
+
         };
         /**
          *change current selected map,
          */
         o.addMap = function() {
+            console.log("being adding map");
             //Remove the show-1, show-2 classes
             //increment the currentMap
             var positionInView = 0;
@@ -208,28 +223,60 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
          *createMap needs the map id,
          */
         o.createMap = function(positionInView) {
+            console.log("creating map");
+
+            var isWebMap = false;
 
             var MapClass = toolkit.getMapClass();
+            var arcgisUtils = toolkit.getArcGISutils();
             var appCurrentState = config.appStateCurrent;
-
             var mapNode = toolkit.getNodeList(".map")[positionInView];
+
+            if (config.webMapId.length) {
+                isWebMap = true;
+            };
+
             toolkit.removeClass(mapNode, "dijitHidden");
 
-            var map = new MapClass(mapNode, {
-                basemap: appCurrentState.b,
-                center: [appCurrentState.x.split("!")[positionInView], appCurrentState.y.split("!")[positionInView]],
-                zoom: appCurrentState.l.split("!")[positionInView]
-            });
+            if (isWebMap) {
+
+                arcgisUtils.createMap(config.webMapId, mapNode).then(function(response) {
+                    o.mapCreationHandler(response.map, positionInView, isWebMap);
+                    o.addLayers(response.map);
+                });
+
+            } else {
+
+                var map = new MapClass(mapNode, {
+                    basemap: appCurrentState.b,
+                    center: [appCurrentState.x.split("!")[positionInView], appCurrentState.y.split("!")[positionInView]],
+                    zoom: appCurrentState.l.split("!")[positionInView]
+                });
+
+
+
+                o.mapCreationHandler(map, positionInView, isWebMap);
+
+            }
+
+
+        };
+
+        o.mapCreationHandler = function(map, positionInView, isWebMap) {
+            //var legendLayers = arcgisUtils.getLegendLayers(response);
+
+            o._map = map;
 
             map.positionInView = positionInView;
 
-            o._map = map;
             o._maps[positionInView] = map;
-            map.on("load", function() {
-                o.addLayers(map);
-            });
 
-            return map;
+            if (!isWebMap) {
+                var mapLoad = map.on("load", function() {
+                    mapLoad.remove();
+                    o.addLayers(map);
+                });
+            }
 
         };
 
@@ -269,6 +316,8 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
             var layersAddResult = map.on("layers-add-result", function() {
 
+                var resized = false;
+
                 layersAddResult.remove();
                 //map.resize();
                 console.log("layers added");
@@ -282,7 +331,16 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
                 }
 
                 var extentChangeHandler = toolkit.getOn().pausable(map, "extent-change", function() {
-                    onEventController.extentChange(map);
+                    console.log("map's extentChange handler");
+                    if (!resized) {
+                        onEventController.extentChange(map);
+                    };
+
+                    resized = false;
+                });
+
+                map.on("resize", function() { //when resizing do not fire the extentChange
+                    resized = true;
                 });
 
                 o._mapsExtentChangeEvent.push(extentChangeHandler);
@@ -307,6 +365,7 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
                 showArcGISBasemaps: true,
                 map: map,
                 onLoad: function() {
+                    // Dont rely on the id's. the basemap_X are subject to change
                     toolkit.arrayEach(basemapGallery.basemaps, function(basemap) {
                         switch (basemap.title.toLowerCase()) {
                             case "imagery": //basemap_8
@@ -322,7 +381,10 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
                                 basemap.name = "topo"; //basemap_5
                                 break;
                             case "terrain with labels":
-                                basemap.name = "terrain"; //basemap_4 //terrain is NOT a standard name
+                                basemap.name = "topo"; //basemap_4 //terrain is NOT a standard name
+                                break;
+                            case "dark gray canvas": //NEW
+                                basemap.name = "gray"; //basemap_3
                                 break;
                             case "light gray canvas":
                                 basemap.name = "gray"; //basemap_3
@@ -335,6 +397,9 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
                                 break;
                             case "openstreetmap":
                                 basemap.name = "osm"; //basemap_0
+                                break;
+                            case "usa topo maps": //NEW , not a standard
+                                basemap.name = "osm"; //basemap_3
                                 break;
                         }
 
@@ -383,12 +448,17 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
                 return;
             }
 
+
             var currentTotalMaps = o._currentTotalMaps;
 
             var mapNode = toolkit.getNodeList(".map")[o._currentMapPosition];
+            //var prevMapNode = toolkit.getNodeList(".map")[o._currentMapPosition - 1];
+
+
+            // parseInt(config.appStateCurrent.a) === parseInt(mapNode.positionInView);
 
             o._currentMapPosition -= 1;
-            //o._currentTotalMaps -= 1;
+            o._currentTotalMaps -= 1;
 
 
             while (currentTotalMaps > 0) {
@@ -489,15 +559,74 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
         };
 
         o.centerAndZoom = function(xList, yList, lList, mapIndex) {
+
             var changedMapPosition = mapIndex;
             var centerX = parseFloat(xList.split("!")[changedMapPosition]);
             var centerY = parseFloat(yList.split("!")[changedMapPosition]);
             var centerLL = [centerX, centerY];
             var level = parseInt(lList.split("!")[changedMapPosition]);
 
+            /* o.disableAllMapExtentEvent();
+
+            var mapPanEnd = o._maps[changedMapPosition].on("pan-end", function() {
+                mapPanEnd.remove();
+                o.enableAllMapExtentEvent();
+            });*/
+
             o._maps[changedMapPosition].centerAndZoom(centerLL, level);
+
         };
 
+        o.updateActiveMapDiv = function(mapIndex) {
+
+
+            toolkit.getNodeList(".map").removeClass("selected-map");
+
+            toolkit.addClass(toolkit.getNodeList(".map")[mapIndex], "selected-map");
+
+
+        };
+
+        /**
+         * Match all extents to the current maps extent
+         **/
+
+        o.syncExtents = function() {
+
+            var activeIndex = parseInt(config.appStateCurrent.a);
+            var activeMap = o._maps[activeIndex];
+
+            var center = activeMap.extent.getCenter();
+
+            var centerLL = toolkit.reproject(center);
+            var level = activeMap.getLevel();
+            var maxMaps = o._maxMaps;
+            var xArray = [],
+                yArray = [],
+                lArray = [];
+
+            while (maxMaps > 0) {
+                xArray.push(centerLL.x.toString());
+                yArray.push(centerLL.y.toString());
+                lArray.push(level.toString());
+
+                maxMaps = maxMaps - 1;
+            }
+
+            toolkit.arrayEach(o._maps, function(map, i) {
+                o._mapsExtentChangeEvent[i].pause();
+                map.centerAndZoom([centerLL.x, centerLL.y], level);
+                o._mapsExtentChangeEvent[i].resume();
+            });
+
+            hash.updateURL({
+                x: xArray.join("!"),
+                y: yArray.join("!"),
+                l: lArray.join("!")
+            });
+
+
+        }
 
 
         return o;

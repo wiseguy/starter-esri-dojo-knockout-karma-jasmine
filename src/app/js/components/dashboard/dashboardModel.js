@@ -1,7 +1,7 @@
-define(["ko", "core/config", "core/modelEventController"],
-    function(ko, config, modelEventController) {
+define(["exports", "ko", "core/config", "core/modelEventController"],
+    function(o, ko, config, modelEventController) {
 
-        var o = {};
+        // var o = {};
         var vm = {};
 
         vm.title = ko.observable();

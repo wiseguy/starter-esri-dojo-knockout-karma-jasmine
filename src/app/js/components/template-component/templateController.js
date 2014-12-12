@@ -109,7 +109,7 @@ define(["exports", "core/config", "components/header/headerModel", "core/toolkit
 
         o.switchView = function(viewId) {
 
-            hash.updateHash({
+            hash.updateApp({
                 v: viewId
             });
 

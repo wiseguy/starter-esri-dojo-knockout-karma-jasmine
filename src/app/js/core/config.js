@@ -9,6 +9,8 @@ define(function() {
 
         basemapForEachMap: false,
 
+        webMapId: "", //if empty then dont use webmap, example a438a0f666f5413a8b3db9d8f8807245
+
         appStateCurrent: {
             "v": "map",
             "b": "streets",

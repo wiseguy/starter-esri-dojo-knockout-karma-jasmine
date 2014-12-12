@@ -8,10 +8,12 @@ define(["exports", "core/config", "core/toolkitController", "core/hashController
 
     o.extentChange = function(map) {
 
+        console.log("onEventController extentChange");
+
         var appCurrentState = config.appStateCurrent;
         var positionInView = map.positionInView;
         var center = map.extent.getCenter();
-        var centerLL = toolkit.convertWM(center, 'wm'); //'ll'
+        var centerLL = toolkit.reproject(center);
         var level = map.getLevel();
 
         var updatedX = appCurrentState.x.split("!");
@@ -23,7 +25,7 @@ define(["exports", "core/config", "core/toolkitController", "core/hashController
         var updatedL = appCurrentState.l.split("!");
         updatedL[positionInView] = level.toString();
 
-        hash.updateHashWithoutChangeDetect({
+        hash.updateURL({
             x: updatedX.join("!"),
             y: updatedY.join("!"),
             l: updatedL.join("!")
@@ -36,6 +38,8 @@ define(["exports", "core/config", "core/toolkitController", "core/hashController
      */
     o.setBasemap = function(basemap, allMaps, targetMap) {
 
+        console.log("onEventController setBasemap");
+
         if (!config.basemapForEachMap) {
 
             toolkit.arrayEach(allMaps, function(theMap, i) {
@@ -46,7 +50,7 @@ define(["exports", "core/config", "core/toolkitController", "core/hashController
 
         }
 
-        hash.updateHashWithoutChangeDetect({
+        hash.updateURL({
             b: basemap.name
         });
 

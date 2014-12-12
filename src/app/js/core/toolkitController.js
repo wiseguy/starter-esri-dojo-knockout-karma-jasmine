@@ -11,7 +11,7 @@ define(["core/config",
         "dojo/ready", "dojo/_base/array", "dojo/sniff", "dojo/hash", "dojo/topic", "dojo/on",
         /*Esri*/
         "esri/request", "esri/layers/ArcGISDynamicMapServiceLayer", "esri/layers/FeatureLayer", "esri/layers/GraphicsLayer",
-        "esri/map", "esri/dijit/BasemapGallery", "esri/dijit/Legend", "esri/geometry/webMercatorUtils"
+        "esri/map", "esri/dijit/BasemapGallery", "esri/dijit/Legend", "esri/geometry/webMercatorUtils", "esri/arcgis/utils"
     ],
     function(config,
         /*Dojo*/
@@ -20,7 +20,7 @@ define(["core/config",
         ready, arrayUtil, sniff, hash, topic, on,
         /*Esri*/
         esriRequest, ArcGISDynamicMapServiceLayer, FeatureLayer, GraphicsLayer,
-        Map, BasemapGallery, Legend, webMercatorUtils) {
+        Map, BasemapGallery, Legend, webMercatorUtils, arcgisUtils) {
 
         var o = {};
 
@@ -34,6 +34,10 @@ define(["core/config",
 
         o.removeClass = function(node, className) {
             domClass.remove(node, className);
+        };
+
+        o.containsClass = function(node, className) {
+            return domClass.contains(node, className);
         };
 
         o.registerFunctionWhenDomReady = function(func) {
@@ -109,16 +113,16 @@ define(["core/config",
         /**
          * sourceProjection can be wm or ll
          */
-        o.convertWM = function(geometry, sourceProjection) {
+        o.reproject = function(geometry) {
 
             var transformedGeometry;
 
-            switch (sourceProjection) {
-                case 'wm':
+            switch (geometry.spatialReference.wkid) {
+                case 102100:
                     transformedGeometry = webMercatorUtils.webMercatorToGeographic(geometry);
                     break;
 
-                case 'll':
+                case 4326:
                     transformedGeometry = webMercatorUtils.geographicToWebMercator(geometry);
                     break;
             }
@@ -205,6 +209,13 @@ define(["core/config",
             return Map;
 
         };
+
+        o.getArcGISutils = function() {
+
+            return arcgisUtils;
+
+        };
+
 
         o.getBasemapDijit = function() {
 

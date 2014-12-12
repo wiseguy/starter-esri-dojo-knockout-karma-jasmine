@@ -1,12 +1,20 @@
-define(["ko", "core/config"],
-    function(ko, config) {
+define(["exports", "ko", "core/config", "core/modelEventController", "core/toolkitController"],
+    function(o, ko, config, modelEventController, toolkit) {
 
-        var o = {};
+        //var o = {};
         var vm = {};
 
         vm.title = ko.observable();
         vm.isActive = ko.observable();
 
+        vm.setActiveMap = function(model, evt) {
+            console.log("mapModel setActiveMap");
+
+            var mapIndex = toolkit.arrayIndex(toolkit.getNodeList(".map"), evt.currentTarget);
+
+            modelEventController.setActiveMap(evt.currentTarget, mapIndex);
+
+        };
 
 
         /**

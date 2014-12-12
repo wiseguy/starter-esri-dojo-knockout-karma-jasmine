@@ -95,17 +95,6 @@ define(["exports", "core/config", "components/tools/toolsModel", "core/toolkitCo
 
         };
 
-        o.handleClickGo = function() {
-
-            //zoom the map to DC
-            hash.updateHash({
-                x: 11,
-                y: 22,
-                v: "map"
-            });
-
-        };
-
 
 
         return o;

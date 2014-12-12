@@ -4,10 +4,9 @@ define(["exports", "core/config", "core/toolkitController", "core/coreController
 
     function(exports, config, toolkit, core, mapController, headerController) {
 
-
-        var watchHashChange = true;
-        var isBrowserNavigation = true;
-        var breakLoop = false;
+        var watchHash = true;
+        var isBrowerBackFwdButton = true;
+        var initialized = false;
 
         /**
          * Uses the URL state, if not present then uses default from config
@@ -28,7 +27,9 @@ define(["exports", "core/config", "core/toolkitController", "core/coreController
 
             } else {
 
-                exports.updateHashWithoutChangeDetect(config.appStateCurrent); //default
+                //debugger;
+                watchHash = false;
+                exports.updateURL(config.appStateCurrent); //default
 
             }
 
@@ -37,82 +38,90 @@ define(["exports", "core/config", "core/toolkitController", "core/coreController
             return true;
         };
 
+        exports.watchHash = function(bool) {
+            watchHash = bool;
+        }
+
+        exports.getWatchHash = function() {
+            return watchHash;
+        }
+
         /**
          *Detect hash change for browser back/foward button click
          */
         exports.startDetectUrlChange = function() {
 
+            toolkit.topicSubscribe("/dojo/hashchange", exports.hashChangeTopicHandler);
 
-            toolkit.topicSubscribe("/dojo/hashchange", function(changedHash) {
-                console.log("hash change handler");
+        };
 
-                if (!watchHashChange) {
-                    isBrowserNavigation = true;
-                    watchHashChange = true; // enable identifying changes in Url
-                    console.log("ended hash change handler since updateHashWithoutChangeDetect was called");
-                    return;
-                }
+        exports.hashChangeTopicHandler = function(changedHash) {
 
-                var appStateCurrent = config.appStateCurrent;
-                var appStatePrevious = config.appStatePrevious;
+            if (!watchHash) {
+                watchHash = true;
+                isBrowerBackFwdButton = true;
+                console.log("ended hash change handler since watchHash is FALSE");
+                return;
+            }
 
-                // 
+            var appStatePrevious, appStateCurrent;
+            // var appStateCurrent = config.appStateCurrent;
+            // var appStatePrevious = config.appStatePrevious;
 
-                if (watchHashChange) {
-                    // 
-                    exports.hashChangeExecute(appStatePrevious, appStateCurrent);
+            if (isBrowerBackFwdButton) { //for browser back button use appStateCurrent
 
-                }
+                appStatePrevious = config.appStateCurrent;
 
-                isBrowserNavigation = true;
-                watchHashChange = true;
+            } else {
 
-            });
+                appStatePrevious = config.appStatePrevious;
+            }
+
+            appStateCurrent = toolkit.stringToObject(changedHash);
+            //debugger;
+            //debugger;
+            // watchHash = true;
+
+            exports.hashChangeExecute(appStatePrevious, appStateCurrent);
+
+            isBrowerBackFwdButton = true;
 
         };
 
         exports.hashChangeExecute = function(appStatePrevious, appStateCurrent) {
+
             var newAppState;
+
             var hash = toolkit.getHash();
-            if (!isBrowserNavigation) {
-                console.log("hash update by user interaction");
-                //if UI interaction
-                exports.appStateCompare(appStatePrevious, appStateCurrent);
-                // debugger;
-            } else {
 
-                console.log("hash update by browser navigation");
-                // This creates a circle where all events listening to changes get fired, so prevent this by using breakloop
-                breakLoop = true;
-                //if back/forward in browser
-                newAppState = toolkit.stringToObject(hash());
+            // newAppState = toolkit.stringToObject(hash());
 
-                if (Object.keys(newAppState).length === 0) {
-                    return;
-                }
-
-                exports.appStateCompare(appStateCurrent, newAppState);
-
-                config.appStateCurrent = toolkit.clone(newAppState);
-                config.appStatePrevious = toolkit.clone(appStateCurrent);
-                // debugger;
+            if (Object.keys(appStateCurrent).length === 0) {
+                return;
             }
+
+            exports.appStateCompare(appStatePrevious, appStateCurrent);
+
+            config.appStateCurrent = toolkit.clone(appStateCurrent);
+            config.appStatePrevious = toolkit.clone(appStatePrevious);
+
 
         };
 
         /**
-         * API to call when hash is to be updated.
-         * changeDetect determines whether update is done silently or follows through to execute some code
+         * API to call when hash/URL is to be updated, firing the app update
+         *
          */
-        exports.updateHash = function(updateObject) {
-            //debugger;
-            if (breakLoop) {
-                console.log("breaking the loop");
-                breakLoop = false;
-                return;
-            }
+        //updateHash
+        exports.updateApp = function(updateObject, urlOnly) {
 
-            console.log("updateHash");
+            console.log("updateApp", updateObject);
+            console.log("watchHash", watchHash);
+            console.log("urlOnly", urlOnly);
+
+            //debugger;
+
+            isBrowerBackFwdButton = false;
 
             var appStateCurrent = config.appStateCurrent;
             var newAppState = toolkit.mixin(toolkit.clone(appStateCurrent), updateObject);
@@ -122,28 +131,33 @@ define(["exports", "core/config", "core/toolkitController", "core/coreController
             config.appStatePrevious = toolkit.clone(appStateCurrent);
             config.appStateCurrent = newAppState;
 
-            //debugger;
-            isBrowserNavigation = false;
-            //console.log(hashString);
-            //debugger;
+            if (urlOnly) {
+                //debugger;
+                watchHash = false;
+            } else {
+                watchHash = true;
+            }
+
             hash(hashString);
 
         };
 
+        //updateHashWithoutChangeDetect
+        /**
+         * API to call when hash/URL is to be updated, WITHOUT firing the app update
+         *
+         */
+        exports.updateURL = function(updateObject) {
 
-        exports.updateHashWithoutChangeDetect = function(updateObject) {
 
-            if (breakLoop) {
-                console.log("breaking the loop");
-                breakLoop = false;
-                return;
+            console.log("update URL only");
+
+            // watchHash = false; // disable identifying Url change
+            //debugger;
+            if (watchHash || !initialized) {
+                exports.updateApp(updateObject, true);
+                initialized = true;
             }
-
-            console.log("updateHashWithoutChangeDetect");
-
-            watchHashChange = false; // disable identifying Url change
-
-            exports.updateHash(updateObject);
 
         };
 
@@ -161,6 +175,8 @@ define(["exports", "core/config", "core/toolkitController", "core/coreController
 
             if (changesArray.length > 0) {
                 exports.handleChanges(oldState, newState, changesArray);
+            } else {
+                console.log("Nothing has changed");
             }
 
             return changesArray;
@@ -206,6 +222,11 @@ define(["exports", "core/config", "core/toolkitController", "core/coreController
                             changesNameArray.push("totalmaps");
                         }
                         break;
+                    case "a":
+                        if (toolkit.arrayIndex(changesNameArray, "activemap") < 0) {
+                            changesNameArray.push("activemap");
+                        }
+                        break;
                 }
 
             });
@@ -219,8 +240,10 @@ define(["exports", "core/config", "core/toolkitController", "core/coreController
 
         exports.updateUIfromChanges = function(oldState, newState, changesNameArray) {
 
+            // exports.watchHash(false);
+            console.log("UPDATE UI >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
             if (toolkit.arrayIndex(changesNameArray, "basemap") > -1) {
-                console.log("set basemap");
+                console.log(">>> set basemap");
                 mapController.setBasemap(newState.b);
             }
 
@@ -235,21 +258,29 @@ define(["exports", "core/config", "core/toolkitController", "core/coreController
                 if (exports.detectMapIndex(oldState.l, newState.l) > -1) {
                     mapIndex = exports.detectMapIndex(oldState.l, newState.l);
                 }
-                console.log("set center and level");
+                console.log(">>> set center and level");
                 mapController.centerAndZoom(newState.x, newState.y, newState.l, mapIndex);
+
             }
 
 
             if (toolkit.arrayIndex(changesNameArray, "view") > -1) {
-                console.log("set view");
+                console.log(">>> set view");
                 headerController.selectView(newState.v);
                 core.startModule(newState.v); //starts only if it wasnt created before
             }
 
             if (toolkit.arrayIndex(changesNameArray, "totalmaps") > -1) {
-                console.log("set totalmaps");
+                console.log(">>> set totalmaps");
                 mapController.changeTotalMaps(newState.m);
             }
+
+            if (toolkit.arrayIndex(changesNameArray, "activemap") > -1) {
+                console.log(">>> set activemap");
+                mapController.updateActiveMapDiv(newState.a);
+            }
+
+            // exports.watchHash(true);
 
         };
 
@@ -274,9 +305,6 @@ define(["exports", "core/config", "core/toolkitController", "core/coreController
             return changeIndex;
         };
 
-        exports.isUpdateByBrowser = function() {
-            return isBrowserNavigation;
-        }
 
         return exports;
 

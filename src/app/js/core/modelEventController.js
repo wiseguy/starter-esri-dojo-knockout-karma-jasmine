@@ -2,13 +2,14 @@
  * This interface handles all events (clicks, mouseover) in the models *
  */
 define(["exports", "core/config", "core/toolkitController", "components/app/appController",
-    "components/map/mapController", "components/tools/toolsController", "components/header/headerController"
+    "components/map/mapController", "components/tools/toolsController", "components/header/headerController",
+    "core/hashController"
 
-], function(o, config, toolkit, appController, mapController, toolsController, headerController) {
+], function(o, config, toolkit, appController, mapController, toolsController, headerController, hash) {
 
-    o.handleClickGo = function(clickedItem) {
+    o.syncExtents = function(clickedItem) {
         // ga('send', 'pageview');        
-        toolsController.handleClickGo(clickedItem);
+        mapController.syncExtents(clickedItem);
 
     };
 
@@ -34,6 +35,14 @@ define(["exports", "core/config", "core/toolkitController", "components/app/appC
         });
 
         headerController.selectView(view.id);
+
+    }
+
+    o.setActiveMap = function(node, mapIndex) {
+
+        hash.updateApp({
+            a: mapIndex
+        });
 
     }
 

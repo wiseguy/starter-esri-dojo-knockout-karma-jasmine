@@ -18,8 +18,8 @@ define(["ko", "core/config", "core/modelEventController"],
         /**
          * handle events
          */
-        vm.clickButton = function(clickedItem) {
-            modelEventController.handleClickGo(clickedItem);
+        vm.syncExtents = function(clickedItem) {
+            modelEventController.syncExtents(clickedItem);
         };
 
         vm.addMap = function() {

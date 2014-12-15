@@ -14,8 +14,7 @@ html(lang='en' manifest='offline.appcache')
       }   
     script(type='text/javascript').
         window.applicationCache.onupdateready = function(e) {
-          console.log(">>>>>>>>>>>>>>>>  Application Cache Updated");          
-          window.applicationCache.swapCache();
+         window.applicationCache.swapCache();
         }
     script(type='text/javascript' src='../app/main.js' async="async")
   body(class="tundra")

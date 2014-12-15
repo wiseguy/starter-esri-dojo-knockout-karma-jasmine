@@ -1,8 +1,8 @@
 /**
 gulp commands
-build - 
-develop - 
-serve -
+dist - 
+watch - 
+optimize -
 */
 
 var gulp = require('gulp');
@@ -30,7 +30,7 @@ var $ = require('gulp-load-plugins')();
 var app_dir = {
     src: __dirname + "/src/",
     tests: __dirname + "/tests/",
-    build: __dirname + "/build/",
+    dist: __dirname + "/dist/",
     css: "**/*.css",
     js: "**/*.js",
     images: "app/images",
@@ -55,7 +55,7 @@ var requirejsOption = {
     },
     // Name of the Entry File, minus the js
     name: 'app/startup',
-    out: 'build/startup-optimized.js'
+    out: 'dist/startup-optimized.js'
 }
 
 
@@ -65,34 +65,34 @@ gulp.task('default', function() {
     // place code for your default task here
 });
 
-/*********Build************/
+/*********Distributable************/
 
-gulp.task('build-delete', function(cb) {
+gulp.task('dist-delete', function(cb) {
     console.log(">>>>>>>> deleting");
-    del([app_dir.build + '**'], cb)
+    del([app_dir.dist + '**'], cb)
 });
 
-gulp.task('build-copy-clean', ['build-delete'], function() {
-    console.log(">>>>>>>> cleaning up the build folder");
+gulp.task('dist-copy-clean', ['dist-delete'], function() {
+    console.log(">>>>>>>> cleaning up the dist folder");
     return gulp.src(app_dir.src + '**')
-        .pipe(gulp.dest(app_dir.build))
+        .pipe(gulp.dest(app_dir.dist))
 });
 
-gulp.task('build-minify-css', ['build-copy-clean'], function() {
+gulp.task('dist-minify-css', ['dist-copy-clean'], function() {
     console.log("minifying CSS");
-    return gulp.src(app_dir.build + app_dir.css)
+    return gulp.src(app_dir.dist + app_dir.css)
         .pipe($.minifyCss())
-        .pipe(gulp.dest(app_dir.build))
+        .pipe(gulp.dest(app_dir.dist))
 });
 
-gulp.task('build-uglify-js', ['build-copy-clean'], function() {
+gulp.task('dist-uglify-js', ['dist-copy-clean'], function() {
     console.log(">>>>>>>> Uglifying JS");
-    return gulp.src(app_dir.build + app_dir.js)
+    return gulp.src(app_dir.dist + app_dir.js)
         .pipe($.uglify())
-        .pipe(gulp.dest(app_dir.build))
+        .pipe(gulp.dest(app_dir.dist))
 });
 
-gulp.task('build-minify-html', ['build-copy-clean'], function() {
+gulp.task('dist-minify-html', ['dist-copy-clean'], function() {
     console.log(">>>>>>>> Minifying HTML");
     var opts = {
         comments: true,
@@ -100,10 +100,10 @@ gulp.task('build-minify-html', ['build-copy-clean'], function() {
     };
     return gulp.src(app_dir.src + app_dir.html)
         .pipe(minifyhtml(opts))
-        .pipe(gulp.dest(app_dir.build))
+        .pipe(gulp.dest(app_dir.dist))
 });
 
-gulp.task('build-minify-image', function() {
+gulp.task('dist-minify-image', function() {
     console.log(">>>>>>>> Minifying Images");
     return gulp.src(app_dir.src + app_dir.images + "/**/*")
         .pipe(imagemin({
@@ -111,17 +111,17 @@ gulp.task('build-minify-image', function() {
             progressive: true,
             interlaced: true
         }))
-        .pipe(gulp.dest(app_dir.build + app_dir.images))
+        .pipe(gulp.dest(app_dir.dist + app_dir.images))
 });
 
-gulp.task('build-compile-coffee', function() {
+gulp.task('dist-compile-coffee', function() {
     console.log(">>>>>>>> Compile Coffeescript");
     return gulp.src(app_dir.tests + "**/*.coffee") // path to your file
         .pipe(coffee())
         .pipe(gulp.dest(app_dir.tests));
 });
 
-gulp.task('build', ['build-minify-css', 'build-uglify-js', 'build-minify-html', 'build-minify-image', 'build-compile-coffee']);
+gulp.task('dist', ['dist-minify-css', 'dist-uglify-js', 'dist-minify-html', 'dist-minify-image', 'dist-compile-coffee']);
 
 /********RequieJS Optimizer********/
 
@@ -148,7 +148,7 @@ gulp.task('requireopt', function() {
     return gulp.src(app_dir.src + app_dir.js)
         .pipe(amdOptimize("core/coreController"), [amdConfig])
         .pipe(concat("index.js"))
-        .pipe(gulp.dest(app_dir.build));
+        .pipe(gulp.dest(app_dir.dist));
 });*/
 
 gulp.task('optimize', ['requireopt']);

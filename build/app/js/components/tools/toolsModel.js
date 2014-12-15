@@ -1,1 +1,0 @@
-define(["ko","core/config","core/modelEventController"],function(n,o,t){var e={},i={};return i.title=n.observable(),i.clickButton=function(n){t.handleClickGo(n)},console.log("apply bindings for app"),e.startup=function(){i.title("Aamir test")},e.bind=function(o){n.applyBindings(i,o)},e.getModel=function(){return i},e.setModel=function(n,o){i[n](o)},e});

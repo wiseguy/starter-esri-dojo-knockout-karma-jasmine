@@ -1,1 +1,0 @@
-define(["core/config","core/toolkitController","core/modelSaveController"],function(){var o={};o.queryEsri=function(){},o.queryJson=function(){}});

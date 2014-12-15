@@ -1,1 +1,0 @@
-define(["exports","core/config","core/toolkitController","components/app/appController","components/map/mapController","components/tools/toolsController"],function(o,n,e,l,t,r){return o.handleClickGo=function(o){r.handleClickGo(o)},o});

@@ -138,6 +138,7 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
             var currentTotalMaps = o._currentTotalMaps; //config.appStateCurrent.m;
             if (currentTotalMaps === o._maxMaps) {
+                core.resumeComponent();
                 alert("can not open more maps");
                 return;
             }
@@ -153,6 +154,7 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
         o.decrementMap = function() {
             var currentTotalMaps = o._currentTotalMaps; //config.appStateCurrent.m;
             if (currentTotalMaps === 1) {
+                core.resumeComponent();
                 alert("at least one map needs to exist decrementMap");
                 return;
             }
@@ -190,14 +192,14 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
             //did we reach the max?
             if (o._currentTotalMaps === o._maxMaps) {
-                core.resumeModule();
+                core.resumeComponent();
                 alert("can not open more maps");
                 return;
             }
 
             //block map interaction
             // core.blockModule(toolkit.getNodeList(".map-container")[0]);
-            core.blockModule(toolkit.getNodeList(".tools-container")[0]);
+            core.blockComponent(toolkit.getNodeList(".tools-container")[0]);
 
             o._currentTotalMaps += 1;
             positionInView = o._currentTotalMaps - 1;
@@ -269,14 +271,15 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
             map.positionInView = positionInView;
 
-            o._maps[positionInView] = map;
 
-            if (!isWebMap) {
+            if (!isWebMap && !o._maps[positionInView]) {
                 var mapLoad = map.on("load", function() {
                     mapLoad.remove();
                     o.addLayers(map);
                 });
             }
+
+            o._maps[positionInView] = map;
 
         };
 
@@ -345,7 +348,7 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
                 o._mapsExtentChangeEvent.push(extentChangeHandler);
 
-                core.resumeModule();
+                core.resumeComponent();
 
             });
 
@@ -444,6 +447,7 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
             //is only 1 map remaining?
 
             if (o._currentMapPosition == 0) {
+                core.resumeComponent();
                 alert("at least one map needs to exist");
                 return;
             }

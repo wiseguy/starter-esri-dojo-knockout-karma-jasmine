@@ -9,9 +9,9 @@
  syncViewModels 
  */
 
-define(["core/config", "components/app/appModel", "core/toolkitController", "core/coreController", "bootstrap"],
+define(["core/config", "components/app/appModel", "core/toolkitController", "core/coreController", "core/koExtend", "bootstrap"],
 
-    function(config, appModel, toolkit, core) {
+    function(config, appModel, toolkit, core, koExtend) {
 
         var o = {};
         /*
@@ -38,6 +38,8 @@ define(["core/config", "components/app/appModel", "core/toolkitController", "cor
             } else {
                 o._initialized = true;
             }
+
+            koExtend.extend();
 
             //looad the partial
             var loadAppDeferred = toolkit.loadPartial("components/app/appPartial.html");

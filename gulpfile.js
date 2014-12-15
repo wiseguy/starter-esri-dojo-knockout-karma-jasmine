@@ -17,6 +17,12 @@ var minifycss = require('gulp-minify-css');
 var minifyhtml = require('gulp-minify-html');
 var imagemin = require('gulp-imagemin');
 
+var requirejs = require("requirejs");
+var amdOptimize = require("amd-optimize");
+var concat = require("gulp-concat");
+//var amdOptimize = require('gulp-amd-optimizer');
+var sourcemap = require('gulp-sourcemaps');
+
 var browserSync = require('browser-sync');
 var del = require('del');
 var $ = require('gulp-load-plugins')();
@@ -30,6 +36,28 @@ var app_dir = {
     images: "app/images",
     html: "**/*.htm"
 };
+
+
+var requirejsOption = {
+    baseUrl: 'src',
+    paths: {
+        'dojo': 'empty:',
+        'dijit': 'empty:',
+        'dojox': 'empty:',
+        'esri': 'empty:',
+        'app': 'app',
+        'core': 'app/js/core',
+        'components': 'app/js/components',
+        'libs': 'app/js/libs',
+        'js': 'app/js',
+        'ko': 'app/js/libs/knockout-3.2.0',
+        'bootstrap': 'app/js/libs/bootstrap.min'
+    },
+    // Name of the Entry File, minus the js
+    name: 'app/startup',
+    out: 'build/startup-optimized.js'
+}
+
 
 
 gulp.task('default', function() {
@@ -94,6 +122,37 @@ gulp.task('build-compile-coffee', function() {
 });
 
 gulp.task('build', ['build-minify-css', 'build-uglify-js', 'build-minify-html', 'build-minify-image', 'build-compile-coffee']);
+
+/********RequieJS Optimizer********/
+
+var amdConfig = {
+    baseUrl: app_dir.src,
+    path: {
+        'core': 'app/js/core',
+        'components': 'app/js/components',
+        'libs': 'app/js/components',
+        'js': 'app/js'
+    },
+    exclude: [
+        'jQuery'
+    ]
+};
+
+//amdOptimize.src("core/coreController", amdConfig)
+
+gulp.task('requireopt', function() {
+    requirejs.optimize(requirejsOption, function(res) {});
+});
+
+/*gulp.task('amdOpt', function() {
+    return gulp.src(app_dir.src + app_dir.js)
+        .pipe(amdOptimize("core/coreController"), [amdConfig])
+        .pipe(concat("index.js"))
+        .pipe(gulp.dest(app_dir.build));
+});*/
+
+gulp.task('optimize', ['requireopt']);
+
 
 /*********Serve************/
 

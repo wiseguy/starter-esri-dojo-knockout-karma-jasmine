@@ -1,5 +1,5 @@
 ## Purpose 
-This is a starter app that follows conventions documented in the docs folder. 
+This is a starter template app. It contains conventions in the docs folder. 
 
 ## Libraries / Dependencies
 1. Esri JavaScript API
@@ -30,8 +30,8 @@ This is a starter app that follows conventions documented in the docs folder.
 	core.showMessageDialog(messageHTML);
 	core.hideMessageDialog(messageHTML);
 7. A blocking API
-	core.blockModule(node or ID);
-	core.resumeModule(node or ID);
+	core.blockComponent(node or ID);
+	core.resumeComponent(node or ID);
 8. A URL update API
 9. Touch Events
 10. Responsive Layout
@@ -41,10 +41,13 @@ This is a starter app that follows conventions documented in the docs folder.
 2. src/app/js/core
 	config.js
 	coreController.js - All esri/xxxx and dojo/xxxx modules should be required here
+	modelEventController - All events triggered by knockout binding must be channeled here
+	onEventController - All events triggered by dojo/on must be channeled here
+	modelSaveController - all model.set should be done here
 
-## How to add new modules
+## Adding a new component
 1. Make a copy of the template folder
-2. 
+2. A component could be part of a view.
 
 ## Rules to keep the Application scalable and inline with user expectation
 1. All updates to Models happen in ModelSaveController.js
@@ -52,8 +55,8 @@ This is a starter app that follows conventions documented in the docs folder.
 3. All dojo/on events get channelled through onEventController.js
 4. Do NOT write topic.publish / topic.subscribe
 5. Use 'exports' to avoid circular dependency. Example hashController.js
-6. Keep your styl file in the module folder but include it in app.styl
-7. The folder name of module and prefix should match. 
+6. Keep your styl file in the component folder but include it in app.styl
+7. The folder name of component and prefix should match. 
 8. Use combination on and touch events
 
 ## How to Test

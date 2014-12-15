@@ -203,7 +203,7 @@ var isView = module.isView();
 
     };
 
-    o.blockModule = function(targetNode) {
+    o.blockComponent = function(targetNode) {
         //inject the blocking div in the node
 
         //create the blocker if necessary
@@ -219,7 +219,7 @@ var isView = module.isView();
 
     };
 
-    o.resumeModule = function() {
+    o.resumeComponent = function() {
         //hide blocker
         toolkit.addClass(o._blockingNode, "dijitHidden");
     };

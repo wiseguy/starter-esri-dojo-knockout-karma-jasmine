@@ -5,8 +5,9 @@
 
 (function() {
     'use strict';
+
     var baseUrl,
-        esriVersion = "3.11",
+        esriVersion = "3.12",
         loadFiles = {
             "css": [
                 "../app/css/app.css",
@@ -44,6 +45,9 @@
         async: true,
         //cacheBust: "v=" + version,
         packages: [{
+            name: "app",
+            location: pathPrefix + "/app"
+        }, {
             name: "core",
             location: pathPrefix + "/app/js/core"
         }, {
@@ -61,12 +65,13 @@
             ["bootstrap", "libs/bootstrap.min"]
         ],
         deps: [
-            "core/coreController",
+            "app/startup",
+            // "app/loader-optimized"
             "dojo/domReady!"
         ],
-        callback: function(coreController) {
+        callback: function() {
 
-            coreController.startup();
+            //  coreController.startup();
 
         } // End callback
     };

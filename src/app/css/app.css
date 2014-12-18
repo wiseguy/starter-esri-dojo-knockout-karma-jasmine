@@ -31,6 +31,12 @@ body {
   background-color: #ccc;
   opacity: 0.5;
 }
+.app .dijitButtonNode {
+  background: #ccc;
+}
+.app .dijitHover .dijitButtonNode {
+  background: #eee;
+}
 /*App Stylus*/
 .app-container {
   width: 100%;

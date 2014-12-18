@@ -8,7 +8,8 @@ define(["core/config",
         /*Dojo*/
         "dojo/promise/all", "dojo/dom", "dojo/dom-attr", "dojo/dom-class", "dojo/html", "dojo/query",
         "dojo/Deferred", "dojo/dom-construct", "dojo/_base/lang", "dojo/io-query", "dojo/hash",
-        "dojo/ready", "dojo/_base/array", "dojo/sniff", "dojo/hash", "dojo/topic", "dojo/on",
+        "dojo/ready", "dojo/_base/array", "dojo/sniff", "dojo/hash", "dojo/topic", "dojo/on", "dojo/parser",
+        "dijit/TitlePane", "dijit/layout/ContentPane", "dijit/form/Button", "dijit/form/DropDownButton", "dijit/TooltipDialog",
         /*Esri*/
         "esri/request", "esri/layers/ArcGISDynamicMapServiceLayer", "esri/layers/FeatureLayer", "esri/layers/GraphicsLayer",
         "esri/map", "esri/dijit/BasemapGallery", "esri/dijit/Legend", "esri/geometry/webMercatorUtils", "esri/arcgis/utils"
@@ -17,7 +18,8 @@ define(["core/config",
         /*Dojo*/
         all, dom, domAttr, domClass, html, dojoQuery,
         Deferred, domConstruct, lang, ioQuery, hash,
-        ready, arrayUtil, sniff, hash, topic, on,
+        ready, arrayUtil, sniff, hash, topic, on, parser,
+        TitlePane, ContentPane, Button, DropDownButton, TooltipDialog,
         /*Esri*/
         esriRequest, ArcGISDynamicMapServiceLayer, FeatureLayer, GraphicsLayer,
         Map, BasemapGallery, Legend, webMercatorUtils, arcgisUtils) {
@@ -59,17 +61,15 @@ define(["core/config",
         o.parseDojo = function(node) {
 
             var nodeToParse = node;
-            require(["dojox/mobile/parser", "dojox/mobile", "dojox/mobile/compat",
-                    "dijit/TitlePane", "dijit/layout/ContentPane", "dijit/form/Button"
-                ],
-                function(parser) {
-                    //using mobile parser because regular one doesnt work with html tags manifest attribute
-                    if (!nodeToParse) {
-                        parser.parse();
-                    } else {
-                        parser.parse(nodeToParse);
-                    }
-                })
+            var parserDeferred;
+            //using mobile parser because regular one doesnt work with html tags manifest attribute
+            if (!nodeToParse) {
+                parserDeferred = parser.parse();
+            } else {
+                parserDeferred = parser.parse(nodeToParse);
+            }
+
+            return parserDeferred;
         };
 
         o.getNodeById = function(id) {

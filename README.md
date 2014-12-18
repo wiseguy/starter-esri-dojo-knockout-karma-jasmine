@@ -1,5 +1,13 @@
 ## Purpose 
-This is a starter template app. It contains conventions in the docs folder. 
+This is a starter template app. It contains conventions in the docs folder.
+
+##TODO
+- make ko components - a drop down list of layer to show
+- add a data loader - esri request
+- add docs for specs
+- add more tests
+- convert to foundation
+- 
 
 ## Libraries / Dependencies
 1. Esri JavaScript API
@@ -8,6 +16,7 @@ This is a starter template app. It contains conventions in the docs folder.
 4. Jasmine
 5. Karma
 6. NodeJS
+7. Bootstrap and Jquery
 
 ## How to Use
 1. Install NodeJS
@@ -17,11 +26,11 @@ This is a starter template app. It contains conventions in the docs folder.
 	npm install -g coffee-script
 	npm install -g karma-cli
 3. Open src/app/main.js and set the baseUrl to http URL to the src folder
-4. Run the command 'gulp build' to have your code optimized in the build folder
+4. Run the command 'gulp dist' to have your code optimized in the dist folder
 
 ## What do you get?
 1. Share, using AddThis
-2. Browser Check
+2. Browser Testing for Compatibility
 3. Google Analytics
 	https://developers.google.com/analytics/devguides/collection/analyticsjs/events
 4. Multiple Views
@@ -32,9 +41,10 @@ This is a starter template app. It contains conventions in the docs folder.
 7. A blocking API
 	core.blockComponent(node or ID);
 	core.resumeComponent(node or ID);
-8. A URL update API
-9. Touch Events
-10. Responsive Layout
+8. A URL update API - hash.updateURL and hash.updateApp
+9. Shows how to use Touch Events
+10. Responsive Layout - Bootstrap
+11. Appcache for offline capabilities
 
 ## What goes where? Folder Structure
 1. src/app/js/components - UI components. May be part of the View linked to the menu
@@ -55,7 +65,8 @@ This is a starter template app. It contains conventions in the docs folder.
 3. All dojo/on events get channelled through onEventController.js
 4. Do NOT write topic.publish / topic.subscribe
 5. Use 'exports' to avoid circular dependency. Example hashController.js
-6. Keep your styl file in the component folder but include it in app.styl
+	(Warning: using circular dependency makes it hard to do the requirejs optimizer)
+6. Keep your styl file in its own component folder but include it in app.styl
 7. The folder name of component and prefix should match. 
 8. Use combination on and touch events
 

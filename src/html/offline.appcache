@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# 2014-11-11:v222
+# 2014-12-15
 
 # Explicitly cached 'master entries'.
 CACHE:
@@ -16,9 +16,6 @@ index.html
 ../app/js/components/dashboard/dashboardController.js
 ../app/js/components/dashboard/dashboardModel.js
 ../app/js/components/dashboard/dashboardPartial.html
-#../app/js/components/footer/footerController.js
-#../app/js/components/footer/footerModel.js
-#../app/js/components/footer/footerPartial.html
 ../app/js/components/header/headerController.js
 ../app/js/components/header/headerModel.js
 ../app/js/components/header/headerPartial.html
@@ -40,10 +37,29 @@ index.html
 ../app/js/libs/bootstrap.min.js
 ../app/js/libs/knockout-3.2.0.js
 # esri stuff
+http://js.arcgis.com/3.12/dijit/themes/tundra/images/titleBar.png
+http://js.arcgis.com/3.12/dijit/themes/tundra/images/spriteArrows.png
+http://js.arcgis.com/3.12/dijit/themes/tundra/images/buttonEnabled.png
+http://js.arcgis.com/3.12/esri/dijit/images/ajax-loader.gif
+http://js.arcgis.com/3.12/esri/dijit/images/popup.png
 http://js.arcgis.com/3.12/init.js
 http://js.arcgis.com/3.12/esri/css/esri.css
+http://js.arcgis.com/3.12/dijit/themes/tundra/tundra.css
 http://js.arcgis.com/3.12/esri/dijit/BasemapGallery.js
-
+http://js.arcgis.com/3.12/dijit/TitlePane.js
+http://js.arcgis.com/3.12/esri/nls/jsapi_en-us.js
+http://js.arcgis.com/3.12/esri/dijit/Legend.js
+http://js.arcgis.com/3.12/dojox/gfx/svg.js
+http://js.arcgis.com/3.12/dojox/mobile.js
+http://js.arcgis.com/3.12/dojox/mobile/parser.js
+http://js.arcgis.com/3.12/dojox/mobile/compat.js
+http://js.arcgis.com/3.12/dojo/hash.js
+http://js.arcgis.com/3.12/esri/images/map/logo-med.png
+http://js.arcgis.com/3.12/dojo/resources/blank.gif
+http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js
+http://www.arcgis.com/sharing/rest/content/items/86de95d4e0244cba80f0fa2c9403a7b2/info/thumbnail/tempimagery.jpg
+http://www.arcgis.com/sharing/rest/content/items/413fd05bbd7342f5991d5ec96f4f8b18/info/thumbnail/tempimagery_with_labels_ne_usa.png
+http://www.arcgis.com/sharing/rest/content/items/d8855ee4d3d74413babfb0f41203b168/info/thumbnail/world_street_map.jpg
 
 # Resources that require the user to be online.
 NETWORK:

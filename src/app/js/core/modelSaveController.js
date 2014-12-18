@@ -10,7 +10,7 @@ define(["exports", "core/config", "core/toolkitController", "components/app/appM
 
     o.updateView = function(viewsList) {
 
-        //headerModel.set("viewLinks", []);
+
         headerModel.set("viewLinks", viewsList);
         // debugger;
         toolkit.arrayEach(viewsList, function(view) {

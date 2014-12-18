@@ -40,7 +40,11 @@ define(["ko", "core/config", "core/modelEventController", "core/toolkitControlle
          * API to get and set model
          */
         o.get = function(name) {
-            return vm[name]();
+            if (name) {
+                return vm[name]();
+            } else {
+                return vm;
+            }
         };
 
         o.set = function(name, value) {

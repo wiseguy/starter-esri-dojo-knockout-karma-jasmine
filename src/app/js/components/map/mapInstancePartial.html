@@ -1,21 +1,22 @@
 
 <div data-bind="event: { mousedown: setActiveMap }" class="map dijitHidden">
   <div class="basemap-gallery-titlepane-holder dijitHidden">
-    <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Basemap', closable:false, open:true">
-      <div data-dojo-type="dijit/layout/ContentPane" class="basemap-contentpane">
-        <div class="basemap-gallery-container">
+    <div data-dojo-type="dijit/form/DropDownButton"><span>Basemaps</span>
+      <div data-dojo-type="dijit/TooltipDialog">
+        <div style="width:300px;height:200px;overflow:auto" class="basemap-gallery-container">
           <div class="basemap-gallery"></div>
         </div>
       </div>
     </div>
   </div>
   <div class="legend-titlepane-holder">
-    <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Legend', closable:false, open:true">
-      <div data-dojo-type="dijit/layout/ContentPane" class="legend-contentpane">
+    <div data-dojo-type="dijit/form/DropDownButton"><span>Legend</span>
+      <div data-dojo-type="dijit/TooltipDialog">
         <div class="legend-container">
           <div class="legend"></div>
         </div>
       </div>
     </div>
   </div>
+  <like-widget params="value: null"></like-widget>
 </div>

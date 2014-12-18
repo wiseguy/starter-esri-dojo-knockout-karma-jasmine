@@ -18,8 +18,9 @@ var minifyhtml = require('gulp-minify-html');
 var imagemin = require('gulp-imagemin');
 
 var requirejs = require("requirejs");
-var amdOptimize = require("amd-optimize");
+//var amdOptimize = require("amd-optimize");
 var concat = require("gulp-concat");
+var requirejsOptimize = require('gulp-requirejs-optimize');
 //var amdOptimize = require('gulp-amd-optimizer');
 var sourcemap = require('gulp-sourcemaps');
 
@@ -38,25 +39,7 @@ var app_dir = {
 };
 
 
-var requirejsOption = {
-    baseUrl: 'src',
-    paths: {
-        'dojo': 'empty:',
-        'dijit': 'empty:',
-        'dojox': 'empty:',
-        'esri': 'empty:',
-        'app': 'app',
-        'core': 'app/js/core',
-        'components': 'app/js/components',
-        'libs': 'app/js/libs',
-        'js': 'app/js',
-        'ko': 'app/js/libs/knockout-3.2.0',
-        'bootstrap': 'app/js/libs/bootstrap.min'
-    },
-    // Name of the Entry File, minus the js
-    name: 'app/startup',
-    out: 'dist/startup-optimized.js'
-}
+
 
 
 
@@ -122,36 +105,68 @@ gulp.task('dist-compile-coffee', function() {
 });
 
 gulp.task('dist', ['dist-minify-css', 'dist-uglify-js', 'dist-minify-html', 'dist-minify-image', 'dist-compile-coffee']);
+gulp.task('dist-opt', ['dist-minify-css', 'dist-uglify-js', 'dist-optimize', 'dist-minify-html', 'dist-minify-image', 'dist-compile-coffee']);
+
 
 /********RequieJS Optimizer********/
 
-var amdConfig = {
-    baseUrl: app_dir.src,
-    path: {
+
+var requirejsOption = {
+    baseUrl: 'src',
+    paths: {
+        'dojo': 'empty:',
+        'dijit': 'empty:',
+        'dojox': 'empty:',
+        'esri': 'empty:',
+        'app': 'app',
         'core': 'app/js/core',
         'components': 'app/js/components',
-        'libs': 'app/js/components',
-        'js': 'app/js'
+        'libs': 'app/js/libs',
+        'js': 'app/js',
+        'ko': 'app/js/libs/knockout-3.2.0',
+        'bootstrap': 'app/js/libs/bootstrap.min'
     },
-    exclude: [
-        'jQuery'
-    ]
-};
-
-//amdOptimize.src("core/coreController", amdConfig)
+    findNestedDependencies: true,
+    // Name of the Entry File, minus the js
+    name: 'app/startup',
+    out: 'dist/startup-optimized.js'
+}
 
 gulp.task('requireopt', function() {
     requirejs.optimize(requirejsOption, function(res) {});
 });
 
-/*gulp.task('amdOpt', function() {
-    return gulp.src(app_dir.src + app_dir.js)
-        .pipe(amdOptimize("core/coreController"), [amdConfig])
-        .pipe(concat("index.js"))
-        .pipe(gulp.dest(app_dir.dist));
-});*/
 
-gulp.task('optimize', ['requireopt']);
+gulp.task('dist-optimize', function() {
+    return gulp.src(app_dir.src + app_dir.js)
+        .pipe(requirejsOptimize(function(file) {
+            return { //options https://github.com/jrburke/r.js/blob/master/build/example.build.js
+                name: 'app/startup',
+                optimize: 'none',
+                //name: "app/startup1",
+                out: "app/startup-optimized.js",
+                useStrict: true,
+                keepAmdefine: true,
+                baseUrl: app_dir.src,
+                paths: {
+                    'dojo': 'empty:',
+                    'dijit': 'empty:',
+                    'dojox': 'empty:',
+                    'esri': 'empty:',
+                    'app': 'app',
+                    'core': 'app/js/core',
+                    'components': 'app/js/components',
+                    'libs': 'app/js/libs',
+                    'js': 'app/js',
+                    'ko': 'app/js/libs/knockout-3.2.0',
+                    'bootstrap': 'app/js/libs/bootstrap.min'
+                }
+            };
+        }))
+        .pipe(gulp.dest(app_dir.dist));
+});
+
+gulp.task('optimize', ['dist-optimize']);
 
 
 /*********Serve************/

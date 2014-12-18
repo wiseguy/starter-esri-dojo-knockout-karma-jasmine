@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" manifest="offline.appcache">
+<html>
   <head>
     <title>BlueRaster Template App</title>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -7,7 +7,6 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link type="text/css" rel="stylesheet" href="../app/css/app.css">
-    <!-- Inline Critical CSS-->
     <style type="text/css">
       body {
         background-color:#000;
@@ -15,11 +14,10 @@
     </style>
     <script type="text/javascript">
       window.applicationCache.onupdateready = function(e) {
-        console.log(">>>>>>>>>>>>>>>>  Application Cache Updated");          
-        window.applicationCache.swapCache();
+       window.applicationCache.swapCache();
       }
     </script>
     <script type="text/javascript" src="../app/main.js" async="async"></script>
   </head>
-  <body class="tundra"></body>
+  <body class="tundra app"></body>
 </html>

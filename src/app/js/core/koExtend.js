@@ -1,4 +1,4 @@
-define(["exports", "ko"], function(o, ko) {
+define(["exports", "ko", "core/toolkitController"], function(o, ko, toolkit) {
 
     o.extend = function() {
 
@@ -14,6 +14,8 @@ define(["exports", "ko"], function(o, ko) {
                 return matchingItems;
             }, this);
         }
+
+
 
     }
 

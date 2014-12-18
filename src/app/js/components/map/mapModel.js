@@ -6,6 +6,10 @@ define(["exports", "ko", "core/config", "core/modelEventController", "core/toolk
 
         vm.title = ko.observable();
         vm.isActive = ko.observable();
+        vm.userRating = ko.observable('like');
+
+
+
 
         vm.setActiveMap = function(model, evt) {
             console.log("mapModel setActiveMap");
@@ -25,6 +29,15 @@ define(["exports", "ko", "core/config", "core/modelEventController", "core/toolk
             vm.title("Map");
             vm.isActive(true);
 
+            ko.components.register('like-widget', {
+                viewModel: {
+                    require: 'components/map/component-like-widget'
+                },
+                template: {
+                    require: 'dojo/text!components/map/component-like-widget.html'
+                }
+            });
+
         };
 
 
@@ -33,6 +46,8 @@ define(["exports", "ko", "core/config", "core/modelEventController", "core/toolk
          */
         o.bind = function(node) {
             console.log("apply bindings for map");
+
+
             ko.applyBindings(vm, node);
         };
 

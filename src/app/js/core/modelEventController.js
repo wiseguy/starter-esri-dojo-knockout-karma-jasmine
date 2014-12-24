@@ -46,5 +46,10 @@ define(["exports", "core/config", "core/toolkitController", "components/app/appC
 
     }
 
+    o.zoomToPlace = function(place) {
+        //alert(place.name);
+        mapController.zoomToXY(place);
+    }
+
     return o;
 });

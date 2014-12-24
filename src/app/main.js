@@ -13,7 +13,7 @@
                 "http://js.arcgis.com/" + esriVersion + "/esri/css/esri.css",
                 "http://js.arcgis.com/" + esriVersion + "/dijit/themes/tundra/tundra.css",
                 "../app/css/app.css",
-                "../app/css/bootstrap.css"
+                "../app/css/bootstrap2.css"
             ],
             "js": [
                 "http://js.arcgis.com/" + esriVersion + "/",

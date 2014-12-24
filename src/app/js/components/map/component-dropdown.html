@@ -1,0 +1,3 @@
+
+<select data-bind="options:places, optionsCaption:'Choose..', optionsText:'name', value:chosenPlace, event:{change:placeSelectHandler}"></select>
+<p data-bind="with:chosenPlace">You have zoomed to <span data-bind="text:name"></span></p>

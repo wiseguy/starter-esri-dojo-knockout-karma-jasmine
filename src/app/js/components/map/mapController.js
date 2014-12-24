@@ -125,10 +125,10 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
             var currentTotalMaps = o._currentTotalMaps; //config.appStateCurrent.m; //o._currentTotalMaps;
             if (parseInt(newMapCount) < parseInt(currentTotalMaps)) { //decreased
-                debugger;
+                //debugger;
                 o.removeMap();
             } else { //increased
-                debugger;
+                //debugger;
                 o.addMap();
             }
 
@@ -252,8 +252,13 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
                 var map = new MapClass(mapNode, {
                     basemap: appCurrentState.b,
                     center: [appCurrentState.x.split("!")[positionInView], appCurrentState.y.split("!")[positionInView]],
-                    zoom: appCurrentState.l.split("!")[positionInView]
+                    zoom: appCurrentState.l.split("!")[positionInView],
+                    fadeOnZoom: true,
+                    force3DTransforms: true,
+                    navigationMode: "css-transforms"
                 });
+
+
 
 
 
@@ -629,6 +634,19 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
                 l: lArray.join("!")
             });
 
+
+        },
+
+        o.getCurrentMap = function() {
+            var activeIndex = parseInt(config.appStateCurrent.a);
+            var activeMap = o._maps[activeIndex];
+            return activeMap;
+        }
+
+        o.zoomToXY = function(xy) {
+            var currentMap = o.getCurrentMap();
+
+            currentMap.centerAndZoom([xy.x, xy.y], xy.l);
 
         }
 

@@ -21,9 +21,10 @@ define(["exports", "core/config", "core/toolkitController", "core/hashController
 
         //Initialize stuff that doesnt depend on DOM
 
-        this.initProxy();
-        this.initPreCallback();
-        this.initCors();
+        this.setupProxy();
+        this.setupPreCallback();
+        this.setupCors();
+        this.setupConfig();
 
         if (config.plugins.analytics) {
             this.initAnalytics();
@@ -127,17 +128,26 @@ define(["exports", "core/config", "core/toolkitController", "core/hashController
         document.getElementsByTagName('head')[0].appendChild(s);
     };
 
-    o.initProxy = function() {
+    o.setupProxy = function() {
 
     };
 
-    o.initPreCallback = function() {
+    o.setupPreCallback = function() {
 
     };
 
-    o.initCors = function() {
+    o.setupCors = function() {
 
     };
+
+    o.setupConfig = function() {
+        var esriConfig = toolkit.getEsriConfig();
+
+        esriConfig.defaults.map.panDuration = 1; // time in milliseconds, default panDuration: 250
+        esriConfig.defaults.map.panRate = 1; // default panRate: 25 
+        esriConfig.defaults.map.zoomDuration = 100; // default zoomDuration: 500 
+        esriConfig.defaults.map.zoomRate = 1; // default zoomRate: 25
+    }
 
     o.initAnalytics = function() {
 

@@ -12,7 +12,8 @@ define(["core/config",
         "dijit/TitlePane", "dijit/layout/ContentPane", "dijit/form/Button", "dijit/form/DropDownButton", "dijit/TooltipDialog",
         /*Esri*/
         "esri/request", "esri/layers/ArcGISDynamicMapServiceLayer", "esri/layers/FeatureLayer", "esri/layers/GraphicsLayer",
-        "esri/map", "esri/dijit/BasemapGallery", "esri/dijit/Legend", "esri/geometry/webMercatorUtils", "esri/arcgis/utils"
+        "esri/map", "esri/dijit/BasemapGallery", "esri/dijit/Legend", "esri/geometry/webMercatorUtils", "esri/arcgis/utils",
+        "esri/config"
     ],
     function(config,
         /*Dojo*/
@@ -22,7 +23,8 @@ define(["core/config",
         TitlePane, ContentPane, Button, DropDownButton, TooltipDialog,
         /*Esri*/
         esriRequest, ArcGISDynamicMapServiceLayer, FeatureLayer, GraphicsLayer,
-        Map, BasemapGallery, Legend, webMercatorUtils, arcgisUtils) {
+        Map, BasemapGallery, Legend, webMercatorUtils, arcgisUtils,
+        esriConfig) {
 
         var o = {};
 
@@ -203,6 +205,11 @@ define(["core/config",
         o.mixin = function(targetObject, sourceObject) {
             return lang.mixin(targetObject, sourceObject);
         };
+
+        o.getEsriConfig = function() {
+
+            return esriConfig;
+        }
 
         o.getMapClass = function() {
 

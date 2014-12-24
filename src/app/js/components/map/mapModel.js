@@ -18,6 +18,8 @@ define(["exports", "ko", "core/config", "core/modelEventController", "core/toolk
 
             modelEventController.setActiveMap(evt.currentTarget, mapIndex);
 
+            return true;
+
         };
 
 
@@ -29,12 +31,12 @@ define(["exports", "ko", "core/config", "core/modelEventController", "core/toolk
             vm.title("Map");
             vm.isActive(true);
 
-            ko.components.register('like-widget', {
+            ko.components.register('zoom-to-place-widget', {
                 viewModel: {
-                    require: 'components/map/component-like-widget'
+                    require: 'components/map/component-dropdown'
                 },
                 template: {
-                    require: 'dojo/text!components/map/component-like-widget.html'
+                    require: 'dojo/text!components/map/component-dropdown.html'
                 }
             });
 

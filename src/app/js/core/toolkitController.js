@@ -64,7 +64,7 @@ define(["core/config",
 
             var nodeToParse = node;
             var parserDeferred;
-            //using mobile parser because regular one doesnt work with html tags manifest attribute
+
             if (!nodeToParse) {
                 parserDeferred = parser.parse();
             } else {

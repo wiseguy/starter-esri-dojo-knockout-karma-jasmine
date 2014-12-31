@@ -389,10 +389,10 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
                                 basemap.name = "topo"; //basemap_5
                                 break;
                             case "terrain with labels":
-                                basemap.name = "topo"; //basemap_4 //terrain is NOT a standard name
+                                basemap.name = "terrain"; //basemap_4 //terrain is NOT a standard name
                                 break;
                             case "dark gray canvas": //NEW
-                                basemap.name = "gray"; //basemap_3
+                                basemap.name = "dark-gray"; //basemap_3
                                 break;
                             case "light gray canvas":
                                 basemap.name = "gray"; //basemap_3

@@ -50,6 +50,22 @@ define(["core/config", "components/app/appModel", "core/toolkitController", "cor
 
                 o.createUI(html);
 
+                setTimeout(function() {
+                    alert("joy ride test");
+                    $('#joyRideTipContent').joyride({
+                        autoStart: true,
+                        postStepCallback: function(index, tip) {
+                            if (index == 2) {
+                                $(this).joyride('set_li', false, 1);
+                            }
+                        },
+                        modal: true,
+                        expose: true
+                    });
+                }, 2000);
+
+
+
                 // toolkit.registerFunctionWhenDomReady(function() {
                 //     toolkit.parseDojo();
                 // });

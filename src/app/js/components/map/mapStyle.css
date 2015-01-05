@@ -129,3 +129,7 @@ zoom-to-place-widget select {
   border: 0px solid #222;
   color: #fff;
 }
+.dijitPopup.dijitTooltipDialogPopup {
+  -webkit-transition: opacity 1s ease-out;
+  transition: opacity 1s ease-out;
+}

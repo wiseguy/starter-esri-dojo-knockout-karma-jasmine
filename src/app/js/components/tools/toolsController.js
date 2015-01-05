@@ -100,9 +100,9 @@ define(["exports", "core/config", "components/tools/toolsModel", "core/toolkitCo
             $('#joyRideTipContent').joyride({
                 autoStart: true,
                 postStepCallback: function(index, tip) {
-                    if (index == 2) {
+                    /*if (index == 2) {
                         $(this).joyride('set_li', false, 1);
-                    }
+                    }*/
                 },
                 nubPosition: 'auto',
                 modal: true,

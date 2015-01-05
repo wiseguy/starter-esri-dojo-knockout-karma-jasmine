@@ -23,12 +23,6 @@
                 //async:true//random order
             }, {
                 src: "../app/js/libs/jquery-1.10.1.js"
-            }, {
-                src: "../app/js/libs/jquery.cookie.js"
-            }, {
-                src: "../app/js/libs/modernizr.mq.js"
-            }, {
-                src: "../app/js/libs/jquery.joyride-2.1.js"
             }]
 
         },
@@ -77,6 +71,9 @@
         ],
         deps: [
             "app/startup",
+            "libs/jquery.cookie",
+            "libs/modernizr.mq",
+            "libs/jquery.joyride-2.1",
             // "app/loader-optimized"
             "dojo/domReady!"
         ],
@@ -119,6 +116,8 @@
         for (var i = 0; i < loadFiles.js.length; i += 1) {
             loadScript(loadFiles.js[i]);
         }
+
+
 
     };
 

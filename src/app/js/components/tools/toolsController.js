@@ -95,7 +95,25 @@ define(["exports", "core/config", "components/tools/toolsModel", "core/toolkitCo
 
         };
 
+        o.showHelp = function() {
 
+            $('#joyRideTipContent').joyride({
+                autoStart: true,
+                postStepCallback: function(index, tip) {
+                    if (index == 2) {
+                        $(this).joyride('set_li', false, 1);
+                    }
+                },
+                nubPosition: 'auto',
+                modal: true,
+                expose: true,
+                nextButton: true
+            });
+
+            // $(window).joyride('resume');
+
+
+        };
 
         return o;
 

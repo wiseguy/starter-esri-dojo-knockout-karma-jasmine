@@ -25,6 +25,12 @@ define(["exports", "core/config", "core/toolkitController", "components/app/appC
 
     }
 
+    o.showHelp = function(clickedItem) {
+
+        toolsController.showHelp();
+
+    }
+
     o.selectView = function(view) {
         ga('send', {
             'hitType': 'pageview', // Required.

@@ -17,11 +17,19 @@
                 "../app/css/joyride/joyride-2.1.css",
                 "../app/css/joyride/mobile.css"
             ],
-            "js": [
-                "http://js.arcgis.com/" + esriVersion + "/",
-                "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js",
-                "../app/js/libs/jquery-1.10.1.js"
-            ]
+            "js": [{
+                src: "http://js.arcgis.com/" + esriVersion + "/"
+                //defer: true //order as given
+                //async:true//random order
+            }, {
+                src: "../app/js/libs/jquery-1.10.1.js"
+            }, {
+                src: "../app/js/libs/jquery.cookie.js"
+            }, {
+                src: "../app/js/libs/modernizr.mq.js"
+            }, {
+                src: "../app/js/libs/jquery.joyride-2.1.js"
+            }]
 
         },
         version = "0.1",
@@ -81,9 +89,10 @@
 
     window.dojoConfig = dojoConfig;
 
-    var loadScript = function(src, attrs) {
+    var loadScript = function(attrs) {
         var s = document.createElement('script');
-        s.setAttribute('src', src);
+        s.setAttribute('type', 'text/javascript');
+        //s.setAttribute('src', src);
         for (var key in attrs) {
             if (attrs.hasOwnProperty(key)) {
                 s.setAttribute(key, attrs[key]);

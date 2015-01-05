@@ -30,6 +30,11 @@ define(["ko", "core/config", "core/modelEventController"],
             modelEventController.removeMap();
         };
 
+        vm.showHelp = function() {
+            modelEventController.showHelp();
+        };
+
+
 
 
         /**

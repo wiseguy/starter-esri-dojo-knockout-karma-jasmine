@@ -139,7 +139,6 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
             var currentTotalMaps = o._currentTotalMaps; //config.appStateCurrent.m;
             if (currentTotalMaps === o._maxMaps) {
                 core.resumeComponent();
-                alert("can not open more maps");
                 return;
             }
             //make the new map active

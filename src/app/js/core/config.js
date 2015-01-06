@@ -5,7 +5,8 @@ defines all app URL, messages, Layers, outFields
 define(function() {
 
     var o = {
-        maxMaps: 4,
+
+        maxMaps: 6,
 
         basemapForEachMap: false,
 
@@ -14,9 +15,9 @@ define(function() {
         appStateCurrent: {
             "v": "map",
             "b": "streets",
-            "x": "54.74!-77.03!-0.12!-122.4", //! separated x values
-            "y": "23.8!38.7!51.50!37.78", //! separated y values
-            "l": "8!9!10!7",
+            "x": "54.74!-77.03!-0.12!-122.4!-122.4!-122.4", //! separated x values
+            "y": "23.8!38.7!51.50!37.78!37.78!37.78", //! separated y values
+            "l": "8!9!10!7!6!5",
             "m": 1, //total maps
             "a": 0 // active map
         },
@@ -57,7 +58,7 @@ define(function() {
 
         webmapId: "", //if webmap id used then that will be used to create the map
 
-        totalMaps: 4,
+
 
         mapDefault: { //stuff that is not maintained in appState
 
@@ -70,7 +71,7 @@ define(function() {
             share: true
         },
 
-        analytics_id: "UA-57085825-1",
+        analytics_id: "UA-57085825-1", //google analytics ID
 
         addthis_config: {
 
@@ -91,7 +92,7 @@ define(function() {
 
         addthis_url: "http://s7.addthis.com/js/300/addthis_widget.js#domready=1",
 
-        analytics_url: "",
+        //analytics_url: "",
 
         services: {
             mapServerPrefix: "https://gisdev.sanacloud.com/arcgis/rest/services/",
@@ -110,6 +111,20 @@ define(function() {
                 "type": "graphic"
             }]
         },
+
+        themeSelector: [{
+            id: "theme1",
+            layer: "https://gisdev.sanacloud.com/arcgis/rest/services/ED_storymaps/Edu_attainment/MapServer/0",
+            thumbnail: ""
+        }, {
+            id: "theme2",
+            layer: "https://gisdev.sanacloud.com/arcgis/rest/services/ED_storymaps/Edu_attainment/MapServer/1",
+            thumbnail: ""
+        }, {
+            id: "theme3",
+            layer: "",
+            thumbnail: "https://gisdev.sanacloud.com/arcgis/rest/services/ED_storymaps/Edu_attainment/MapServer/0"
+        }],
 
         messages: {
             "loading": "Loading...",

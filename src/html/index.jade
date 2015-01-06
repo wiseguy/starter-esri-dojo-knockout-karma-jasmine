@@ -13,8 +13,41 @@ html(manifest='offline.appcache')
         background-color:#000;
       }   
     script(type='text/javascript').
-        window.applicationCache.onupdateready = function(e) {
-         window.applicationCache.swapCache();
+        var sCacheStatus = "Not supported";
+        if (window.applicationCache) 
+        {
+          var oAppCache = window.applicationCache;
+          oAppCache.onupdateready = function(e) {
+           window.applicationCache.swapCache();
+          }
+
+          switch (oAppCache.status) 
+          {
+              case oAppCache.UNCACHED : 
+                 sCacheStatus = "Not cached"; 
+                 break;
+              case oAppCache.IDLE : 
+                 sCacheStatus = "Idle"; 
+                 break;
+              case oAppCache.CHECKING : 
+                 sCacheStatus = "Checking"; 
+                 break;
+              case oAppCache.DOWNLOADING : 
+                 sCacheStatus = "Downloading"; 
+                 break;
+              case oAppCache.UPDATEREADY : 
+                 sCacheStatus = "Update ready"; 
+                 break;
+              case oAppCache.OBSOLETE : 
+                 sCacheStatus = "Obsolete"; 
+                 break;
+              default : 
+                sCacheStatus = "Unexpected Status ( " + 
+                               oAppCache.status.toString() + ")";
+                break;
+           }
         }
+        console.log(sCacheStatus);
+        
     script(type='text/javascript' src='../app/main.js' async="async")
   body(class="tundra app")

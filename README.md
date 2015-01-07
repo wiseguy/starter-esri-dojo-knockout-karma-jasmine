@@ -1,6 +1,6 @@
 ## Purpose 
 
-This is a starter template app. It is source to begin any new application. It contains style conventions in the [a relative link](docs) docs folder.
+This is a starter template app. It is source to begin any new application. It contains style conventions in the [docs folder](docs) .
 
 ##TODO
 
@@ -33,7 +33,7 @@ This is a starter template app. It is source to begin any new application. It co
 ## What do you get?
 
 1. Share, using AddThis
-2. Browser Testing for Compatibility
+2. Browser Check for Compatibility
 3. Google Analytics
 	https://developers.google.com/analytics/devguides/collection/analyticsjs/events
 4. Multiple Views

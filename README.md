@@ -40,15 +40,16 @@ This is a starter template app. It is source to begin any new application. It co
 5. Multiple Maps with ability to add, remove and Sync maps
 6. A notification API
 	core.showMessageDialog(messageHTML);
-	core.hideMessageDialog(messageHTML);
+	core.hideMessageDialog();
 7. A blocking API
 	core.blockComponent(node or ID);
-	core.resumeComponent(node or ID);
+	core.resumeComponent();
 8. A URL update API - hash.updateURL and hash.updateApp
 9. Theme Selector
 10. Responsive Layout - Bootstrap
 11. Appcache for offline capabilities
 12. Knockout Components Example
+13. A Feature Tour of the application
 
 ## What goes where? Folder Structure
 1. src/app/js/components - UI components. May be part of the View linked to the menu

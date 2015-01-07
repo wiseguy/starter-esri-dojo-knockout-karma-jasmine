@@ -40,6 +40,15 @@ define(["exports", "ko", "core/config", "core/modelEventController", "core/toolk
                 }
             });
 
+            ko.components.register('theme-widget', {
+                viewModel: {
+                    require: 'components/map/component-theme'
+                },
+                template: {
+                    require: 'dojo/text!components/map/component-theme.html'
+                }
+            });
+
         };
 
 

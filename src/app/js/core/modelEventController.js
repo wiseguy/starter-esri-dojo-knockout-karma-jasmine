@@ -57,5 +57,15 @@ define(["exports", "core/config", "core/toolkitController", "components/app/appC
         mapController.zoomToXY(place);
     }
 
+    o.selectTheme = function(theme, mapIndex) {
+        //alert(place.name);
+        mapController.selectTheme(theme, mapIndex);
+    }
+
+    o.showMapOptions = function(theme, evt) {
+        debugger;
+    }
+
+
     return o;
 });

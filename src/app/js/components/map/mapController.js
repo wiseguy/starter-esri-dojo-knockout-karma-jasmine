@@ -415,6 +415,7 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
             }, toolkit.getNodeList('.basemap-gallery')[0]); //this is always 0
 
             toolkit.removeClass(toolkit.getNodeList('.basemap-gallery-titlepane-holder')[map.positionInView], "dijitHidden");
+            toolkit.removeClass(toolkit.getNodeList('.theme-titlepane-holder')[map.positionInView], "dijitHidden");
 
             basemapGallery.startup();
 
@@ -646,6 +647,11 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
             var currentMap = o.getCurrentMap();
 
             currentMap.centerAndZoom([xy.x, xy.y], xy.l);
+
+        }
+
+        o.selectTheme = function(theme, mapIndex) {
+            alert("selected theme " + theme.name + " for map " + mapIndex);
 
         }
 

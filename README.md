@@ -1,15 +1,15 @@
 ## Purpose 
-This is a starter template app. It contains conventions in the docs folder.
+
+This is a starter template app. It is source to begin any new application. It contains style conventions in the [a relative link](docs) docs folder.
 
 ##TODO
-- make ko components - a drop down list of layer to show
+
 - add a data loader - esri request
 - add docs for specs
 - add more tests
-- convert to foundation
-- 
 
 ## Libraries / Dependencies
+
 1. Esri JavaScript API
 2. Dojo
 3. KnockoutJS
@@ -17,8 +17,10 @@ This is a starter template app. It contains conventions in the docs folder.
 5. Karma
 6. NodeJS
 7. Bootstrap and Jquery
+8. Zurb Joyride
 
 ## How to Use
+
 1. Install NodeJS
 2. Run the following commands from the root folder
 	npm install
@@ -29,12 +31,13 @@ This is a starter template app. It contains conventions in the docs folder.
 4. Run the command 'gulp dist' to have your code optimized in the dist folder
 
 ## What do you get?
+
 1. Share, using AddThis
 2. Browser Testing for Compatibility
 3. Google Analytics
 	https://developers.google.com/analytics/devguides/collection/analyticsjs/events
 4. Multiple Views
-5. Multiple Maps
+5. Multiple Maps with ability to add, remove and Sync maps
 6. A notification API
 	core.showMessageDialog(messageHTML);
 	core.hideMessageDialog(messageHTML);
@@ -42,9 +45,10 @@ This is a starter template app. It contains conventions in the docs folder.
 	core.blockComponent(node or ID);
 	core.resumeComponent(node or ID);
 8. A URL update API - hash.updateURL and hash.updateApp
-9. Shows how to use Touch Events
+9. Theme Selector
 10. Responsive Layout - Bootstrap
 11. Appcache for offline capabilities
+12. Knockout Components Example
 
 ## What goes where? Folder Structure
 1. src/app/js/components - UI components. May be part of the View linked to the menu
@@ -74,7 +78,6 @@ This is a starter template app. It contains conventions in the docs folder.
 1. Write Tests in CoffeeScript
 2. Run karma start
 3. Write tests in *Spec.js file
-
 
 ## Flow
 main.js --> coreController.js --> appController.js --> current view

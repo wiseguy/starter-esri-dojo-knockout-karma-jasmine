@@ -1,0 +1,16 @@
+span(data-bind="foreach:themes")
+	//- You have zoomed to 
+	div.themeItem(data-bind="event:{mouseenter:$parent.themeSelectHandler}")
+		div.themeTitle(data-bind="html:name")
+		div.mapIndex()
+			div(data-bind="click:function(){$parent.selectedMapIndex(1)}") Map 1
+			div(data-bind="click:function(){$parent.selectedMapIndex(2)}") Map 2
+			div(data-bind="click:function(){$parent.selectedMapIndex(3)}") Map 3
+
+	
+//- div(class="like-or-dislike" data-bind="visible: !chosenValue()")
+//- 	button(data-bind="click: like") Like it
+//- 	button(data-bind="click: dislike") Dislike it
+//- div(class="result" data-bind="visible: chosenValue") You
+//- 	strong(data-bind="text: chosenValue") | it.
+//- 	| And this was loaded from an external file.

@@ -1,0 +1,9 @@
+<span data-bind="foreach:themes">
+  <div data-bind="event:{mouseenter:$parent.themeSelectHandler}" class="themeItem">
+    <div data-bind="html:name" class="themeTitle"></div>
+    <div class="mapIndex">
+      <div data-bind="click:function(){$parent.selectedMapIndex(1)}">Map 1</div>
+      <div data-bind="click:function(){$parent.selectedMapIndex(2)}">Map 2</div>
+      <div data-bind="click:function(){$parent.selectedMapIndex(3)}">Map 3</div>
+    </div>
+  </div></span>

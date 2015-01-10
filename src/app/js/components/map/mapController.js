@@ -204,6 +204,8 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
             positionInView = o._currentTotalMaps - 1;
             o._currentMapPosition = positionInView;
 
+            mapModel.set("visibleMapCount", o._currentTotalMaps);
+
             /* toolkit.getNodeList(".map").removeClass(function(index, css) {
                 return (css.match(/(^|\s)show-\S+/g) || []).join(' '); //remove show-* classes
             });
@@ -294,10 +296,10 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
             var mapLayers = toolkit.arrayMap(config.services.layers, function(layerItem) {
 
-                var mapLayer;
-                var url = layerItem.url;
-                var urlIsAbsolute = url && (url.indexOf("http://") + url.indexOf("https://") <= -2);
-                var mapServerPrefix = config.services.mapServerPrefix;
+                var mapLayer,
+                    url = layerItem.url,
+                    urlIsAbsolute = url && (url.indexOf("http://") + url.indexOf("https://") <= -2),
+                    mapServerPrefix = config.services.mapServerPrefix;
 
                 if (urlIsAbsolute) {
                     url = mapServerPrefix + url;
@@ -305,7 +307,11 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
                 //debugger;
 
                 var LayerConstructor = toolkit.getLayerConstructor(layerItem.type);
-                switch (layerItem.type) {
+                mapLayer = new LayerConstructor(url, layerItem);
+                /*switch (layerItem.type) {
+                    case "tile":
+                        mapLayer = new LayerConstructor(url);
+                        break;
                     case "dynamic":
                         mapLayer = new LayerConstructor(url, layerItem);
                         break;
@@ -316,7 +322,7 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
                         mapLayer = new LayerConstructor(url, layerItem);
                         break;
 
-                }
+                }*/
                 return mapLayer;
 
             });
@@ -458,6 +464,7 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
             }
 
 
+
             var currentTotalMaps = o._currentTotalMaps;
 
             var mapNode = toolkit.getNodeList(".map")[o._currentMapPosition];
@@ -469,6 +476,7 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
             o._currentMapPosition -= 1;
             o._currentTotalMaps -= 1;
 
+            mapModel.set("visibleMapCount", o._currentTotalMaps);
 
             while (currentTotalMaps > 0) {
 
@@ -651,7 +659,17 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
         }
 
         o.selectTheme = function(theme, mapIndex) {
-            alert("selected theme " + theme.name + " for map " + mapIndex);
+            //alert("selected theme " + theme.name + " for map " + mapIndex);
+            var map = o._maps[mapIndex - 1];
+            var url = theme.url;
+            var themeWasAdded = map.getLayer(theme.id);
+
+            if (!themeWasAdded) {
+                var LayerConstructor = toolkit.getLayerConstructor(theme.type);
+                var mapLayer = new LayerConstructor(url, theme);
+                map.addLayer(mapLayer);
+            }
+
 
         }
 

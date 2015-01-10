@@ -11,7 +11,8 @@ define(["core/config",
         "dojo/ready", "dojo/_base/array", "dojo/sniff", "dojo/hash", "dojo/topic", "dojo/on", "dojo/parser",
         "dijit/TitlePane", "dijit/layout/ContentPane", "dijit/form/Button", "dijit/form/DropDownButton", "dijit/TooltipDialog",
         /*Esri*/
-        "esri/request", "esri/layers/ArcGISDynamicMapServiceLayer", "esri/layers/FeatureLayer", "esri/layers/GraphicsLayer",
+        "esri/request", "esri/layers/ArcGISDynamicMapServiceLayer", "esri/layers/ArcGISTiledMapServiceLayer",
+        "esri/layers/FeatureLayer", "esri/layers/GraphicsLayer",
         "esri/map", "esri/dijit/BasemapGallery", "esri/dijit/Legend", "esri/geometry/webMercatorUtils", "esri/arcgis/utils",
         "esri/config"
     ],
@@ -22,9 +23,9 @@ define(["core/config",
         ready, arrayUtil, sniff, hash, topic, on, parser,
         TitlePane, ContentPane, Button, DropDownButton, TooltipDialog,
         /*Esri*/
-        esriRequest, ArcGISDynamicMapServiceLayer, FeatureLayer, GraphicsLayer,
-        Map, BasemapGallery, Legend, webMercatorUtils, arcgisUtils,
-        esriConfig) {
+        esriRequest, ArcGISDynamicMapServiceLayer, ArcGISTiledMapServiceLayer,
+        FeatureLayer, GraphicsLayer, Map, BasemapGallery, Legend,
+        webMercatorUtils, arcgisUtils, esriConfig) {
 
         var o = {};
 
@@ -145,6 +146,9 @@ define(["core/config",
                     break;
                 case "feature":
                     constructor = FeatureLayer;
+                    break;
+                case "tile":
+                    constructor = ArcGISTiledMapServiceLayer;
                     break;
             }
 

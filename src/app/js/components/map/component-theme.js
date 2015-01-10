@@ -1,8 +1,9 @@
-define(["ko", "core/modelEventController", "core/toolkitController"], function(ko, modelEventController, toolkit) {
+define(["ko", "core/modelEventController", "core/toolkitController", "core/config"], function(ko, modelEventController, toolkit, Config) {
 
     function ThemeWidgetVM(params) {
         //this.chosenValue = ko.observable(params.value);
-        var themes = [{
+        var themes = Config.themes;
+        /*var themes = [{
             name: "Poverty",
             layer: "https://gisdev.sanacloud.com/arcgis/rest/services/ED_storymaps/Edu_attainment/MapServer/0"
         }, {
@@ -11,7 +12,7 @@ define(["ko", "core/modelEventController", "core/toolkitController"], function(k
         }, {
             name: "Crime",
             layer: "https://gisdev.sanacloud.com/arcgis/rest/services/ED_storymaps/Edu_attainment/MapServer/0"
-        }];
+        }];*/
 
 
         this.themes = ko.observableArray(themes);
@@ -19,6 +20,7 @@ define(["ko", "core/modelEventController", "core/toolkitController"], function(k
         this.chosenTheme = ko.observable();
 
         this.themeSelectHandler = function(theme) {
+
             this.chosenTheme(theme);
             //modelEventController.selectTheme(theme);
         }.bind(this);
@@ -26,6 +28,7 @@ define(["ko", "core/modelEventController", "core/toolkitController"], function(k
         this.selectedMapIndex = function(index) {
 
             modelEventController.selectTheme(this.chosenTheme(), index);
+
         }.bind(this);
     }
 

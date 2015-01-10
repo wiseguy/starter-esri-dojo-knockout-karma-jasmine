@@ -3,9 +3,12 @@ span(data-bind="foreach:themes")
 	div.themeItem(data-bind="event:{mouseenter:$parent.themeSelectHandler}")
 		div.themeTitle(data-bind="html:name")
 		div.mapIndex()
-			div(data-bind="click:function(){$parent.selectedMapIndex(1)}") Map 1
-			div(data-bind="click:function(){$parent.selectedMapIndex(2)}") Map 2
-			div(data-bind="click:function(){$parent.selectedMapIndex(3)}") Map 3
+			div(data-bind="visible:$root.visibleMapCount()>=1,click:function(){$parent.selectedMapIndex(1)}") Map 1
+			div(data-bind="visible:$root.visibleMapCount()>=2,click:function(){$parent.selectedMapIndex(2)}") Map 2
+			div(data-bind="visible:$root.visibleMapCount()>=3,click:function(){$parent.selectedMapIndex(3)}") Map 3
+			div(data-bind="visible:$root.visibleMapCount()>=4,click:function(){$parent.selectedMapIndex(4)}") Map 4
+			div(data-bind="visible:$root.visibleMapCount()>=5,click:function(){$parent.selectedMapIndex(5)}") Map 4
+			div(data-bind="visible:$root.visibleMapCount()>=6,click:function(){$parent.selectedMapIndex(6)}") Map 5
 
 	
 //- div(class="like-or-dislike" data-bind="visible: !chosenValue()")

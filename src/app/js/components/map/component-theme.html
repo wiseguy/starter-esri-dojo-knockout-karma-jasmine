@@ -2,8 +2,11 @@
   <div data-bind="event:{mouseenter:$parent.themeSelectHandler}" class="themeItem">
     <div data-bind="html:name" class="themeTitle"></div>
     <div class="mapIndex">
-      <div data-bind="click:function(){$parent.selectedMapIndex(1)}">Map 1</div>
-      <div data-bind="click:function(){$parent.selectedMapIndex(2)}">Map 2</div>
-      <div data-bind="click:function(){$parent.selectedMapIndex(3)}">Map 3</div>
+      <div data-bind="visible:$root.visibleMapCount()&gt;=1,click:function(){$parent.selectedMapIndex(1)}">Map 1</div>
+      <div data-bind="visible:$root.visibleMapCount()&gt;=2,click:function(){$parent.selectedMapIndex(2)}">Map 2</div>
+      <div data-bind="visible:$root.visibleMapCount()&gt;=3,click:function(){$parent.selectedMapIndex(3)}">Map 3</div>
+      <div data-bind="visible:$root.visibleMapCount()&gt;=4,click:function(){$parent.selectedMapIndex(4)}">Map 4</div>
+      <div data-bind="visible:$root.visibleMapCount()&gt;=5,click:function(){$parent.selectedMapIndex(5)}">Map 4</div>
+      <div data-bind="visible:$root.visibleMapCount()&gt;=6,click:function(){$parent.selectedMapIndex(6)}">Map 5</div>
     </div>
   </div></span>

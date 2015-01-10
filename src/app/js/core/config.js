@@ -15,9 +15,9 @@ define(function() {
         appStateCurrent: {
             "v": "map",
             "b": "streets",
-            "x": "54.74!-77.03!-0.12!-122.4!-122.4!-122.4", //! separated x values
-            "y": "23.8!38.7!51.50!37.78!37.78!37.78", //! separated y values
-            "l": "8!9!10!7!6!5",
+            "x": "-101.70!-77.03!-0.12!-122.4!-122.4!-122.4", //! separated x values
+            "y": "38.83!38.7!51.50!37.78!37.78!37.78", //! separated y values
+            "l": "4!9!10!7!6!5",
             "m": 1, //total maps
             "a": 0 // active map
         },
@@ -95,35 +95,46 @@ define(function() {
         //analytics_url: "",
 
         services: {
-            mapServerPrefix: "https://gisdev.sanacloud.com/arcgis/rest/services/",
+            mapServerPrefix: "http://gisdev.sanacloud.com/arcgis/rest/services/",
             layers: [{
                 "id": "attainment",
                 "url": "ED_storymaps/Edu_attainment/MapServer", //if url has http then use exact, else append with mapServerPrefix
-                "type": "dynamic", //feature, graphic            
+                "type": "dynamic", //feature, graphic   , tile          
                 "visibleLayers": [0, 1]
+            }, {
+                "id": "soil-survey",
+                "url": "http://server.arcgisonline.com/ArcGIS/rest/services/Specialty/Soil_Survey_Map/MapServer", //if url has http then use exact, else append with mapServerPrefix
+                "type": "tile", //feature, graphic , tile
             }, {
                 "id": "stateBoundaries",
                 "url": "ED_storymaps/Private_vs_Pub_schoolEnroll/MapServer/0", //if url has http then use exact, else append with mapServerPrefix
-                "type": "feature", //feature, graphic
-                "outFields": ["*"]
+                "type": "feature", //feature, graphic , tile
+                "outFields": ["*"],
+                "opacity": 0.7
             }, {
                 "id": "hoverGraphics",
                 "type": "graphic"
             }]
         },
 
-        themeSelector: [{
-            id: "theme1",
-            layer: "https://gisdev.sanacloud.com/arcgis/rest/services/ED_storymaps/Edu_attainment/MapServer/0",
-            thumbnail: ""
+        themes: [{
+            id: "swap",
+            name: "State Wildlife Action Plan",
+            url: "http://maps.natureserve.org/landscope3/rest/services/US/PRI_US_SWAP/MapServer",
+            thumbnail: "",
+            type: "tile"
         }, {
-            id: "theme2",
-            layer: "https://gisdev.sanacloud.com/arcgis/rest/services/ED_storymaps/Edu_attainment/MapServer/1",
-            thumbnail: ""
+            id: "nced",
+            name: "National Conservation Easment Database",
+            url: "http://maps.natureserve.org/landscope1/rest/services/US/PRO_US_NCED/MapServer/",
+            thumbnail: "",
+            type: "tile"
         }, {
-            id: "theme3",
-            layer: "",
-            thumbnail: "https://gisdev.sanacloud.com/arcgis/rest/services/ED_storymaps/Edu_attainment/MapServer/0"
+            id: "padus",
+            name: "Protected Areas Database of the US ",
+            url: "http://maps.natureserve.org/landscope1/rest/services/US/PRO_US_PADUS/MapServer/",
+            thumbnail: "",
+            type: "tile"
         }],
 
         messages: {

@@ -1,8 +1,13 @@
 CACHE MANIFEST
 # 2015
-
+####################################################################
 # Explicitly cached 'master entries'.
+# This is the default section for entries. 
+# Files listed under this header (or immediately after the CACHE MANIFEST) will be 
+# explicitly cached after they're downloaded for the first time.
+####################################################################
 CACHE:
+
 #/favicon.ico
 #index.html
 #../app/css/app.css
@@ -36,7 +41,7 @@ CACHE:
 #../app/js/core/toolkitController.js
 #../app/js/libs/bootstrap.min.js
 #../app/js/libs/knockout-3.2.0.js
-# esri stuff
+####### esri stuff
 http://js.arcgis.com/3.12/dijit/themes/tundra/images/titleBar.png
 http://js.arcgis.com/3.12/dijit/themes/tundra/images/spriteArrows.png
 http://js.arcgis.com/3.12/dijit/themes/tundra/images/buttonEnabled.png
@@ -61,13 +66,21 @@ http://www.arcgis.com/sharing/rest/content/items/86de95d4e0244cba80f0fa2c9403a7b
 http://www.arcgis.com/sharing/rest/content/items/413fd05bbd7342f5991d5ec96f4f8b18/info/thumbnail/tempimagery_with_labels_ne_usa.png
 http://www.arcgis.com/sharing/rest/content/items/d8855ee4d3d74413babfb0f41203b168/info/thumbnail/world_street_map.jpg
 
+
+####################################################################
 # Resources that require the user to be online.
+# Files listed in this section may come from the network if they aren't in the cache, otherwise the network isn't used, even if
+# the user is online. You can white-list specific URLs here, or simply "*", which allows all URLs. Most sites need "*".
+####################################################################
 NETWORK:
 *
 
+
+####################################################################
 # static.html will be served if main.py is inaccessible
 # offline.jpg will be served in place of all images in images/large/
 # offline.html will be served in place of all other .html files
+####################################################################
 FALLBACK:
 #/main.py /static.html
 #images/large/ images/offline.jpg

@@ -7,11 +7,12 @@ define(["exports", "ko", "core/config", "core/modelEventController", "core/toolk
         vm.title = ko.observable();
         vm.isActive = ko.observable();
         vm.userRating = ko.observable('like');
-
+        vm.visibleMapCount = ko.observable(1);
 
 
 
         vm.setActiveMap = function(model, evt) {
+
             console.log("mapModel setActiveMap");
 
             var mapIndex = toolkit.arrayIndex(toolkit.getNodeList(".map"), evt.currentTarget);

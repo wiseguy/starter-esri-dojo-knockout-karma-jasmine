@@ -14,7 +14,7 @@ define(function() {
 
         appStateCurrent: {
             "v": "map",
-            "b": "streets",
+            "b": "dark-gray",
             "x": "-101.70!-77.03!-0.12!-122.4!-122.4!-122.4", //! separated x values
             "y": "38.83!38.7!51.50!37.78!37.78!37.78", //! separated y values
             "l": "4!9!10!7!6!5",
@@ -96,25 +96,30 @@ define(function() {
 
         services: {
             mapServerPrefix: "http://gisdev.sanacloud.com/arcgis/rest/services/",
-            layers: [{
+            layers: [
+                /*{
                 "id": "attainment",
                 "url": "ED_storymaps/Edu_attainment/MapServer", //if url has http then use exact, else append with mapServerPrefix
                 "type": "dynamic", //feature, graphic   , tile          
                 "visibleLayers": [0, 1]
-            }, {
-                "id": "soil-survey",
-                "url": "http://server.arcgisonline.com/ArcGIS/rest/services/Specialty/Soil_Survey_Map/MapServer", //if url has http then use exact, else append with mapServerPrefix
-                "type": "tile", //feature, graphic , tile
-            }, {
+            },*/
+                {
+                    "id": "soil-survey",
+                    "url": "http://server.arcgisonline.com/ArcGIS/rest/services/Specialty/Soil_Survey_Map/MapServer", //if url has http then use exact, else append with mapServerPrefix
+                    "type": "tile", //feature, graphic , tile
+                }
+                /*, {
                 "id": "stateBoundaries",
                 "url": "ED_storymaps/Private_vs_Pub_schoolEnroll/MapServer/0", //if url has http then use exact, else append with mapServerPrefix
                 "type": "feature", //feature, graphic , tile
                 "outFields": ["*"],
                 "opacity": 0.7
-            }, {
-                "id": "hoverGraphics",
-                "type": "graphic"
-            }]
+            }*/
+                , {
+                    "id": "hoverGraphics",
+                    "type": "graphic"
+                }
+            ]
         },
 
         themes: [{

@@ -19,6 +19,7 @@
         var oAppCache = window.applicationCache;
         oAppCache.onupdateready = function(e) {
          window.applicationCache.swapCache();
+         location.reload(true);
         }
         
         switch (oAppCache.status) 

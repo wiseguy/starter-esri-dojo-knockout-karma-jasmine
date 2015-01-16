@@ -289,10 +289,18 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
         };
 
-        o.addLayers = function(map) {
+        /**
+         *@param: layers - structure like config.services.layers
+         *
+         */
+
+        o.addLayers = function(map, layers) {
 
             console.log("add layers");
+
             var mapLayers = [];
+
+            var layers = layers || config.services.layers;
 
             var mapLayers = toolkit.arrayMap(config.services.layers, function(layerItem) {
 

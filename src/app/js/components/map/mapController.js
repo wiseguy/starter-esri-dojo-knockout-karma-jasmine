@@ -347,6 +347,7 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
                 if (map.positionInView == 0 || config.basemapForEachMap) { //only add basemap for first map
                     o.addBasemap(map, evt.layers);
+                    o.updateActiveMapDiv(0); //set the first map as active one
                 } else {
                     o.addLegend(map, evt.layers);
                 }

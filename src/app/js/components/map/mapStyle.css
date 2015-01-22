@@ -11,10 +11,16 @@
   box-sizing: border-box;
   border: 2px solid #ccc;
 }
+.map .esriSimpleSlider {
+  opacity: 0.2;
+}
 .map.selected-map {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   border: 2px solid #ff0;
+}
+.map.selected-map .esriSimpleSlider {
+  opacity: 1;
 }
 .map.show-1 {
   position: absolute;

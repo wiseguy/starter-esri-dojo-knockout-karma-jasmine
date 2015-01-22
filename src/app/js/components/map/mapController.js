@@ -335,7 +335,7 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
             });
 
-            var layersAddResult = map.on("layers-add-result", function() {
+            var layersAddResult = map.on("layers-add-result", function(evt) {
 
                 var resized = false;
 
@@ -346,9 +346,9 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
                 //map.addLayers
 
                 if (map.positionInView == 0 || config.basemapForEachMap) { //only add basemap for first map
-                    o.addBasemap(map);
+                    o.addBasemap(map, evt.layers);
                 } else {
-                    o.addLegend(map);
+                    o.addLegend(map, evt.layers);
                 }
 
                 var extentChangeHandler = toolkit.getOn().pausable(map, "extent-change", function() {
@@ -376,7 +376,7 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
         };
 
-        o.addBasemap = function(map) {
+        o.addBasemap = function(map, layersAdded) {
 
             console.log('Add basemap');
 
@@ -440,19 +440,29 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
                 onEventController.setBasemap(basemap, o._maps, map);
             });
 
-            o.addLegend(map);
+            o.addLegend(map, layersAdded);
 
 
         };
 
-        o.addLegend = function(map) {
+        o.addLegend = function(map, layersAdded) {
 
             console.log("Add Legend");
 
             var Legend = toolkit.getLegendDijit();
 
+            var layerInfos = [];
+
+            toolkit.arrayEach(layersAdded, function(layerItem) {
+                layerInfos.push({
+                    title: " ",
+                    layer: layerItem.layer
+                });
+            });
+
             var legend = new Legend({
-                map: map
+                map: map,
+                layerInfos: layerInfos
             }, toolkit.getNodeList(".legend")[map.positionInView]);
 
 

@@ -8,7 +8,17 @@ define(["exports", "ko", "core/config", "core/modelEventController", "core/toolk
         vm.isActive = ko.observable();
         vm.userRating = ko.observable('like');
         vm.visibleMapCount = ko.observable(1);
+        vm.activeMapIndex = ko.observable(0);
 
+        vm.zoomToCurrentLocation = function(model, evt) {
+            var mapIndex = vm.activeMapIndex();
+            modelEventController.zoomToCurrentLocation(mapIndex);
+        }
+
+        vm.syncMaps = function(model, evt) {
+            var mapIndex = vm.activeMapIndex();
+            modelEventController.syncMaps(mapIndex);
+        }
 
 
         vm.setActiveMap = function(model, evt) {
@@ -16,6 +26,7 @@ define(["exports", "ko", "core/config", "core/modelEventController", "core/toolk
             console.log("mapModel setActiveMap");
 
             var mapIndex = toolkit.arrayIndex(toolkit.getNodeList(".map"), evt.currentTarget);
+
 
             modelEventController.setActiveMap(evt.currentTarget, mapIndex);
 

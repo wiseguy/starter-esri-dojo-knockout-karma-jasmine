@@ -29,6 +29,16 @@
         version = "0.1",
         dojoConfig;
 
+
+    var pathname = document.location.pathname.split("/");
+    pathname.pop();
+    pathname.pop();
+
+    var hostname = document.location.hostname;
+
+    baseUrl = document.location.protocol + "//" + hostname + pathname.join("/");
+
+
     baseUrl = "http://shj.blueraster.com/apps-wiseguy/template-esri/src";
     //baseUrl = "http://staging.geoent.com/esri";
 

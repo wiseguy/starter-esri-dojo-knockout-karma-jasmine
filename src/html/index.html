@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html manifest="offline.appcache"> 
+<html> 
   <head>
     <title>BlueRaster Template App</title>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -10,47 +10,8 @@
     <style type="text/css">
       body {
         background-color:#000;
-      }   
+      }        
     </style>
-    <script type="text/javascript">
-      var sCacheStatus = "Not supported";
-      if (window.applicationCache) 
-      {
-        var oAppCache = window.applicationCache;
-        oAppCache.onupdateready = function(e) {
-         window.applicationCache.swapCache();
-         location.reload(true);
-        }
-        
-        switch (oAppCache.status) 
-        {
-            case oAppCache.UNCACHED : 
-               sCacheStatus = "Not cached"; 
-               break;
-            case oAppCache.IDLE : 
-               sCacheStatus = "Idle"; 
-               break;
-            case oAppCache.CHECKING : 
-               sCacheStatus = "Checking"; 
-               break;
-            case oAppCache.DOWNLOADING : 
-               sCacheStatus = "Downloading"; 
-               break;
-            case oAppCache.UPDATEREADY : 
-               sCacheStatus = "Update ready"; 
-               break;
-            case oAppCache.OBSOLETE : 
-               sCacheStatus = "Obsolete"; 
-               break;
-            default : 
-              sCacheStatus = "Unexpected Status ( " + 
-                             oAppCache.status.toString() + ")";
-              break;
-        }
-      }
-      console.log(sCacheStatus);
-      
-    </script>
     <script type="text/javascript" src="../app/main.js" async="async"></script>
   </head>
   <body class="tundra app"></body>

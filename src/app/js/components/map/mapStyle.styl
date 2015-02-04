@@ -17,7 +17,7 @@
 	box-sizing border-box
 	border 2px solid yellow
 	
-	.esriSimpleSlider
+	.esriSimpleSlider, .locationButton, .HomeButton, .syncMaps
 		opacity 1.0
 	
 	
@@ -266,3 +266,42 @@ theme-widget
 				
 .dijitPopup.dijitTooltipDialogPopup
 	transition opacity 1s ease-out
+	
+.HomeButton:hover,
+.locationButton:hover,
+.syncMaps:hover,
+.esriSimpleSlider:hover
+	opacity 1.0
+	
+.HomeButton
+	position: absolute
+	top 95px
+	left 20px
+	z-index 100
+	opacity 0.2
+	
+.locationButton
+	opacity 0.2	
+	position absolute
+	top 135px
+	left 20px
+	z-index 100
+	width 30px
+	height 30px
+	background-image url('../images/my_location.png')
+	cursor pointer
+	border-radius 5px
+	
+.syncMaps
+	opacity 0.2	
+	position absolute
+	top 175px
+	left 20px
+	z-index 100
+	width 30px
+	height 30px
+	background-image url('../images/sync_maps.png')
+	background-color blue	
+	cursor pointer
+	border-radius 5px
+

@@ -14,7 +14,7 @@ define(["core/config",
         "esri/request", "esri/layers/ArcGISDynamicMapServiceLayer", "esri/layers/ArcGISTiledMapServiceLayer",
         "esri/layers/FeatureLayer", "esri/layers/GraphicsLayer",
         "esri/map", "esri/dijit/BasemapGallery", "esri/dijit/Legend", "esri/geometry/webMercatorUtils", "esri/arcgis/utils",
-        "esri/config"
+        "esri/config", "esri/dijit/HomeButton", "esri/geometry/Point"
     ],
     function(config,
         /*Dojo*/
@@ -25,7 +25,7 @@ define(["core/config",
         /*Esri*/
         esriRequest, ArcGISDynamicMapServiceLayer, ArcGISTiledMapServiceLayer,
         FeatureLayer, GraphicsLayer, Map, BasemapGallery, Legend,
-        webMercatorUtils, arcgisUtils, esriConfig) {
+        webMercatorUtils, arcgisUtils, esriConfig, HomeButton, Point) {
 
         var o = {};
 
@@ -237,6 +237,12 @@ define(["core/config",
         o.getLegendDijit = function() {
 
             return Legend;
+
+        };
+
+        o.getConstructor = function(constructorName) {
+
+            return eval(constructorName);
 
         };
 

@@ -19,7 +19,10 @@
   box-sizing: border-box;
   border: 2px solid #ff0;
 }
-.map.selected-map .esriSimpleSlider {
+.map.selected-map .esriSimpleSlider,
+.map.selected-map .locationButton,
+.map.selected-map .HomeButton,
+.map.selected-map .syncMaps {
   opacity: 1;
 }
 .map.show-1 {
@@ -258,4 +261,42 @@ theme-widget .mapIndex div {
 .dijitPopup.dijitTooltipDialogPopup {
   -webkit-transition: opacity 1s ease-out;
   transition: opacity 1s ease-out;
+}
+.HomeButton:hover,
+.locationButton:hover,
+.syncMaps:hover,
+.esriSimpleSlider:hover {
+  opacity: 1;
+}
+.HomeButton {
+  position: absolute;
+  top: 95px;
+  left: 20px;
+  z-index: 100;
+  opacity: 0.2;
+}
+.locationButton {
+  opacity: 0.2;
+  position: absolute;
+  top: 135px;
+  left: 20px;
+  z-index: 100;
+  width: 30px;
+  height: 30px;
+  background-image: url("../images/my_location.png");
+  cursor: pointer;
+  border-radius: 5px;
+}
+.syncMaps {
+  opacity: 0.2;
+  position: absolute;
+  top: 175px;
+  left: 20px;
+  z-index: 100;
+  width: 30px;
+  height: 30px;
+  background-image: url("../images/sync_maps.png");
+  background-color: #00f;
+  cursor: pointer;
+  border-radius: 5px;
 }

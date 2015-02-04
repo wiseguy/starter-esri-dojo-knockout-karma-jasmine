@@ -10,10 +10,10 @@
  */
 
 define(["exports", "core/config", "components/map/mapModel", "core/toolkitController", "core/coreController",
-        "core/hashController", "core/onEventController", "core/modelEventController"
+        "core/hashController", "core/onEventController", "core/modelEventController", "core/modelSaveController"
     ],
 
-    function(o, config, mapModel, toolkit, core, hash, onEventController, modelEventController) {
+    function(o, config, mapModel, toolkit, core, hash, onEventController, modelEventController, modelSaveController) {
 
         /*
          * Private variables
@@ -260,13 +260,28 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
                 });
 
 
-
+                o.homeButton(map, positionInView);
 
 
                 o.mapCreationHandler(map, positionInView, isWebMap);
 
             }
 
+
+        };
+
+        o.homeButton = function(map, positionInView) {
+
+            var HomeButton = toolkit.getConstructor("HomeButton");
+
+            var node = toolkit.getNodeList(".homeButton")[positionInView];
+            var homeButton = new HomeButton({
+                //theme: "homeButton",
+                map: map,
+                extent: null,
+                visible: true
+            }, node);
+            homeButton.startup();
 
         };
 
@@ -616,6 +631,9 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
         o.updateActiveMapDiv = function(mapIndex) {
 
 
+            // mapModel.set("activeMapIndex", mapIndex);
+            modelSaveController.setActiveMap(mapIndex);
+
             toolkit.getNodeList(".map").removeClass("selected-map");
 
             toolkit.addClass(toolkit.getNodeList(".map")[mapIndex], "selected-map");
@@ -627,9 +645,9 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
          * Match all extents to the current maps extent
          **/
 
-        o.syncExtents = function() {
+        o.syncMaps = function(mapIndex) {
 
-            var activeIndex = parseInt(config.appStateCurrent.a);
+            var activeIndex = mapIndex; //parseInt(config.appStateCurrent.a);
             var activeMap = o._maps[activeIndex];
 
             var center = activeMap.extent.getCenter();
@@ -691,6 +709,34 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
 
         }
+
+        /**
+         *Zooms to browser location
+         */
+        o.zoomToCurrentLocation = function(mapIndex) {
+
+            var map = o._maps[mapIndex];
+
+            if (navigator.geolocation) {
+
+                navigator.geolocation.getCurrentPosition(function(position) {
+
+                    var coords = position.coords || position.coordinate || position;
+                    var Point = toolkit.getConstructor("Point");
+
+                    var currentLocation = new Point(coords.longitude, coords.latitude);
+
+                    map.centerAndZoom(currentLocation, 9);
+
+                })
+
+            } else {
+
+            }
+        }
+
+
+
 
 
         return o;

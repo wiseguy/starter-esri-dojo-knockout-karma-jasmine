@@ -66,6 +66,18 @@ define(["exports", "core/config", "core/toolkitController", "components/app/appC
         debugger;
     }
 
+    o.zoomToCurrentLocation = function(mapIndex) {
+
+        mapController.zoomToCurrentLocation(mapIndex);
+
+    }
+
+    o.syncMaps = function(mapIndex) {
+
+        mapController.syncMaps(mapIndex);
+
+    }
+
 
     return o;
 });

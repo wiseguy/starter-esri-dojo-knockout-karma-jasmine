@@ -20,6 +20,12 @@ define(["exports", "core/config", "core/toolkitController", "components/app/appM
 
     }
 
+    o.setActiveMap = function(mapIndex) {
+
+        mapModel.set("activeMapIndex", mapIndex);
+
+    }
+
     return o;
 
 });

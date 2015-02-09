@@ -520,17 +520,12 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
                 return;
             }
 
-
-
             var currentTotalMaps = o._currentTotalMaps;
 
             var mapNode = toolkit.getNodeList(".map")[o._currentMapPosition];
-            //var prevMapNode = toolkit.getNodeList(".map")[o._currentMapPosition - 1];
-
-
-            // parseInt(config.appStateCurrent.a) === parseInt(mapNode.positionInView);
 
             o._currentMapPosition -= 1;
+
             o._currentTotalMaps -= 1;
 
             mapModel.set("visibleMapCount", o._currentTotalMaps);
@@ -549,13 +544,14 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
             o._mapsExtentChangeEvent[o._currentMapPosition + 1].pause();
 
-
             toolkit.addClass(mapNode, "dijitHidden");
 
             o._mapsExtentChangeEvent[o._currentMapPosition + 1].resume();
 
             o.resizeActiveMaps();
+
             console.log("RESUME");
+
             core.resumeComponent();
 
         };
@@ -563,7 +559,7 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
         o.resizeActiveMaps = function() {
 
             toolkit.arrayEach(o._maps, function(theMap, i) {
-                if (i <= o._currentMapPosition) {
+                if (i <= o._currentTotalMaps) {
                     theMap.resize();
                 }
             });

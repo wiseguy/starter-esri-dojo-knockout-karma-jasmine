@@ -20,8 +20,8 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
          */
         o._initialized = false;
 
-        o._currentMapPosition = 0; //0 index,keep this updated
-        o._currentTotalMaps = 0; //start with 1, keep this updated
+        o._currentMapPosition = 0; //0 index,keep this updated in addMap and removeMap only
+        o._currentTotalMaps = 0; //start with 1, keep this updated in addMap and removeMap only
         o._maxMaps = config.maxMaps; //starts with 1
         o._map;
         o._maps = [];
@@ -182,39 +182,6 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
         };
 
-        /**
-         * Decide how many maps to show
-         */
-        /*  o.showMaps = function(count) {
-
-            var currentTotalMaps = o._currentTotalMaps;
-            var originalCount = count;
-            var totalMapsToAddOrRemove = Math.abs(currentTotalMaps - count);
-
-            if (count == currentTotalMaps) {
-                return; //do not change
-            }
-
-
-            while (totalMapsToAddOrRemove > 0) {
-                if (count < currentTotalMaps) {
-                    o.removeMap();
-                } else {
-                    o.addMap();
-                }
-
-                totalMapsToAddOrRemove -= 1;
-            }
-
-            hash.updateURL({
-                m: count
-            });
-
-            // core.resumeComponent();
-
-
-
-        };*/
 
         /**
          *change current selected map,
@@ -231,10 +198,14 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
             //do we need to open a hidden map?
             if ((o._currentMapPosition + 1) < totalMapsCreated) {
                 o.showMap();
+                o._currentTotalMaps += 1;
+                o._currentMapPosition += 1;
+                //console.clear();
+                //console.log("%c Adding - _currentMapPosition " + o._currentMapPosition + " o._currentTotalMaps " + o._currentTotalMaps, "color:green");
+                //debugger;
                 return;
             }
-            console.clear();
-            console.log("%c _currentMapPosition " + o._currentMapPosition + " o._currentTotalMaps " + o._currentTotalMaps, "color:green");
+
 
             //did we reach the max?
             if (o._currentTotalMaps === o._maxMaps) {
@@ -255,10 +226,7 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
             mapModel.set("visibleMapCount", o._currentTotalMaps);
 
-            /* toolkit.getNodeList(".map").removeClass(function(index, css) {
-                return (css.match(/(^|\s)show-\S+/g) || []).join(' '); //remove show-* classes
-            });
-            */
+
             while (currentTotalMaps > 0) {
 
                 toolkit.getNodeList(".map").removeClass("show-" + currentTotalMaps);
@@ -270,7 +238,10 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
             toolkit.getNodeList(".map").addClass("show-" + o._currentTotalMaps);
 
             o.createMap(positionInView);
+
+
         };
+
         /**
          *createMap needs the map id,
          */
@@ -326,7 +297,7 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
             var node = toolkit.getNodeList(".homeButton")[positionInView];
             var homeButton = new HomeButton({
-                //theme: "homeButton",
+                theme: "HomeButton",
                 map: map,
                 extent: null,
                 visible: true
@@ -574,6 +545,8 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
             toolkit.getNodeList(".map").addClass("show-" + (o._currentMapPosition + 1));
 
+            console.log("%c Remmoving - currentMapPosition " + o._currentMapPosition + " o._currentTotalMaps " + o._currentTotalMaps, "color:blue");
+
             o._mapsExtentChangeEvent[o._currentMapPosition + 1].pause();
 
 
@@ -606,8 +579,6 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
             toolkit.getNodeList(".map").addClass("show-" + (o._currentMapPosition + 2));
 
             toolkit.removeClass(mapNode, "dijitHidden");
-
-            o._currentMapPosition += 1;
 
             o.resizeActiveMaps();
 

@@ -23,7 +23,8 @@ define(["exports", "core/config", "core/toolkitController", "components/app/appC
 
         // mapController.changeTotalMaps(count);
         hash.updateApp({
-            m: count
+            m: count,
+            a: count - 1
         });
 
     }

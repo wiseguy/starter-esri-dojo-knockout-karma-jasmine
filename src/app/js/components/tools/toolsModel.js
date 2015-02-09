@@ -26,6 +26,10 @@ define(["ko", "core/config", "core/modelEventController"],
             modelEventController.addMap();
         };
 
+        vm.showMaps = function(count) {
+            modelEventController.showMaps(count);
+        };
+
         vm.removeMap = function() {
             modelEventController.removeMap();
         };

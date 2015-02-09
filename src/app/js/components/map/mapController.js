@@ -20,8 +20,8 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
          */
         o._initialized = false;
 
-        o._currentMapPosition = 0; //0 index
-        o._currentTotalMaps = 0; //start with 1
+        o._currentMapPosition = 0; //0 index,keep this updated
+        o._currentTotalMaps = 0; //start with 1, keep this updated
         o._maxMaps = config.maxMaps; //starts with 1
         o._map;
         o._maps = [];
@@ -120,17 +120,26 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
         /**
          *was map incremented or decremented?, hashController fires this
-         */
+         *is done only by one */
         o.changeTotalMaps = function(newMapCount) {
 
-            var currentTotalMaps = o._currentTotalMaps; //config.appStateCurrent.m; //o._currentTotalMaps;
-            if (parseInt(newMapCount) < parseInt(currentTotalMaps)) { //decreased
-                //debugger;
-                o.removeMap();
-            } else { //increased
-                //debugger;
-                o.addMap();
+            var currentTotalMaps = o._currentTotalMaps;
+
+            var numberOfIterations = Math.abs(newMapCount - currentTotalMaps);
+
+            while (numberOfIterations > 0) {
+
+                if (parseInt(newMapCount) < parseInt(currentTotalMaps)) { //decreased                    
+                    o.removeMap();
+                } else { //increased
+                    //debugger;
+                    o.addMap();
+                }
+
+                numberOfIterations -= 1;
+
             }
+
 
         };
 
@@ -172,22 +181,60 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
             hash.updateApp(hashObj);
 
         };
+
+        /**
+         * Decide how many maps to show
+         */
+        /*  o.showMaps = function(count) {
+
+            var currentTotalMaps = o._currentTotalMaps;
+            var originalCount = count;
+            var totalMapsToAddOrRemove = Math.abs(currentTotalMaps - count);
+
+            if (count == currentTotalMaps) {
+                return; //do not change
+            }
+
+
+            while (totalMapsToAddOrRemove > 0) {
+                if (count < currentTotalMaps) {
+                    o.removeMap();
+                } else {
+                    o.addMap();
+                }
+
+                totalMapsToAddOrRemove -= 1;
+            }
+
+            hash.updateURL({
+                m: count
+            });
+
+            // core.resumeComponent();
+
+
+
+        };*/
+
         /**
          *change current selected map,
          */
         o.addMap = function() {
-            console.log("being adding map");
+            console.log("begin adding map");
             //Remove the show-1, show-2 classes
             //increment the currentMap
             var positionInView = 0;
             var allMapNodes;
             var currentTotalMaps = o._currentTotalMaps;
+            var totalMapsCreated = o._maps.length;
 
             //do we need to open a hidden map?
-            if ((o._currentMapPosition + 1) < o._currentTotalMaps) {
+            if ((o._currentMapPosition + 1) < totalMapsCreated) {
                 o.showMap();
                 return;
             }
+            console.clear();
+            console.log("%c _currentMapPosition " + o._currentMapPosition + " o._currentTotalMaps " + o._currentTotalMaps, "color:green");
 
             //did we reach the max?
             if (o._currentTotalMaps === o._maxMaps) {
@@ -201,6 +248,8 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
             core.blockComponent(toolkit.getNodeList(".tools-container")[0]);
 
             o._currentTotalMaps += 1;
+            o._currentMapPosition += 1;
+
             positionInView = o._currentTotalMaps - 1;
             o._currentMapPosition = positionInView;
 
@@ -209,7 +258,7 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
             /* toolkit.getNodeList(".map").removeClass(function(index, css) {
                 return (css.match(/(^|\s)show-\S+/g) || []).join(' '); //remove show-* classes
             });
-*/
+            */
             while (currentTotalMaps > 0) {
 
                 toolkit.getNodeList(".map").removeClass("show-" + currentTotalMaps);
@@ -255,6 +304,7 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
                     center: [appCurrentState.x.split("!")[positionInView], appCurrentState.y.split("!")[positionInView]],
                     zoom: appCurrentState.l.split("!")[positionInView],
                     fadeOnZoom: true,
+                    autoResize: false,
                     force3DTransforms: true,
                     navigationMode: "css-transforms"
                 });
@@ -486,6 +536,8 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
             o.resizeActiveMaps();
 
+            core.resumeComponent();
+
         };
 
         o.removeMap = function(node) {
@@ -524,11 +576,14 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
             o._mapsExtentChangeEvent[o._currentMapPosition + 1].pause();
 
+
             toolkit.addClass(mapNode, "dijitHidden");
 
             o._mapsExtentChangeEvent[o._currentMapPosition + 1].resume();
 
             o.resizeActiveMaps();
+            console.log("RESUME");
+            core.resumeComponent();
 
         };
 
@@ -555,6 +610,9 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
             o._currentMapPosition += 1;
 
             o.resizeActiveMaps();
+
+            core.resumeComponent();
+            console.log("RESUME");
 
         };
 

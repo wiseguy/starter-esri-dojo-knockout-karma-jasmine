@@ -19,6 +19,16 @@ define(["exports", "core/config", "core/toolkitController", "components/app/appC
 
     }
 
+    o.showMaps = function(count) {
+
+        // mapController.changeTotalMaps(count);
+        hash.updateApp({
+            m: count
+        });
+
+    }
+
+
     o.removeMap = function(clickedItem) {
 
         mapController.decrementMap();

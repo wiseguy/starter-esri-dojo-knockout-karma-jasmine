@@ -1,5 +1,11 @@
 div.tools-container()
 	div.tools()
+		span(data-bind="click:function(){showMaps(4)}")
+			button(data-dojo-type="dijit/form/Button" data-dojo-props="showLabel: true" type="button") 4 maps
+		span(data-bind="click:function(){showMaps(2)}")
+			button(data-dojo-type="dijit/form/Button" data-dojo-props="showLabel: true" type="button") 2 maps
+		span(data-bind="click:function(){showMaps(6)}")
+			button(data-dojo-type="dijit/form/Button" data-dojo-props="showLabel: true" type="button") 6 maps
 		span(data-bind="click:addMap")
 			button(data-dojo-type="dijit/form/Button" data-dojo-props="showLabel: true" type="button") Add Map
 		span(data-bind="click:removeMap")

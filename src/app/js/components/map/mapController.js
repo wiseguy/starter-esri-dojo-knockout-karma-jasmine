@@ -126,9 +126,11 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
             var currentTotalMaps = o._currentTotalMaps;
 
             var numberOfIterations = Math.abs(newMapCount - currentTotalMaps);
-            var isRemove = (parseInt(newMapCount) < parseInt(currentTotalMaps))
+            var isRemove = (parseInt(newMapCount) < parseInt(currentTotalMaps));
             var isAdd = !isRemove;
-
+            if (isAdd) {
+                o.showMapContainers(currentTotalMaps + numberOfIterations)
+            }
 
             while (numberOfIterations > 0) {
 
@@ -143,7 +145,7 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
             }
 
-            if (isRemove) {
+            if (isRemove) { //resize total maps showing
                 o.resizeActiveMaps();
             }
 
@@ -174,7 +176,7 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
                 return;
             }
 
-            var lastMapNode = toolkit.getNodeList(".map")[parseInt(currentTotalMaps) - 1];
+            var lastMapNode = toolkit.getNodeList(".map.main")[parseInt(currentTotalMaps) - 1];
             var isRemovedMapAlsoActive = toolkit.containsClass(lastMapNode, "selected-map");
 
             var hashObj = {
@@ -204,7 +206,7 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
             //do we need to open a hidden map?
             if ((o._currentMapPosition + 1) < totalMapsCreated) {
-                o.showMap();
+
                 o._currentTotalMaps += 1;
                 o._currentMapPosition += 1;
                 o.resizeActiveMaps(o._maps[o._currentMapPosition]);
@@ -237,13 +239,13 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
             while (currentTotalMaps > 0) {
 
-                toolkit.getNodeList(".map").removeClass("show-" + currentTotalMaps);
+                toolkit.getNodeList(".map.main").removeClass("show-" + currentTotalMaps);
 
                 currentTotalMaps -= 1;
 
             }
 
-            toolkit.getNodeList(".map").addClass("show-" + o._currentTotalMaps);
+            toolkit.getNodeList(".map.main").addClass("show-" + o._currentTotalMaps);
 
             o.createMap(positionInView);
 
@@ -261,7 +263,7 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
             var MapClass = toolkit.getMapClass();
             var arcgisUtils = toolkit.getArcGISutils();
             var appCurrentState = config.appStateCurrent;
-            var mapNode = toolkit.getNodeList(".map")[positionInView];
+            var mapNode = toolkit.getNodeList(".map.main")[positionInView];
 
             if (config.webMapId.length) {
                 isWebMap = true;
@@ -530,7 +532,7 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
             var currentTotalMaps = o._currentTotalMaps;
 
-            var mapNode = toolkit.getNodeList(".map")[o._currentMapPosition];
+            var mapNode = toolkit.getNodeList(".map.main")[o._currentMapPosition];
 
             o._currentMapPosition -= 1;
 
@@ -540,13 +542,13 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
             while (currentTotalMaps > 0) {
 
-                toolkit.getNodeList(".map").removeClass("show-" + currentTotalMaps);
+                toolkit.getNodeList(".map.main").removeClass("show-" + currentTotalMaps);
 
                 currentTotalMaps -= 1;
 
             }
 
-            toolkit.getNodeList(".map").addClass("show-" + (o._currentMapPosition + 1));
+            toolkit.getNodeList(".map.main").addClass("show-" + (o._currentMapPosition + 1));
 
             console.log("%c Remmoving - currentMapPosition " + o._currentMapPosition + " o._currentTotalMaps " + o._currentTotalMaps, "color:blue");
 
@@ -573,8 +575,7 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
             } else {
 
                 toolkit.arrayEach(o._maps, function(theMap, i) {
-                    if (i <= o._currentTotalMaps) {
-
+                    if (i <= (o._currentTotalMaps - 1)) {
                         theMap.resize();
                     }
                 });
@@ -584,19 +585,21 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
         };
 
-        o.showMap = function() {
+        o.showMapContainers = function(totalToShow) {
 
-            var mapNode = toolkit.getNodeList(".map")[o._currentMapPosition + 1];
+            toolkit.getNodeList(".map.main").forEach(function(node, i) {
+                if (i <= (totalToShow - 1)) {
+                    toolkit.removeClass(node, "dijitHidden");
+                    var currentShowClass = node.className.match(/(^|\s)show-\S+/g)[0].trim();
+                    node.className = node.className.replace(currentShowClass, "show-" + totalToShow);
+                } else {
+                    toolkit.addClass(node, "dijitHidden");
+                }
+            });
 
-            toolkit.getNodeList(".map").removeClass("show-" + (o._currentMapPosition + 1));
 
-            toolkit.getNodeList(".map").addClass("show-" + (o._currentMapPosition + 2));
-
-            toolkit.removeClass(mapNode, "dijitHidden");
 
             // o.resizeActiveMaps();
-
-            core.resumeComponent();
             console.log("RESUME");
 
         };
@@ -677,9 +680,9 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
             // mapModel.set("activeMapIndex", mapIndex);
             modelSaveController.setActiveMap(mapIndex);
 
-            toolkit.getNodeList(".map").removeClass("selected-map");
+            toolkit.getNodeList(".map.main").removeClass("selected-map");
 
-            toolkit.addClass(toolkit.getNodeList(".map")[mapIndex], "selected-map");
+            toolkit.addClass(toolkit.getNodeList(".map.main")[mapIndex], "selected-map");
 
 
         };

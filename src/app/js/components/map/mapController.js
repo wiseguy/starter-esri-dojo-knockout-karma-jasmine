@@ -126,10 +126,13 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
             var currentTotalMaps = o._currentTotalMaps;
 
             var numberOfIterations = Math.abs(newMapCount - currentTotalMaps);
+            var isRemove = (parseInt(newMapCount) < parseInt(currentTotalMaps))
+            var isAdd = !isRemove;
+
 
             while (numberOfIterations > 0) {
 
-                if (parseInt(newMapCount) < parseInt(currentTotalMaps)) { //decreased                    
+                if (isRemove) { //decreased                    
                     o.removeMap();
                 } else { //increased
                     //debugger;
@@ -138,6 +141,10 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
                 numberOfIterations -= 1;
 
+            }
+
+            if (isRemove) {
+                o.resizeActiveMaps();
             }
 
 
@@ -200,6 +207,7 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
                 o.showMap();
                 o._currentTotalMaps += 1;
                 o._currentMapPosition += 1;
+                o.resizeActiveMaps(o._maps[o._currentMapPosition]);
                 //console.clear();
                 //console.log("%c Adding - _currentMapPosition " + o._currentMapPosition + " o._currentTotalMaps " + o._currentTotalMaps, "color:green");
                 //debugger;
@@ -505,7 +513,7 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
             legend.startup();
 
-            o.resizeActiveMaps();
+            o.resizeActiveMaps(map);
 
             core.resumeComponent();
 
@@ -548,21 +556,31 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
             o._mapsExtentChangeEvent[o._currentMapPosition + 1].resume();
 
-            o.resizeActiveMaps();
+            //o.resizeActiveMaps();
 
             console.log("RESUME");
 
             core.resumeComponent();
 
         };
+        /*
+         * If map sent then resize only the target map
+         */
+        o.resizeActiveMaps = function(map) {
 
-        o.resizeActiveMaps = function() {
+            if (map) {
+                map.resize();
+            } else {
 
-            toolkit.arrayEach(o._maps, function(theMap, i) {
-                if (i <= o._currentTotalMaps) {
-                    theMap.resize();
-                }
-            });
+                toolkit.arrayEach(o._maps, function(theMap, i) {
+                    if (i <= o._currentTotalMaps) {
+
+                        theMap.resize();
+                    }
+                });
+
+            }
+
 
         };
 
@@ -576,7 +594,7 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
             toolkit.removeClass(mapNode, "dijitHidden");
 
-            o.resizeActiveMaps();
+            // o.resizeActiveMaps();
 
             core.resumeComponent();
             console.log("RESUME");

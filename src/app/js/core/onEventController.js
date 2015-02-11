@@ -56,6 +56,13 @@ define(["exports", "core/config", "core/toolkitController", "core/hashController
 
     }
 
+    o.windowResize = function() {
+
+        console.log("onEventController window resize");
+        mapController.resizeActiveMaps();
+
+    }
+
 
     return o;
 });

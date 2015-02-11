@@ -9,9 +9,9 @@
  syncViewModels 
  */
 
-define(["core/config", "components/app/appModel", "core/toolkitController", "core/coreController", "core/koExtend", "bootstrap"],
+define(["core/config", "components/app/appModel", "core/toolkitController", "core/onEventController", "core/coreController", "core/koExtend", "bootstrap"],
 
-    function(config, appModel, toolkit, core, koExtend) {
+    function(config, appModel, toolkit, onevent, core, koExtend) {
 
         var o = {};
         /*
@@ -90,6 +90,10 @@ define(["core/config", "components/app/appModel", "core/toolkitController", "cor
             //start the view that is in current app state
 
             activeViewId = config.appStateCurrent.v;
+
+            toolkit.getOn()(window, "resize", function() {
+                onevent.windowResize();
+            });
 
             core.startModule(activeViewId);
 

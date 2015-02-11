@@ -25,7 +25,7 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
         o._maxMaps = config.maxMaps; //starts with 1
         o._map;
         o._maps = [];
-        o._mapsExtentChangeEvent = [];
+        // o._mapsExtentChangeEvent = [];
         o._basemaps;
         o._legend;
 
@@ -411,7 +411,7 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
                     resized = true;
                 });
 
-                o._mapsExtentChangeEvent.push(extentChangeHandler);
+                //o._mapsExtentChangeEvent.push(extentChangeHandler);
 
                 core.resumeComponent();
 
@@ -552,11 +552,11 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
             console.log("%c Remmoving - currentMapPosition " + o._currentMapPosition + " o._currentTotalMaps " + o._currentTotalMaps, "color:blue");
 
-            o._mapsExtentChangeEvent[o._currentMapPosition + 1].pause();
+            // o._mapsExtentChangeEvent[o._currentMapPosition + 1].pause();
 
             toolkit.addClass(mapNode, "dijitHidden");
 
-            o._mapsExtentChangeEvent[o._currentMapPosition + 1].resume();
+            // o._mapsExtentChangeEvent[o._currentMapPosition + 1].resume();
 
             //o.resizeActiveMaps();
 
@@ -714,9 +714,9 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
             }
 
             toolkit.arrayEach(o._maps, function(map, i) {
-                o._mapsExtentChangeEvent[i].pause();
+                // o._mapsExtentChangeEvent[i].pause();
                 map.centerAndZoom([centerLL.x, centerLL.y], level);
-                o._mapsExtentChangeEvent[i].resume();
+                // o._mapsExtentChangeEvent[i].resume();
             });
 
             hash.updateURL({

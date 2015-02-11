@@ -327,6 +327,7 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
             if (!isWebMap && !o._maps[positionInView]) {
                 var mapLoad = map.on("load", function() {
                     mapLoad.remove();
+                    map.resize();
                     o.addLayers(map);
                 });
             }
@@ -390,10 +391,12 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
                 console.log("layers added");
 
                 //map.addLayers
+                if (map.positionInView == 0) {
+                    o.updateActiveMapDiv(0); //set the first map as active one
+                }
 
                 if (map.positionInView == 0 || config.basemapForEachMap) { //only add basemap for first map
                     o.addBasemap(map, evt.layers);
-                    o.updateActiveMapDiv(0); //set the first map as active one
                 } else {
                     o.addLegend(map, evt.layers);
                 }

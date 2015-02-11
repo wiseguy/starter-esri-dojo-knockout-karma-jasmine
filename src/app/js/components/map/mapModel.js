@@ -25,7 +25,7 @@ define(["exports", "ko", "core/config", "core/modelEventController", "core/toolk
 
             console.log("mapModel setActiveMap");
 
-            var mapIndex = toolkit.arrayIndex(toolkit.getNodeList(".map"), evt.currentTarget);
+            var mapIndex = toolkit.arrayIndex(toolkit.getNodeList(".map.main"), evt.currentTarget);
 
 
             modelEventController.setActiveMap(evt.currentTarget, mapIndex);

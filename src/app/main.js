@@ -39,7 +39,7 @@
     baseUrl = document.location.protocol + "//" + hostname + pathname.join("/");
 
 
-    baseUrl = "http://shj.blueraster.com/apps-wiseguy/template-esri/src";
+    //baseUrl = "http://shj.blueraster.com/apps-wiseguy/template-esri/src";
     //baseUrl = "http://staging.geoent.com/esri";
 
     var pathPrefix = baseUrl || document.location.pathname.replace(/\/[^/]+$/, "");

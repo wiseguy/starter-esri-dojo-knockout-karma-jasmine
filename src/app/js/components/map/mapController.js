@@ -436,8 +436,9 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
                 showArcGISBasemaps: true,
                 map: map,
                 onLoad: function() {
+                    var basemapsToHide = [];
                     // Dont rely on the id's. the basemap_X are subject to change
-                    toolkit.arrayEach(basemapGallery.basemaps, function(basemap) {
+                    toolkit.arrayEach(basemapGallery.basemaps, function(basemap, i) {
                         switch (basemap.title.toLowerCase()) {
                             case "imagery": //basemap_8
                                 basemap.name = "satellite";
@@ -470,13 +471,24 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
                                 basemap.name = "osm"; //basemap_0
                                 break;
                             case "usa topo maps": //NEW , not a standard
+                                basemapsToHide.push(i);
+                                basemap.name = "osm"; //basemap_3
+                                break;
+                            case "usgs national map": //NEW , not a standard
+                                basemapsToHide.push(i);
                                 basemap.name = "osm"; //basemap_3
                                 break;
                         }
 
                     });
+
+                    toolkit.arrayEach(basemapsToHide.reverse(), function(i) {
+                        basemapGallery.basemaps.splice(i, 1);
+                    });
                 }
             }, toolkit.getNodeList('.basemap-gallery')[0]); //this is always 0
+
+
 
             toolkit.removeClass(toolkit.getNodeList('.basemap-gallery-titlepane-holder')[map.positionInView], "dijitHidden");
             toolkit.removeClass(toolkit.getNodeList('.theme-titlepane-holder')[map.positionInView], "dijitHidden");

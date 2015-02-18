@@ -22,10 +22,13 @@ define(["exports", "ko", "core/config", "core/modelEventController", "core/toolk
 
         vm.shareButton = function(model, evt) {
 
+            modelEventController.shareButton(evt.currentTarget);
 
         }
 
         vm.geocode = function(model, evt) {
+
+            modelEventController.geocode(evt.currentTarget);
 
 
         }

@@ -12,14 +12,23 @@
   border: 2px solid #ccc;
 }
 .map.main .esriSimpleSlider {
-  background-color: rgba(80,92,155,0.4);
+  color: #119ada;
+  background-color: $toolsBackground;
   border: 0px;
   border-radius: 0px;
 }
-.map.main .esriSimpleSlider:hover,
-.map.main esriSimpleSliderIncrementButton:hover,
-.map.main esriSimpleSliderDecrementButton:hover {
-  background-color: rgba(80,92,155,0.7);
+.map.main .esriSimpleSlider:hover {
+  border-radius: 0px;
+}
+.map.main .esriSimpleSliderIncrementButton:hover,
+.map.main .esriSimpleSliderDecrementButton:hover {
+  color: #119ada;
+  background-color: $toolsBackgroundHover;
+  border-radius: 0px;
+  background-position: 7px 7px;
+}
+.map.main .esriSimpleSliderIncrementButton {
+  border-bottom: 1px solid #119ada;
 }
 .map.selected-map {
   -moz-box-sizing: border-box;
@@ -179,8 +188,8 @@
 }
 .basemap-gallery-titlepane-holder {
   position: absolute;
-  left: 100px;
-  top: 10px;
+  right: 100px;
+  top: 0px;
   z-index: 10;
 }
 .basemap-gallery {
@@ -193,12 +202,9 @@
 }
 .theme-titlepane-holder {
   position: absolute;
-  left: 200px;
-  top: 10px;
+  right: 200px;
+  top: 0px;
   z-index: 10;
-}
-.theme-titlepane-holder .dijitButtonNode {
-  background-color: #ff0;
 }
 .theme-gallery {
   width: 100%;
@@ -285,14 +291,16 @@ theme-widget .mapIndex div {
 .HomeButton .home {
   opacity: 0.8;
   background-image: url("../images/control_home.png");
-  background-color: rgba(80,92,155,0.4);
+  background-color: $toolsBackground;
   border-radius: 0px;
   -webkit-transition: all 0.5s ease-out;
   transition: all 0.5s ease-out;
 }
 .HomeButton .home:hover {
   opacity: 1;
-  background-color: rgba(80,92,155,0.7);
+  background-repeat: no-repeat;
+  background-color: $toolsBackgroundHover;
+  background-position: 7px 7px;
 }
 .locationButton {
   position: absolute;
@@ -301,8 +309,10 @@ theme-widget .mapIndex div {
   z-index: 100;
   width: 30px;
   height: 30px;
+  background-repeat: no-repeat;
   background-image: url("../images/location.png");
-  background-color: rgba(80,92,155,0.4);
+  background-position: 5px 5px;
+  background-color: $toolsBackground;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   border: 0px solid #00f;
@@ -312,25 +322,32 @@ theme-widget .mapIndex div {
   transition: all 0.5s ease-out;
 }
 .locationButton:hover {
-  background-color: rgba(80,92,155,0.7);
+  background-color: $toolsBackgroundHover;
+  background-position: 7px 7px;
+}
+.map.show-1 .syncMaps {
+  display: none;
 }
 .syncMaps {
   opacity: 0.8;
   position: absolute;
-  top: 175px;
+  top: 255px;
   left: 20px;
   z-index: 100;
   width: 30px;
   height: 30px;
+  background-repeat: no-repeat;
   background-image: url("../images/icon_sync.png");
-  background-color: rgba(80,92,155,0.4);
+  background-position: 5px 5px;
+  background-color: $toolsBackground;
   cursor: pointer;
   border-radius: 0px;
   -webkit-transition: all 0.5s ease-out;
   transition: all 0.5s ease-out;
 }
 .syncMaps:hover {
-  background-color: rgba(80,92,155,0.7);
+  background-color: $toolsBackgroundHover;
+  background-position: 7px 7px;
 }
 .shareButton {
   opacity: 0.8;
@@ -340,33 +357,37 @@ theme-widget .mapIndex div {
   z-index: 100;
   width: 30px;
   height: 30px;
+  background-repeat: no-repeat;
   background-image: url("../images/share.png");
-  background-color: rgba(80,92,155,0.4);
+  background-position: 5px 5px;
+  background-color: $toolsBackground;
   cursor: pointer;
   border-radius: 0px;
   -webkit-transition: all 0.5s ease-out;
   transition: all 0.5s ease-out;
 }
 .shareButton:hover {
-  background-color: rgba(80,92,155,0.7);
+  background-color: $toolsBackgroundHover;
+  background-position: 7px 7px;
 }
 .geocode {
   opacity: 0.8;
   position: absolute;
-  top: 255px;
+  top: 175px;
   left: 20px;
   z-index: 100;
   width: 30px;
   height: 30px;
   background-image: url("../images/geocode.png");
   background-repeat: no-repeat;
-  background-postion: 10px 10px;
-  background-color: rgba(80,92,155,0.4);
+  background-position: 5px 5px;
+  background-color: $toolsBackground;
   cursor: pointer;
   border-radius: 0px;
   -webkit-transition: all 0.5s ease-out;
   transition: all 0.5s ease-out;
 }
 .geocode:hover {
-  background-color: rgba(80,92,155,0.7);
+  background-color: $toolsBackgroundHover;
+  background-position: 7px 7px;
 }

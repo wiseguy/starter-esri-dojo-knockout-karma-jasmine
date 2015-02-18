@@ -26,7 +26,7 @@ define(function() {
 
         viewLinks: [{
             "id": "dashboard",
-            "label": "Dashboard",
+            "label": "Home",
             "selected": false
         }, {
             "id": "map",
@@ -122,6 +122,22 @@ define(function() {
             ]
         },
 
+        utilities: {
+
+            geometryService: {
+                "url": ""
+            },
+
+            printService: {
+                "url": "http://utility.arcgisonline.com/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task"
+            },
+
+            geocodingService: {
+                "url": "http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"
+            },
+
+        },
+
         themes: [{
             id: "swap",
             name: "State Wildlife Action Plan",
@@ -146,7 +162,10 @@ define(function() {
             "loading": "Loading...",
             "error": "Something is wrong!",
             "browserIncompatible": "This browser is not fully supported. The fully supported browsers list is : <br>"
-        }
+        },
+
+
+        dashboardHTML: "This is a single page map site"
 
     };
 

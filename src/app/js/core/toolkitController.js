@@ -10,11 +10,13 @@ define(["core/config",
         "dojo/Deferred", "dojo/dom-construct", "dojo/_base/lang", "dojo/io-query", "dojo/hash",
         "dojo/ready", "dojo/_base/array", "dojo/sniff", "dojo/hash", "dojo/topic", "dojo/on", "dojo/parser",
         "dijit/TitlePane", "dijit/layout/ContentPane", "dijit/form/Button", "dijit/form/DropDownButton", "dijit/TooltipDialog",
+        "dojo/keys",
         /*Esri*/
         "esri/request", "esri/layers/ArcGISDynamicMapServiceLayer", "esri/layers/ArcGISTiledMapServiceLayer",
         "esri/layers/FeatureLayer", "esri/layers/GraphicsLayer",
         "esri/map", "esri/dijit/BasemapGallery", "esri/dijit/Legend", "esri/geometry/webMercatorUtils", "esri/arcgis/utils",
-        "esri/config", "esri/dijit/HomeButton", "esri/geometry/Point"
+        "esri/config", "esri/dijit/HomeButton", "esri/geometry/Point", "esri/tasks/locator",
+        "esri/symbols/SimpleMarkerSymbol", "esri/InfoTemplate", "esri/graphic"
     ],
     function(config,
         /*Dojo*/
@@ -22,10 +24,12 @@ define(["core/config",
         Deferred, domConstruct, lang, ioQuery, hash,
         ready, arrayUtil, sniff, hash, topic, on, parser,
         TitlePane, ContentPane, Button, DropDownButton, TooltipDialog,
+        keys,
         /*Esri*/
         esriRequest, ArcGISDynamicMapServiceLayer, ArcGISTiledMapServiceLayer,
         FeatureLayer, GraphicsLayer, Map, BasemapGallery, Legend,
-        webMercatorUtils, arcgisUtils, esriConfig, HomeButton, Point) {
+        webMercatorUtils, arcgisUtils, esriConfig, HomeButton, Point, Locator,
+        SimpleMarkerSymbol, InfoTemplate, Graphic) {
 
         var o = {};
 
@@ -94,6 +98,10 @@ define(["core/config",
         o.arrayMap = function(sourceArray, handlerFunc) {
             var targetArray = arrayUtil.map(sourceArray, handlerFunc);
             return targetArray;
+        };
+
+        o.arrayEvery = function(sourceArray, handlerFunc) {
+            arrayUtil.every(sourceArray, handlerFunc);
         };
 
         o.arrayEach = function(sourceArray, handlerFunc) {
@@ -243,6 +251,12 @@ define(["core/config",
         o.getConstructor = function(constructorName) {
 
             return eval(constructorName);
+
+        };
+
+        o.get = function(nameStr) {
+
+            return eval(nameStr);
 
         };
 

@@ -61,6 +61,8 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
                 var html = results[0];
                 var mapInstanceHtml = results[1];
+
+                o.createGeocoding();
                 o.createUI(html, mapInstanceHtml);
 
             });
@@ -117,6 +119,93 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
          * Custom methods for this controller
          **************************************/
 
+        o.createGeocoding = function() {
+
+            //listen to enter event for input
+            var Locator = new toolkit.getConstructor("Locator");
+            var locator = new Locator(config.utilities.geocodingService.url);
+            var on = toolkit.get("on");
+
+            on(window, "keypress", function(evt) {
+                var keys = toolkit.get("keys");
+
+                switch (evt.charOrCode) {
+                    case keys.ENTER:
+                        var map = o._maps[o._currentMapPosition];
+                        map.graphics.clear();
+                        var address = {
+                            "SingleLine": toolkit.getNodeById("locator").value
+                        };
+                        locator.outSpatialReference = map.spatialReference;
+                        var options = {
+                            address: address,
+                            outFields: ["Loc_name"]
+                        };
+                        locator.addressToLocations(options);
+
+                        break;
+                }
+
+            });
+
+            on(toolkit.getNodeById("locator"), "click", function(evt) {
+                evt.stopPropagation(); // to avoid the window from closing
+            });
+
+
+
+            locator.on("address-to-locations-complete", function(evt) {
+                debugger;
+                var symbol = new SimpleMarkerSymbol();
+                var infoTemplate = new InfoTemplate(
+                    "Location",
+                    "Address: ${address}<br />Score: ${score}<br />Source locator: ${locatorName}"
+                );
+                symbol.setStyle(SimpleMarkerSymbol.STYLE_SQUARE);
+                symbol.setColor(new Color([153, 0, 51, 0.75]));
+
+                var geom;
+                toolkit.arrayEvery(evt.addresses, function(candidate) {
+                    console.log(candidate.score);
+                    if (candidate.score > 80) {
+                        console.log(candidate.location);
+                        var attributes = {
+                            address: candidate.address,
+                            score: candidate.score,
+                            locatorName: candidate.attributes.Loc_name
+                        };
+                        geom = candidate.location;
+                        var graphic = new Graphic(geom, symbol, attributes, infoTemplate);
+                        //add a graphic to the map at the geocoded location
+                        map.graphics.add(graphic);
+                        //add a text symbol to the map listing the location of the matched address.
+                        var displayText = candidate.address;
+                        var font = new Font(
+                            "16pt",
+                            Font.STYLE_NORMAL,
+                            Font.VARIANT_NORMAL,
+                            Font.WEIGHT_BOLD,
+                            "Helvetica"
+                        );
+
+                        var textSymbol = new TextSymbol(
+                            displayText,
+                            font,
+                            new Color("#666633")
+                        );
+                        textSymbol.setOffset(0, 8);
+                        map.graphics.add(new Graphic(geom, textSymbol));
+                        return false; //break out of loop after one candidate with score greater  than 80 is found.
+                    }
+                });
+                if (geom !== undefined) {
+                    map.centerAndZoom(geom, 12);
+                }
+
+            });
+
+
+        };
 
         /**
          *was map incremented or decremented?, hashController fires this

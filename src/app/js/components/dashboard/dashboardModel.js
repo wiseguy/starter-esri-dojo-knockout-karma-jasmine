@@ -10,8 +10,7 @@ define(["exports", "ko", "core/config", "core/modelEventController"],
          * set defaults
          */
         o.initialize = function() {
-
-            vm.text("This is the Dashboard page");
+            vm.text(config.dashboardHTML);
             vm.isActive(true);
 
         };

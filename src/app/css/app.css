@@ -32,10 +32,11 @@ body {
   opacity: 0.5;
 }
 .app .dijitButtonNode {
-  background: #ccc;
+  background: #505c9b;
+  color: #fff;
 }
 .app .dijitHover .dijitButtonNode {
-  background: #eee;
+  background: #505c9b;
 }
 /*App Stylus*/
 .app-container {
@@ -50,6 +51,7 @@ body {
   left: 0;
   bottom: 0;
   top: 50px;
+  padding: 10px;
 }
 /*Header Stylus*/
 .header-container {
@@ -61,6 +63,13 @@ body {
   z-index: 100;
   background-color: #008000;
 }
+.navbar-nav {
+  float: left;
+}
+.navbar-toggle {
+  float: left;
+  margin-left: 15px;
+}
 .menu-item {
   padding: 10px;
 }
@@ -69,6 +78,27 @@ body {
 }
 .navbar-inverse {
   background-color: #444c94;
+}
+.navbar-nav > .active > a > span {
+  border-bottom: 3px solid #119ada;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border-radius: 3px;
+  padding-bottom: 5px;
+  color: #fff;
+}
+.navbar-inverse .navbar-nav > .active > a,
+.navbar-inverse .navbar-nav > .active > a:hover,
+.navbar-inverse .navbar-nav > .active > a:focus {
+  background: none;
+}
+.logo {
+  background-image: url("../images/logo.png");
+  background-repeat: no-repeat;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-position: center 0px;
 }
 /*Map Stylus*/
 .map-container {
@@ -85,14 +115,23 @@ body {
   border: 2px solid #ccc;
 }
 .map.main .esriSimpleSlider {
-  background-color: rgba(80,92,155,0.4);
+  color: #119ada;
+  background-color: rgba(80,92,155,0.3);
   border: 0px;
   border-radius: 0px;
 }
-.map.main .esriSimpleSlider:hover,
-.map.main esriSimpleSliderIncrementButton:hover,
-.map.main esriSimpleSliderDecrementButton:hover {
-  background-color: rgba(80,92,155,0.7);
+.map.main .esriSimpleSlider:hover {
+  border-radius: 0px;
+}
+.map.main .esriSimpleSliderIncrementButton:hover,
+.map.main .esriSimpleSliderDecrementButton:hover {
+  color: #119ada;
+  background-color: rgba(80,92,155,0.5);
+  border-radius: 0px;
+  background-position: 7px 7px;
+}
+.map.main .esriSimpleSliderIncrementButton {
+  border-bottom: 1px solid #119ada;
 }
 .map.selected-map {
   -moz-box-sizing: border-box;
@@ -252,8 +291,8 @@ body {
 }
 .basemap-gallery-titlepane-holder {
   position: absolute;
-  left: 100px;
-  top: 10px;
+  right: 100px;
+  top: 0px;
   z-index: 10;
 }
 .basemap-gallery {
@@ -266,12 +305,9 @@ body {
 }
 .theme-titlepane-holder {
   position: absolute;
-  left: 200px;
-  top: 10px;
+  right: 200px;
+  top: 0px;
   z-index: 10;
-}
-.theme-titlepane-holder .dijitButtonNode {
-  background-color: #ff0;
 }
 .theme-gallery {
   width: 100%;
@@ -358,14 +394,16 @@ theme-widget .mapIndex div {
 .HomeButton .home {
   opacity: 0.8;
   background-image: url("../images/control_home.png");
-  background-color: rgba(80,92,155,0.4);
+  background-color: rgba(80,92,155,0.3);
   border-radius: 0px;
   -webkit-transition: all 0.5s ease-out;
   transition: all 0.5s ease-out;
 }
 .HomeButton .home:hover {
   opacity: 1;
-  background-color: rgba(80,92,155,0.7);
+  background-repeat: no-repeat;
+  background-color: rgba(80,92,155,0.5);
+  background-position: 7px 7px;
 }
 .locationButton {
   position: absolute;
@@ -374,8 +412,10 @@ theme-widget .mapIndex div {
   z-index: 100;
   width: 30px;
   height: 30px;
+  background-repeat: no-repeat;
   background-image: url("../images/location.png");
-  background-color: rgba(80,92,155,0.4);
+  background-position: 5px 5px;
+  background-color: rgba(80,92,155,0.3);
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   border: 0px solid #00f;
@@ -385,25 +425,32 @@ theme-widget .mapIndex div {
   transition: all 0.5s ease-out;
 }
 .locationButton:hover {
-  background-color: rgba(80,92,155,0.7);
+  background-color: rgba(80,92,155,0.5);
+  background-position: 7px 7px;
+}
+.map.show-1 .syncMaps {
+  display: none;
 }
 .syncMaps {
   opacity: 0.8;
   position: absolute;
-  top: 175px;
+  top: 255px;
   left: 20px;
   z-index: 100;
   width: 30px;
   height: 30px;
+  background-repeat: no-repeat;
   background-image: url("../images/icon_sync.png");
-  background-color: rgba(80,92,155,0.4);
+  background-position: 5px 5px;
+  background-color: rgba(80,92,155,0.3);
   cursor: pointer;
   border-radius: 0px;
   -webkit-transition: all 0.5s ease-out;
   transition: all 0.5s ease-out;
 }
 .syncMaps:hover {
-  background-color: rgba(80,92,155,0.7);
+  background-color: rgba(80,92,155,0.5);
+  background-position: 7px 7px;
 }
 .shareButton {
   opacity: 0.8;
@@ -413,45 +460,50 @@ theme-widget .mapIndex div {
   z-index: 100;
   width: 30px;
   height: 30px;
+  background-repeat: no-repeat;
   background-image: url("../images/share.png");
-  background-color: rgba(80,92,155,0.4);
+  background-position: 5px 5px;
+  background-color: rgba(80,92,155,0.3);
   cursor: pointer;
   border-radius: 0px;
   -webkit-transition: all 0.5s ease-out;
   transition: all 0.5s ease-out;
 }
 .shareButton:hover {
-  background-color: rgba(80,92,155,0.7);
+  background-color: rgba(80,92,155,0.5);
+  background-position: 7px 7px;
 }
 .geocode {
   opacity: 0.8;
   position: absolute;
-  top: 255px;
+  top: 175px;
   left: 20px;
   z-index: 100;
   width: 30px;
   height: 30px;
   background-image: url("../images/geocode.png");
   background-repeat: no-repeat;
-  background-postion: 10px 10px;
-  background-color: rgba(80,92,155,0.4);
+  background-position: 5px 5px;
+  background-color: rgba(80,92,155,0.3);
   cursor: pointer;
   border-radius: 0px;
   -webkit-transition: all 0.5s ease-out;
   transition: all 0.5s ease-out;
 }
 .geocode:hover {
-  background-color: rgba(80,92,155,0.7);
+  background-color: rgba(80,92,155,0.5);
+  background-position: 7px 7px;
 }
 /*Map Stylus*/
 .tools-container {
   position: absolute;
-  right: 250px;
-  top: 5px;
+  right: 20px;
+  top: 10px;
   z-index: 200 !important;
 }
-.share-container {
-  width: 300px;
+.share-container,
+.geocode-container {
+  width: 260px;
   height: 40px;
-  float: left;
+  padding-left: 40px;
 }

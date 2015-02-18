@@ -12,8 +12,8 @@
             "css": [
                 "http://js.arcgis.com/" + esriVersion + "/esri/css/esri.css",
                 "http://js.arcgis.com/" + esriVersion + "/dijit/themes/tundra/tundra.css",
-                "../app/css/app.css",
                 "../app/css/bootstrap2.css",
+                "../app/css/app.css",
                 "../app/css/joyride/joyride-2.1.css",
                 "../app/css/joyride/mobile.css"
             ],

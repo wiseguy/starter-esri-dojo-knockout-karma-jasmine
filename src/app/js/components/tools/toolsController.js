@@ -115,6 +115,47 @@ define(["exports", "core/config", "components/tools/toolsModel", "core/toolkitCo
 
         };
 
+        o.shareButton = function(node) {
+
+
+            //show container
+            var shareNode = toolkit.getNodeList(".share-container")[0];
+
+            var isClosed = toolkit.containsClass(shareNode, "dijitHidden");
+
+            if (isClosed) {
+
+                toolkit.removeClass(shareNode, "dijitHidden");
+                toolkit.placeDom(shareNode, node, "last");
+
+            } else {
+
+                toolkit.addClass(shareNode, "dijitHidden");
+
+            }
+
+        };
+
+        o.geocode = function(node) {
+
+            //show container
+            var shareNode = toolkit.getNodeList(".geocode-container")[0];
+
+            var isClosed = toolkit.containsClass(shareNode, "dijitHidden");
+
+            if (isClosed) {
+
+                toolkit.removeClass(shareNode, "dijitHidden");
+                toolkit.placeDom(shareNode, node, "last");
+
+            } else {
+
+                toolkit.addClass(shareNode, "dijitHidden");
+
+            }
+
+        };
+
         return o;
 
     });

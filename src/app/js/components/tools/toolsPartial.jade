@@ -1,18 +1,21 @@
 div.tools-container()
 	div.tools()
-		span(data-bind="click:function(){showMaps(4)}")
-			button(data-dojo-type="dijit/form/Button" data-dojo-props="showLabel: true" type="button") 4 maps
-		span(data-bind="click:function(){showMaps(2)}")
-			button(data-dojo-type="dijit/form/Button" data-dojo-props="showLabel: true" type="button") 2 maps
-		span(data-bind="click:function(){showMaps(6)}")
-			button(data-dojo-type="dijit/form/Button" data-dojo-props="showLabel: true" type="button") 6 maps
 		span(data-bind="click:addMap")
 			button(data-dojo-type="dijit/form/Button" data-dojo-props="showLabel: true" type="button") Add Map
 		span(data-bind="click:removeMap")
 			button(data-dojo-type="dijit/form/Button" data-dojo-props="showLabel: true" type="button") Remove Map
+		span(data-bind="click:function(){showMaps(4)}")
+			button(data-dojo-type="dijit/form/Button" data-dojo-props="showLabel: true" type="button") 4
+		span(data-bind="click:function(){showMaps(2)}")
+			button(data-dojo-type="dijit/form/Button" data-dojo-props="showLabel: true" type="button") 2
+		span(data-bind="click:function(){showMaps(6)}")
+			button(data-dojo-type="dijit/form/Button" data-dojo-props="showLabel: true" type="button") 6
 		span(data-bind="click:showHelp")
 			button(data-dojo-type="dijit/form/Button" data-dojo-props="showLabel: true" type="button") Help ?
-		div(class="share-container")
+		div(class="share-container dijitHidden")
 			div(class="addthis_sharing_toolbox")
+		div(class="geocode-container dijitHidden")
+			div(class="geocode-holder")
+				input(id="locator" type="text" placeHolder="Search address")
 			//-a(href="http://www.addthis.com/bookmark.php?v=20" class="addthis_button")
 			//-	img(src="http://s7.addthis.com/static/btn/v2/lg-share-en.gif" width="125" height="16" border="0" alt="Share")

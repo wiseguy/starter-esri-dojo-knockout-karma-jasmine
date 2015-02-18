@@ -168,38 +168,39 @@ define(["exports", "core/config", "core/toolkitController", "core/hashController
 
     };
 
-    o.startModule = function(moduleId) {
+    o.startModule = function(moduleId, dependencyList) {
 
 
 
         require(["components/" + moduleId + "/" + moduleId + "Controller"], function(module) {
 
-            console.log("STARTED MODULE " + module);
+            if (dependencyList && dependencyList.length > 0) {
+
+
+                (function(theModule) {
+
+                    require(["components/" + dependencyList[0] + "/" + dependencyList[0] + "Controller"], function(depMod) {
+                        var checkDependency = setInterval(function() {
+                            if (depMod.isInitialized()) {
+                                theModule.startup();
+                                window.clearInterval(checkDependency);
+                            }
+                        }, 50);
+                    });
+
+                }(module))
 
 
 
-            module.startup();
+            } else {
 
-            /*
-var isView = module.isView();
-            if (isView) {
-                //switch to the module if its a view
-
-
-
-                toolkit.arrayEach(config.viewLinks, function(viewLink) {
-                    if (viewLink.id === moduleId) {
-                        //debugger;
-                        toolkit.getNodeList("." + viewLink.id + "-container").removeClass("dijitHidden");
-                    } else {
-                        //debugger;
-                        toolkit.getNodeList("." + viewLink.id + "-container").addClass("dijitHidden");
+                module.startup().then(function(mid, theModule) {
+                    return function() {
+                        console.log(">>>>>>>>>>>>>>>>>> >>>>>>>>>>>>>>>>>> STARTED MODULE " + mid, theModule);
                     }
-                });
+                }(moduleId, module));
 
-
-
-            }*/
+            }
 
         });
 

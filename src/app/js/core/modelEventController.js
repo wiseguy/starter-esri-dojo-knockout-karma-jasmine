@@ -89,6 +89,18 @@ define(["exports", "core/config", "core/toolkitController", "components/app/appC
 
     }
 
+    o.shareButton = function(node) {
+
+        toolsController.shareButton(node);
+
+    }
+
+    o.geocode = function(node) {
+
+        toolsController.geocode(node);
+
+    }
+
 
     return o;
 });

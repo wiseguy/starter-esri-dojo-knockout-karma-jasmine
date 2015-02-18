@@ -1,12 +1,13 @@
 
 <div class="header-container">
   <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="logo"></div>
     <div class="navbar-header">
       <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar">					</span></button>
     </div>
     <div id="navbar" class="collapse navbar-collapse">
       <ul data-bind="foreach:viewLinks" class="nav navbar-nav">
-        <li data-bind="click:$root.selectView,css:{active:selected}" class="clickable"><a href="#" data-bind="html:label"></a></li>
+        <li data-bind="click:$root.selectView,css:{active:selected}" class="clickable"><a href="#"><span data-bind="html:label"></span></a></li>
       </ul>
     </div>
   </nav>

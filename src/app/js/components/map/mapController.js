@@ -128,9 +128,10 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
             on(window, "keypress", function(evt) {
                 var keys = toolkit.get("keys");
-
-                switch (evt.charOrCode) {
+                var code = evt.charCode || evt.charOrCode;
+                switch (code) {
                     case keys.ENTER:
+                        debugger;
                         var map = o._maps[o._currentMapPosition];
                         map.graphics.clear();
                         var address = {
@@ -155,7 +156,11 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
 
             locator.on("address-to-locations-complete", function(evt) {
-                debugger;
+
+                var SimpleMarkerSymbol = toolkit.get("SimpleMarkerSymbol");
+                var Font = toolkit.get("Font");
+                var TextSymbol = toolkit.get("TextSymbol");
+
                 var symbol = new SimpleMarkerSymbol();
                 var infoTemplate = new InfoTemplate(
                     "Location",

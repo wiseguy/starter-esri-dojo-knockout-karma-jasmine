@@ -2,7 +2,9 @@
 <div data-bind="event: { mousedown: setActiveMap }" class="map main dijitHidden">
   <div class="homeButton"></div>
   <div data-bind="click: syncMaps" class="syncMaps"></div>
+  <div data-bind="click: shareButton" class="shareButton"></div>
   <div data-bind="click: zoomToCurrentLocation" class="locationButton"></div>
+  <div data-bind="click: geocode" class="geocode">		</div>
   <div class="basemap-gallery-titlepane-holder dijitHidden">
     <div data-dojo-type="dijit/form/DropDownButton"><span>Basemaps</span>
       <div data-dojo-type="dijit/TooltipDialog">

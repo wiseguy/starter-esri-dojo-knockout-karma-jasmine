@@ -14,7 +14,7 @@ define(function() {
 
         appStateCurrent: {
             "v": "map",
-            "b": "dark-gray",
+            "b": "osm",
             "x": "-101.70!-77.03!-0.12!-122.4!-122.4!-122.4", //! separated x values
             "y": "38.83!38.7!51.50!37.78!37.78!37.78", //! separated y values
             "l": "4!9!10!7!6!5",

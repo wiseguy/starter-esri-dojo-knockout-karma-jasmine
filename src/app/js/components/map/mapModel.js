@@ -20,6 +20,15 @@ define(["exports", "ko", "core/config", "core/modelEventController", "core/toolk
             modelEventController.syncMaps(mapIndex);
         }
 
+        vm.shareButton = function(model, evt) {
+
+
+        }
+
+        vm.geocode = function(model, evt) {
+
+
+        }
 
         vm.setActiveMap = function(model, evt) {
 

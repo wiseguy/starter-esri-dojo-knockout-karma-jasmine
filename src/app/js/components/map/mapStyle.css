@@ -6,13 +6,20 @@
   bottom: 0;
   top: $headerHeight;
 }
-.map {
+.map.main {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   border: 2px solid #ccc;
 }
-.map .esriSimpleSlider {
-  opacity: 0.2;
+.map.main .esriSimpleSlider {
+  background-color: rgba(80,92,155,0.4);
+  border: 0px;
+  border-radius: 0px;
+}
+.map.main .esriSimpleSlider:hover,
+.map.main esriSimpleSliderIncrementButton:hover,
+.map.main esriSimpleSliderDecrementButton:hover {
+  background-color: rgba(80,92,155,0.7);
 }
 .map.selected-map {
   -moz-box-sizing: border-box;
@@ -275,28 +282,91 @@ theme-widget .mapIndex div {
   z-index: 100;
   opacity: 0.2;
 }
+.HomeButton .home {
+  opacity: 0.8;
+  background-image: url("../images/control_home.png");
+  background-color: rgba(80,92,155,0.4);
+  border-radius: 0px;
+  -webkit-transition: all 0.5s ease-out;
+  transition: all 0.5s ease-out;
+}
+.HomeButton .home:hover {
+  opacity: 1;
+  background-color: rgba(80,92,155,0.7);
+}
 .locationButton {
-  opacity: 0.2;
   position: absolute;
   top: 135px;
   left: 20px;
   z-index: 100;
   width: 30px;
   height: 30px;
-  background-image: url("../images/my_location.png");
+  background-image: url("../images/location.png");
+  background-color: rgba(80,92,155,0.4);
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: 0px solid #00f;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 0px;
+  -webkit-transition: all 0.5s ease-out;
+  transition: all 0.5s ease-out;
+}
+.locationButton:hover {
+  background-color: rgba(80,92,155,0.7);
 }
 .syncMaps {
-  opacity: 0.2;
+  opacity: 0.8;
   position: absolute;
   top: 175px;
   left: 20px;
   z-index: 100;
   width: 30px;
   height: 30px;
-  background-image: url("../images/sync_maps.png");
-  background-color: #00f;
+  background-image: url("../images/icon_sync.png");
+  background-color: rgba(80,92,155,0.4);
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 0px;
+  -webkit-transition: all 0.5s ease-out;
+  transition: all 0.5s ease-out;
+}
+.syncMaps:hover {
+  background-color: rgba(80,92,155,0.7);
+}
+.shareButton {
+  opacity: 0.8;
+  position: absolute;
+  top: 215px;
+  left: 20px;
+  z-index: 100;
+  width: 30px;
+  height: 30px;
+  background-image: url("../images/share.png");
+  background-color: rgba(80,92,155,0.4);
+  cursor: pointer;
+  border-radius: 0px;
+  -webkit-transition: all 0.5s ease-out;
+  transition: all 0.5s ease-out;
+}
+.shareButton:hover {
+  background-color: rgba(80,92,155,0.7);
+}
+.geocode {
+  opacity: 0.8;
+  position: absolute;
+  top: 255px;
+  left: 20px;
+  z-index: 100;
+  width: 30px;
+  height: 30px;
+  background-image: url("../images/geocode.png");
+  background-repeat: no-repeat;
+  background-postion: 10px 10px;
+  background-color: rgba(80,92,155,0.4);
+  cursor: pointer;
+  border-radius: 0px;
+  -webkit-transition: all 0.5s ease-out;
+  transition: all 0.5s ease-out;
+}
+.geocode:hover {
+  background-color: rgba(80,92,155,0.7);
 }

@@ -1,5 +1,5 @@
 .map-container
-	background-color orange !important
+	background-color $mapBackground !important
 	position absolute
 	right 0
 	left 0
@@ -265,7 +265,10 @@ zoom-to-place-widget
 		height 25px
 		background-color $buttonsColor
 		border 0px solid #222
-		color #FFF
+		color $buttonsTextColor
+		
+	select:hover
+		color $buttonsTextHoverColor
 		
 theme-widget
 	position absolute

@@ -157,7 +157,7 @@ define(function() {
         utilities: {
 
             geometryService: {
-                "url": ""
+                "url": "http://tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer"
             },
 
             printService: {

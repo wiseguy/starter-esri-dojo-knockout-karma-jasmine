@@ -33,7 +33,7 @@ body {
 }
 .app .dijitButtonNode {
   background: #505c9b;
-  color: #fff;
+  color: #9d9d9d;
   border: none;
   height: 25px;
 }
@@ -53,6 +53,15 @@ body {
 .app .dijitTooltipContainer .dijitTooltipAbove > .dijitTooltipConnector,
 .app .dijitTooltipContainer .dijitTooltipBelow > .dijitTooltipConnector {
   background-image: url("") !important;
+}
+.app .dijitTooltipConnector {
+  display: none;
+}
+.app .dijitDropDownButtonHover .dijitButtonNode,
+.app .dijitButtonHover .dijitButtonNode {
+  background-color: #505c9b;
+  background-image: url("");
+  color: #fff;
 }
 /*App Stylus*/
 .app-container {
@@ -118,7 +127,7 @@ body {
 }
 /*Map Stylus*/
 .map-container {
-  background-color: #ffa500 !important;
+  background-color: #b5d0d0 !important;
   position: absolute;
   right: 0;
   left: 0;
@@ -361,6 +370,9 @@ zoom-to-place-widget select {
   height: 25px;
   background-color: #505c9b;
   border: 0px solid #222;
+  color: #9d9d9d;
+}
+zoom-to-place-widget select:hover {
   color: #fff;
 }
 theme-widget {

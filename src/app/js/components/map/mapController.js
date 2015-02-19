@@ -136,7 +136,7 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
             });
 
-            on(toolkit.getNodeById("locator"), "click", function(evt) {
+            on(toolkit.getNodeById("locator"), "click, touch", function(evt) {
                 evt.stopPropagation(); // to avoid the window from closing
             });
 

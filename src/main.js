@@ -6,23 +6,28 @@
 (function() {
     'use strict';
 
-    var baseUrl,
-        esriVersion = "3.12",
+    var baseUrl;
+    /* if app files in different location, hardcode the path, USE SLASH AT END OF URL*/
+    // baseUrl = "http://shj.blueraster.com/apps-wiseguy/template-esri/src/";
+
+    var pathPrefix = baseUrl || document.location.pathname.replace(/\/[^/]+$/, "");
+
+    var esriVersion = "3.12",
         loadFiles = {
             "css": [
                 "http://js.arcgis.com/" + esriVersion + "/esri/css/esri.css",
                 "http://js.arcgis.com/" + esriVersion + "/dijit/themes/tundra/tundra.css",
-                "../app/css/bootstrap2.css",
-                "../app/css/app.css",
-                "../app/css/joyride/joyride-2.1.css",
-                "../app/css/joyride/mobile.css"
+                "app/css/bootstrap2.css",
+                pathPrefix + "app/css/app.css",
+                pathPrefix + "app/css/joyride/joyride-2.1.css",
+                pathPrefix + "app/css/joyride/mobile.css"
             ],
             "js": [{
                 src: "http://js.arcgis.com/" + esriVersion + "/"
                 //defer: true //order as given
                 //async:true//random order
             }, {
-                src: "../app/js/libs/jquery-1.10.1.js"
+                src: pathPrefix + "app/js/libs/jquery-1.10.1.js"
             }]
 
         },
@@ -30,19 +35,7 @@
         dojoConfig;
 
 
-    var pathname = document.location.pathname.split("/");
-    pathname.pop();
-    pathname.pop();
 
-    var hostname = document.location.hostname;
-
-    baseUrl = document.location.protocol + "//" + hostname + pathname.join("/");
-
-
-    //baseUrl = "http://shj.blueraster.com/apps-wiseguy/template-esri/src";
-    //baseUrl = "http://staging.geoent.com/esri";
-
-    var pathPrefix = baseUrl || document.location.pathname.replace(/\/[^/]+$/, "");
 
     // Precaution
     if (!window.console) {
@@ -61,19 +54,19 @@
         //cacheBust: "v=" + version,
         packages: [{
             name: "app",
-            location: pathPrefix + "/app"
+            location: pathPrefix + "app"
         }, {
             name: "core",
-            location: pathPrefix + "/app/js/core"
+            location: pathPrefix + "app/js/core"
         }, {
             name: "components",
-            location: pathPrefix + "/app/js/components"
+            location: pathPrefix + "app/js/components"
         }, {
             name: "libs",
-            location: pathPrefix + "/app/js/libs"
+            location: pathPrefix + "app/js/libs"
         }, {
             name: "js",
-            location: pathPrefix + "/app/js"
+            location: pathPrefix + "app/js"
         }],
         aliases: [ //use for version specific files
             ["ko", "libs/knockout-3.2.0"],

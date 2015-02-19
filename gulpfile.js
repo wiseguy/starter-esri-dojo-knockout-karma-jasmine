@@ -57,7 +57,8 @@ gulp.task('dist-delete', function(cb) {
 
 gulp.task('dist-copy-clean', ['dist-delete'], function() {
     console.log(">>>>>>>> cleaning up the dist folder");
-    return gulp.src(app_dir.src + '**')
+    //ignore jade, styl, and css inside the js folder
+    return gulp.src([app_dir.src + '**', '!' + app_dir.src + '**/*.jade', '!' + app_dir.src + '**/*.styl', '!' + app_dir.src + 'app/js/*.css'])
         .pipe(gulp.dest(app_dir.dist))
 });
 

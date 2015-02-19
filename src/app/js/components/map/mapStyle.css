@@ -12,6 +12,7 @@
   border: 2px solid #ccc;
 }
 .map.main .esriSimpleSlider {
+  opacity: 0.4;
   color: #119ada;
   background-color: $toolsBackground;
   border: 0px;
@@ -37,7 +38,9 @@
 .map.selected-map .esriSimpleSlider,
 .map.selected-map .locationButton,
 .map.selected-map .HomeButton,
-.map.selected-map .syncMaps {
+.map.selected-map .syncMaps,
+.map.selected-map .shareButton,
+.map.selected-map .geocode {
   opacity: 1;
 }
 .map.show-1 {
@@ -288,7 +291,7 @@ theme-widget .mapIndex div {
   top: 95px;
   left: 20px;
   z-index: 100;
-  opacity: 0.2;
+  opacity: 0.4;
 }
 .HomeButton .home {
   opacity: 0.8;
@@ -305,6 +308,7 @@ theme-widget .mapIndex div {
   background-position: 7px 7px;
 }
 .locationButton {
+  opacity: 0.4;
   position: absolute;
   top: 135px;
   left: 20px;
@@ -331,7 +335,7 @@ theme-widget .mapIndex div {
   display: none;
 }
 .syncMaps {
-  opacity: 0.8;
+  opacity: 0.4;
   position: absolute;
   top: 255px;
   left: 20px;
@@ -352,7 +356,7 @@ theme-widget .mapIndex div {
   background-position: 7px 7px;
 }
 .shareButton {
-  opacity: 0.8;
+  opacity: 0.4;
   position: absolute;
   top: 215px;
   left: 20px;
@@ -373,7 +377,7 @@ theme-widget .mapIndex div {
   background-position: 7px 7px;
 }
 .geocode {
-  opacity: 0.8;
+  opacity: 0.4;
   position: absolute;
   top: 175px;
   left: 20px;

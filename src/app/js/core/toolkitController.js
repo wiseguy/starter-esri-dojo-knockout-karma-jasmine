@@ -10,13 +10,14 @@ define(["core/config",
         "dojo/Deferred", "dojo/dom-construct", "dojo/_base/lang", "dojo/io-query", "dojo/hash",
         "dojo/ready", "dojo/_base/array", "dojo/sniff", "dojo/hash", "dojo/topic", "dojo/on", "dojo/parser",
         "dijit/TitlePane", "dijit/layout/ContentPane", "dijit/form/Button", "dijit/form/DropDownButton", "dijit/TooltipDialog",
-        "dojo/keys",
+        "dojo/keys", "dijit/focus",
         /*Esri*/
         "esri/request", "esri/layers/ArcGISDynamicMapServiceLayer", "esri/layers/ArcGISTiledMapServiceLayer",
-        "esri/layers/FeatureLayer", "esri/layers/GraphicsLayer",
+        "esri/layers/FeatureLayer", "esri/layers/GraphicsLayer", "esri/layers/WMSLayer",
         "esri/map", "esri/dijit/BasemapGallery", "esri/dijit/Legend", "esri/geometry/webMercatorUtils", "esri/arcgis/utils",
         "esri/config", "esri/dijit/HomeButton", "esri/geometry/Point", "esri/tasks/locator",
-        "esri/symbols/SimpleMarkerSymbol", "esri/InfoTemplate", "esri/graphic", "esri/symbols/Font", "esri/symbols/TextSymbol"
+        "esri/symbols/SimpleMarkerSymbol", "esri/InfoTemplate", "esri/graphic", "esri/symbols/Font", "esri/symbols/TextSymbol",
+        "esri/Color"
     ],
     function(config,
         /*Dojo*/
@@ -24,14 +25,20 @@ define(["core/config",
         Deferred, domConstruct, lang, ioQuery, hash,
         ready, arrayUtil, sniff, hash, topic, on, parser,
         TitlePane, ContentPane, Button, DropDownButton, TooltipDialog,
-        keys,
+        keys, focusUtils,
         /*Esri*/
         esriRequest, ArcGISDynamicMapServiceLayer, ArcGISTiledMapServiceLayer,
-        FeatureLayer, GraphicsLayer, Map, BasemapGallery, Legend,
+        FeatureLayer, GraphicsLayer, WMSLayer, Map, BasemapGallery, Legend,
         webMercatorUtils, arcgisUtils, esriConfig, HomeButton, Point, Locator,
-        SimpleMarkerSymbol, InfoTemplate, Graphic, Font, TextSymbol) {
+        SimpleMarkerSymbol, InfoTemplate, Graphic, Font, TextSymbol,
+        Color) {
 
         var o = {};
+
+        o.setFocus = function(nodeOrId) {
+
+            focusUtils.focus(nodeOrId);
+        }
 
         o.allPromises = function(arrayOfPromises) {
             return all(arrayOfPromises);
@@ -157,6 +164,9 @@ define(["core/config",
                     break;
                 case "tile":
                     constructor = ArcGISTiledMapServiceLayer;
+                    break;
+                case "wms":
+                    constructor = WMSLayer;
                     break;
             }
 

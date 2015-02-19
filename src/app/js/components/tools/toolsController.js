@@ -37,12 +37,10 @@ define(["exports", "core/config", "components/tools/toolsModel", "core/toolkitCo
             loadToolsDeferred.then(function(html) {
 
                 console.log("load startup");
-                // debugger;
-
-
-
 
                 o.createUI(html);
+
+
 
             });
 
@@ -66,7 +64,15 @@ define(["exports", "core/config", "components/tools/toolsModel", "core/toolkitCo
 
             toolkit.injectHtml(selectorNode, html, "last");
 
+            if (config.showTools) {
+                var toolsNode = toolkit.getNodeList(".tools-container .tools")[0];
+                toolkit.removeClass(toolsNode, "dijitHidden");
+            }
 
+            if (config.showHelp) {
+                var helpNode = toolkit.getNodeList(".tools-container .help")[0];
+                toolkit.removeClass(helpNode, "dijitHidden");
+            }
 
             //start model with default values
             toolsModel.initialize();
@@ -139,18 +145,19 @@ define(["exports", "core/config", "components/tools/toolsModel", "core/toolkitCo
         o.geocode = function(node) {
 
             //show container
-            var shareNode = toolkit.getNodeList(".geocode-container")[0];
-
-            var isClosed = toolkit.containsClass(shareNode, "dijitHidden");
+            var geocodeNode = toolkit.getNodeList(".geocode-container")[0];
+            var locatorTextBox = toolkit.getNodeById("locator");
+            var isClosed = toolkit.containsClass(geocodeNode, "dijitHidden");
 
             if (isClosed) {
 
-                toolkit.removeClass(shareNode, "dijitHidden");
-                toolkit.placeDom(shareNode, node, "last");
+                toolkit.removeClass(geocodeNode, "dijitHidden");
+                toolkit.placeDom(geocodeNode, node, "last");
+                toolkit.setFocus(locatorTextBox);
 
             } else {
 
-                toolkit.addClass(shareNode, "dijitHidden");
+                toolkit.addClass(geocodeNode, "dijitHidden");
 
             }
 

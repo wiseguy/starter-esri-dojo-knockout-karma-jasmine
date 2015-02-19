@@ -35,9 +35,26 @@ html, body
 .app .dijitButtonNode
 	background $buttonsColor
 	color $buttonsTextColor
+	border none
+	height 25px
+	
+.app .dijitButtonText
+	line-height 25px
 
 .app .dijitHover .dijitButtonNode
-	background $buttonsHoverColor
+	background-color $buttonsHoverColor
+	
+.app .dijitTooltipContainer
+	background-color $tooltipColor
+	background-image url()
+	
+.app .dijitTooltipDialog
+	outline none
+
+.app .dijitTooltipContainer .dijitTooltipAbove > .dijitTooltipConnector,
+.app .dijitTooltipContainer .dijitTooltipBelow > .dijitTooltipConnector
+	background-image url() !important
+	
 
 /*App Stylus*/	
 @import "../js/components/app/appStyle.styl"

@@ -63,6 +63,16 @@ define(["exports", "core/config", "core/toolkitController", "core/hashController
 
     }
 
+    o.geocodingResults = function(results, map) {
+
+        mapController.showGeocodingResult(results, map);
+
+    }
+
+    o.handleKeypress = function(code) {
+        mapController.handleKeypress(code);
+    }
+
 
     return o;
 });

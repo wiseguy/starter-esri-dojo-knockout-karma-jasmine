@@ -1,5 +1,5 @@
 div.tools-container()
-	div.tools()
+	div.tools.dijitHidden()
 		span(data-bind="click:addMap")
 			button(data-dojo-type="dijit/form/Button" data-dojo-props="showLabel: true" type="button") Add Map
 		span(data-bind="click:removeMap")
@@ -10,8 +10,10 @@ div.tools-container()
 			button(data-dojo-type="dijit/form/Button" data-dojo-props="showLabel: true" type="button") 2
 		span(data-bind="click:function(){showMaps(6)}")
 			button(data-dojo-type="dijit/form/Button" data-dojo-props="showLabel: true" type="button") 6
+	div.help.dijitHidden()
 		span(data-bind="click:showHelp")
 			button(data-dojo-type="dijit/form/Button" data-dojo-props="showLabel: true" type="button") Help ?
+	div.map-tools()
 		div(class="share-container dijitHidden")
 			div(class="addthis_sharing_toolbox")
 		div(class="geocode-container dijitHidden")

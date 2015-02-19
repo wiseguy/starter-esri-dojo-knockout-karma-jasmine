@@ -12,7 +12,21 @@ define(function() {
 
         webMapId: "", //if empty then dont use webmap, example a438a0f666f5413a8b3db9d8f8807245
 
+        showTools: false,
+
+        showHelp: true,
+
         appStateCurrent: {
+            "v": "map",
+            "b": "osm",
+            "x": "-96.06!-77.03!-0.12!-122.4!-122.4!-122.4", //! separated x values //
+            "y": "30.10!38.7!51.50!37.78!37.78!37.78", //! separated y values
+            "l": "13!9!10!7!6!5",
+            "m": 1, //total maps
+            "a": 0 // active map
+        },
+
+        /* appStateCurrent: {
             "v": "map",
             "b": "osm",
             "x": "-101.70!-77.03!-0.12!-122.4!-122.4!-122.4", //! separated x values
@@ -20,7 +34,7 @@ define(function() {
             "l": "4!9!10!7!6!5",
             "m": 1, //total maps
             "a": 0 // active map
-        },
+        },*/
 
         appStatePrevious: {}, // to keep track of previous
 
@@ -103,21 +117,39 @@ define(function() {
                 "type": "dynamic", //feature, graphic   , tile          
                 "visibleLayers": [0, 1]
             },*/
-                {
+                /* {
                     "id": "soil-survey",
                     "url": "http://server.arcgisonline.com/ArcGIS/rest/services/Specialty/Soil_Survey_Map/MapServer", //if url has http then use exact, else append with mapServerPrefix
                     "type": "tile", //feature, graphic , tile
-                }
+                }*/
                 /*, {
                 "id": "stateBoundaries",
-                "url": "ED_storymaps/Private_vs_Pub_schoolEnroll/MapServer/0", //if url has http then use exact, else append with mapServerPrefix
+            "url": "ED_storymaps/Private_vs_Pub_schoolEnroll/MapServer/0", //if url has http then use exact, else append with mapServerPrefix
                 "type": "feature", //feature, graphic , tile
                 "outFields": ["*"],
                 "opacity": 0.7
             }*/
-                , {
+                {
                     "id": "hoverGraphics",
                     "type": "graphic"
+                }, {
+                    "id": "lot-h",
+                    "url": "http://shj.blueraster.com:8080/geoserver/aamir/wms",
+                    "format": "png",
+                    "visibleLayers": ["Prop_ID_Subd_Lot_H_ETJ_Selection"],
+                    "type": "wms", //feature, graphic , tile
+                }, {
+                    "id": "parcel",
+                    "url": "http://shj.blueraster.com:8080/geoserver/aamir/wms",
+                    "format": "png",
+                    "visibleLayers": ["Prop_ID_Subd_Parcel_H_ETJ_Selection"],
+                    "type": "wms", //feature, graphic , tile
+                }, {
+                    "id": "res-h",
+                    "url": "http://shj.blueraster.com:8080/geoserver/aamir/wms",
+                    "format": "png",
+                    "visibleLayers": ["Prop_ID_Subd_Res_H_ETJ_Selection"],
+                    "type": "wms", //feature, graphic , tile
                 }
             ]
         },

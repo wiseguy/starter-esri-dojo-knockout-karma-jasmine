@@ -34,9 +34,25 @@ body {
 .app .dijitButtonNode {
   background: #505c9b;
   color: #fff;
+  border: none;
+  height: 25px;
+}
+.app .dijitButtonText {
+  line-height: 25px;
 }
 .app .dijitHover .dijitButtonNode {
-  background: #505c9b;
+  background-color: #505c9b;
+}
+.app .dijitTooltipContainer {
+  background-color: rgba(80,92,155,0.3);
+  background-image: url("");
+}
+.app .dijitTooltipDialog {
+  outline: none;
+}
+.app .dijitTooltipContainer .dijitTooltipAbove > .dijitTooltipConnector,
+.app .dijitTooltipContainer .dijitTooltipBelow > .dijitTooltipConnector {
+  background-image: url("") !important;
 }
 /*App Stylus*/
 .app-container {
@@ -116,7 +132,7 @@ body {
 }
 .map.main .esriSimpleSlider {
   color: #119ada;
-  background-color: rgba(80,92,155,0.3);
+  background-color: #000;
   border: 0px;
   border-radius: 0px;
 }
@@ -126,7 +142,7 @@ body {
 .map.main .esriSimpleSliderIncrementButton:hover,
 .map.main .esriSimpleSliderDecrementButton:hover {
   color: #119ada;
-  background-color: rgba(80,92,155,0.5);
+  background-color: rgba(80,92,155,0.8);
   border-radius: 0px;
   background-position: 7px 7px;
 }
@@ -136,7 +152,6 @@ body {
 .map.selected-map {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  border: 2px solid #ff0;
 }
 .map.selected-map .esriSimpleSlider,
 .map.selected-map .locationButton,
@@ -338,13 +353,13 @@ body {
 zoom-to-place-widget {
   position: absolute;
   right: 0px;
-  top: 0px;
+  top: 3px;
   z-index: 100;
 }
 zoom-to-place-widget select {
   width: 100px;
-  height: 30px;
-  background-color: #999;
+  height: 25px;
+  background-color: #505c9b;
   border: 0px solid #222;
   color: #fff;
 }
@@ -394,7 +409,7 @@ theme-widget .mapIndex div {
 .HomeButton .home {
   opacity: 0.8;
   background-image: url("../images/control_home.png");
-  background-color: rgba(80,92,155,0.3);
+  background-color: #000;
   border-radius: 0px;
   -webkit-transition: all 0.5s ease-out;
   transition: all 0.5s ease-out;
@@ -402,7 +417,7 @@ theme-widget .mapIndex div {
 .HomeButton .home:hover {
   opacity: 1;
   background-repeat: no-repeat;
-  background-color: rgba(80,92,155,0.5);
+  background-color: rgba(80,92,155,0.8);
   background-position: 7px 7px;
 }
 .locationButton {
@@ -415,7 +430,7 @@ theme-widget .mapIndex div {
   background-repeat: no-repeat;
   background-image: url("../images/location.png");
   background-position: 5px 5px;
-  background-color: rgba(80,92,155,0.3);
+  background-color: #000;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   border: 0px solid #00f;
@@ -425,7 +440,7 @@ theme-widget .mapIndex div {
   transition: all 0.5s ease-out;
 }
 .locationButton:hover {
-  background-color: rgba(80,92,155,0.5);
+  background-color: rgba(80,92,155,0.8);
   background-position: 7px 7px;
 }
 .map.show-1 .syncMaps {
@@ -442,14 +457,14 @@ theme-widget .mapIndex div {
   background-repeat: no-repeat;
   background-image: url("../images/icon_sync.png");
   background-position: 5px 5px;
-  background-color: rgba(80,92,155,0.3);
+  background-color: #000;
   cursor: pointer;
   border-radius: 0px;
   -webkit-transition: all 0.5s ease-out;
   transition: all 0.5s ease-out;
 }
 .syncMaps:hover {
-  background-color: rgba(80,92,155,0.5);
+  background-color: rgba(80,92,155,0.8);
   background-position: 7px 7px;
 }
 .shareButton {
@@ -463,14 +478,14 @@ theme-widget .mapIndex div {
   background-repeat: no-repeat;
   background-image: url("../images/share.png");
   background-position: 5px 5px;
-  background-color: rgba(80,92,155,0.3);
+  background-color: #000;
   cursor: pointer;
   border-radius: 0px;
   -webkit-transition: all 0.5s ease-out;
   transition: all 0.5s ease-out;
 }
 .shareButton:hover {
-  background-color: rgba(80,92,155,0.5);
+  background-color: rgba(80,92,155,0.8);
   background-position: 7px 7px;
 }
 .geocode {
@@ -484,14 +499,14 @@ theme-widget .mapIndex div {
   background-image: url("../images/geocode.png");
   background-repeat: no-repeat;
   background-position: 5px 5px;
-  background-color: rgba(80,92,155,0.3);
+  background-color: #000;
   cursor: pointer;
   border-radius: 0px;
   -webkit-transition: all 0.5s ease-out;
   transition: all 0.5s ease-out;
 }
 .geocode:hover {
-  background-color: rgba(80,92,155,0.5);
+  background-color: rgba(80,92,155,0.8);
   background-position: 7px 7px;
 }
 /*Map Stylus*/
@@ -503,7 +518,9 @@ theme-widget .mapIndex div {
 }
 .share-container,
 .geocode-container {
-  width: 260px;
-  height: 40px;
+  height: 30px;
   padding-left: 40px;
+}
+.share-container {
+  width: 260px;
 }

@@ -33,7 +33,6 @@
 .map.selected-map {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  border: 2px solid #ff0;
 }
 .map.selected-map .esriSimpleSlider,
 .map.selected-map .locationButton,
@@ -235,13 +234,13 @@
 zoom-to-place-widget {
   position: absolute;
   right: 0px;
-  top: 0px;
+  top: 3px;
   z-index: 100;
 }
 zoom-to-place-widget select {
   width: 100px;
-  height: 30px;
-  background-color: #999;
+  height: 25px;
+  background-color: $buttonsColor;
   border: 0px solid #222;
   color: #fff;
 }

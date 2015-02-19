@@ -130,6 +130,11 @@ define(["exports", "core/config", "core/toolkitController", "core/hashController
 
     o.setupProxy = function() {
 
+        var esriConfig = toolkit.getEsriConfig();
+
+        esriConfig.defaults.io.proxyUrl = "/proxy/proxy.ashx";
+
+
     };
 
     o.setupPreCallback = function() {

@@ -28,6 +28,7 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
         // o._mapsExtentChangeEvent = [];
         o._basemaps;
         o._legend;
+        o._locator;
 
 
         /*
@@ -123,29 +124,15 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
             //listen to enter event for input
             var Locator = new toolkit.getConstructor("Locator");
-            var locator = new Locator(config.utilities.geocodingService.url);
+            o._locator = new Locator(config.utilities.geocodingService.url);
+
             var on = toolkit.get("on");
 
             on(window, "keypress", function(evt) {
-                var keys = toolkit.get("keys");
-                var code = evt.charCode || evt.charOrCode;
-                switch (code) {
-                    case keys.ENTER:
-                        debugger;
-                        var map = o._maps[o._currentMapPosition];
-                        map.graphics.clear();
-                        var address = {
-                            "SingleLine": toolkit.getNodeById("locator").value
-                        };
-                        locator.outSpatialReference = map.spatialReference;
-                        var options = {
-                            address: address,
-                            outFields: ["Loc_name"]
-                        };
-                        locator.addressToLocations(options);
 
-                        break;
-                }
+                var code = evt.charCode || evt.charOrCode;
+                onEventController.handleKeypress(code);
+
 
             });
 
@@ -155,57 +142,10 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
 
 
 
-            locator.on("address-to-locations-complete", function(evt) {
+            o._locator.on("address-to-locations-complete", function(evt) {
 
-                var SimpleMarkerSymbol = toolkit.get("SimpleMarkerSymbol");
-                var Font = toolkit.get("Font");
-                var TextSymbol = toolkit.get("TextSymbol");
-
-                var symbol = new SimpleMarkerSymbol();
-                var infoTemplate = new InfoTemplate(
-                    "Location",
-                    "Address: ${address}<br />Score: ${score}<br />Source locator: ${locatorName}"
-                );
-                symbol.setStyle(SimpleMarkerSymbol.STYLE_SQUARE);
-                symbol.setColor(new Color([153, 0, 51, 0.75]));
-
-                var geom;
-                toolkit.arrayEvery(evt.addresses, function(candidate) {
-                    console.log(candidate.score);
-                    if (candidate.score > 80) {
-                        console.log(candidate.location);
-                        var attributes = {
-                            address: candidate.address,
-                            score: candidate.score,
-                            locatorName: candidate.attributes.Loc_name
-                        };
-                        geom = candidate.location;
-                        var graphic = new Graphic(geom, symbol, attributes, infoTemplate);
-                        //add a graphic to the map at the geocoded location
-                        map.graphics.add(graphic);
-                        //add a text symbol to the map listing the location of the matched address.
-                        var displayText = candidate.address;
-                        var font = new Font(
-                            "16pt",
-                            Font.STYLE_NORMAL,
-                            Font.VARIANT_NORMAL,
-                            Font.WEIGHT_BOLD,
-                            "Helvetica"
-                        );
-
-                        var textSymbol = new TextSymbol(
-                            displayText,
-                            font,
-                            new Color("#666633")
-                        );
-                        textSymbol.setOffset(0, 8);
-                        map.graphics.add(new Graphic(geom, textSymbol));
-                        return false; //break out of loop after one candidate with score greater  than 80 is found.
-                    }
-                });
-                if (geom !== undefined) {
-                    map.centerAndZoom(geom, 12);
-                }
+                var map = o._maps[o._currentMapPosition];
+                onEventController.geocodingResults(evt.addresses, map);
 
             });
 
@@ -888,8 +828,90 @@ define(["exports", "core/config", "components/map/mapModel", "core/toolkitContro
             } else {
 
             }
+        },
+
+
+        o.showGeocodingResult = function(results, map) {
+
+            map.graphics.clear();
+
+            var SimpleMarkerSymbol = toolkit.get("SimpleMarkerSymbol");
+            var Font = toolkit.get("Font");
+            var TextSymbol = toolkit.get("TextSymbol");
+            var InfoTemplate = toolkit.get("InfoTemplate");
+            var Color = toolkit.get("Color");
+            var Graphic = toolkit.get("Graphic");
+
+            var symbol = new SimpleMarkerSymbol();
+            var infoTemplate = new InfoTemplate(
+                "Location",
+                "Address: ${address}<br />Score: ${score}<br />Source locator: ${locatorName}"
+            );
+            symbol.setStyle(SimpleMarkerSymbol.STYLE_CIRCLE);
+            symbol.setColor(new Color([153, 0, 51, 0.75]));
+            symbol.setSize(8);
+
+            var geom;
+            toolkit.arrayEvery(results, function(candidate) {
+                console.log(candidate.score);
+                if (candidate.score > 80) {
+                    console.log(candidate.location);
+                    var attributes = {
+                        address: candidate.address,
+                        score: candidate.score,
+                        locatorName: candidate.attributes.Loc_name
+                    };
+                    geom = candidate.location;
+                    var graphic = new Graphic(geom, symbol, attributes, infoTemplate);
+                    //add a graphic to the map at the geocoded location
+                    map.graphics.add(graphic);
+                    //add a text symbol to the map listing the location of the matched address.
+                    var displayText = candidate.address;
+                    var font = new Font(
+                        "16pt",
+                        Font.STYLE_NORMAL,
+                        Font.VARIANT_NORMAL,
+                        Font.WEIGHT_BOLD,
+                        "Helvetica"
+                    );
+
+                    var textSymbol = new TextSymbol(
+                        displayText,
+                        font,
+                        new Color("#666633")
+                    );
+                    textSymbol.setOffset(0, 8);
+                    map.graphics.add(new Graphic(geom, textSymbol));
+                    return false; //break out of loop after one candidate with score greater  than 80 is found.
+                }
+            });
+            if (geom !== undefined) {
+                map.centerAndZoom(geom, 12);
+            }
+
         }
 
+        o.handleKeypress = function(code) {
+
+            var keys = toolkit.get("keys");
+
+            switch (code) {
+                case keys.ENTER:
+                    var map = o._maps[o._currentMapPosition];
+                    var address = {
+                        "SingleLine": toolkit.getNodeById("locator").value
+                    };
+                    o._locator.outSpatialReference = map.spatialReference;
+                    var options = {
+                        address: address,
+                        outFields: ["Loc_name"]
+                    };
+                    o._locator.addressToLocations(options);
+
+                    break;
+            }
+
+        }
 
 
 

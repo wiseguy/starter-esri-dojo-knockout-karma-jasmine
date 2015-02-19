@@ -1,12 +1,14 @@
 
 <div class="tools-container">
-  <div class="tools"><span data-bind="click:addMap">
+  <div class="tools dijitHidden"><span data-bind="click:addMap">
       <button data-dojo-type="dijit/form/Button" data-dojo-props="showLabel: true" type="button">Add Map</button></span><span data-bind="click:removeMap">
       <button data-dojo-type="dijit/form/Button" data-dojo-props="showLabel: true" type="button">Remove Map</button></span><span data-bind="click:function(){showMaps(4)}">
       <button data-dojo-type="dijit/form/Button" data-dojo-props="showLabel: true" type="button">4</button></span><span data-bind="click:function(){showMaps(2)}">
       <button data-dojo-type="dijit/form/Button" data-dojo-props="showLabel: true" type="button">2</button></span><span data-bind="click:function(){showMaps(6)}">
-      <button data-dojo-type="dijit/form/Button" data-dojo-props="showLabel: true" type="button">6</button></span><span data-bind="click:showHelp">
-      <button data-dojo-type="dijit/form/Button" data-dojo-props="showLabel: true" type="button">Help ?</button></span>
+      <button data-dojo-type="dijit/form/Button" data-dojo-props="showLabel: true" type="button">6</button></span></div>
+  <div class="help dijitHidden"><span data-bind="click:showHelp">
+      <button data-dojo-type="dijit/form/Button" data-dojo-props="showLabel: true" type="button">Help ?</button></span></div>
+  <div class="map-tools">
     <div class="share-container dijitHidden">
       <div class="addthis_sharing_toolbox"></div>
     </div>

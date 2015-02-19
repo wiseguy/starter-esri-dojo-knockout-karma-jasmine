@@ -11,6 +11,9 @@
     // baseUrl = "http://shj.blueraster.com/apps-wiseguy/template-esri/src/";
 
     var pathPrefix = baseUrl || document.location.pathname.replace(/\/[^/]+$/, "");
+    if (pathPrefix.slice(-1) !== "/") {
+        pathPrefix = pathPrefix + "/";
+    }
 
     var esriVersion = "3.12",
         loadFiles = {

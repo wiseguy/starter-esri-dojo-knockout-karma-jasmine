@@ -133,22 +133,22 @@ define(function() {
                     "id": "hoverGraphics",
                     "type": "graphic"
                 }, {
-                    "id": "lot-h",
-                    "url": "http://shj.blueraster.com:8080/geoserver/aamir/wms",
+                    "id": "county",
+                    "url": "http://shj.blueraster.com:8080/geoserver/hempstead/wms",
                     "format": "png",
-                    "visibleLayers": ["Prop_ID_Subd_Lot_H_ETJ_Selection"],
+                    "visibleLayers": ["Waller_County_Polygon"],
+                    "type": "wms", //feature, graphic , tile
+                }, {
+                    "id": "zoning",
+                    "url": "http://shj.blueraster.com:8080/geoserver/hempstead/wms",
+                    "format": "png",
+                    "visibleLayers": ["Zoning_Hempstead"],
                     "type": "wms", //feature, graphic , tile
                 }, {
                     "id": "parcel",
-                    "url": "http://shj.blueraster.com:8080/geoserver/aamir/wms",
+                    "url": "http://shj.blueraster.com:8080/geoserver/hempstead/wms",
                     "format": "png",
-                    "visibleLayers": ["Prop_ID_Subd_Parcel_H_ETJ_Selection"],
-                    "type": "wms", //feature, graphic , tile
-                }, {
-                    "id": "res-h",
-                    "url": "http://shj.blueraster.com:8080/geoserver/aamir/wms",
-                    "format": "png",
-                    "visibleLayers": ["Prop_ID_Subd_Res_H_ETJ_Selection"],
+                    "visibleLayers": ["Prop_ID_Join_WallerCAD"],
                     "type": "wms", //feature, graphic , tile
                 }
             ]

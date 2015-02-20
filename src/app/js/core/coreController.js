@@ -66,12 +66,10 @@ define(["exports", "core/config", "core/toolkitController", "core/hashController
 
         //Check if user browser compatible with any from the compatibility list
         safeBrowser = toolkit.arraySome(browsersCompatible, function(browser) {
-            var version = toolkit.sniff(browser.id);
-            return (version != undefined && version >= browser.min && (browser.max == 0 || version <= browser.max) && (browser.min == 0 || version >= browser.min));
+            var isValidBrowser = bowser[browser.id];
+            var version = bowser.version;
+            return ((isValidBrowser != undefined) && (version >= browser.min) && (browser.max == 0 || version <= browser.max) && (browser.min == 0 || version >= browser.min));
         });
-
-        // if (toolkit.sniff('ios') || sniff('android'))
-        //     safeBrowser = false;
 
         if (!safeBrowser) {
 
@@ -84,7 +82,6 @@ define(["exports", "core/config", "core/toolkitController", "core/hashController
                     browserResults.push(browser.name + " minimum version " + browser.min)
                 }
             });
-
 
             toolkit.arrayEach(browsersCompatible, function(browser) {
                 validBrowsers.push(browser.name + " versions - ");

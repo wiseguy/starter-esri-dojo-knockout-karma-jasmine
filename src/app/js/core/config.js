@@ -48,13 +48,29 @@ define(function() {
             "selected": false
         }],
 
+        /*chrome[webkit]
+        firefox[gecko]
+        msie
+        Android native browser as android[webkit]
+        iOS native browser as ios[webkit]
+        opera[webkit if >12]
+        phantomjs[webkit]
+        safari[webkit]
+        seamonkey[gecko]
+        BlackBerry native browser as blackberry[webkit]
+        WebOS native browser as webos[webkit]
+        Amazon Kindle browser as silk[webkit]
+        Bada browser as bada[webkit]
+        Tizen browser as tizen[webkit]
+        Sailfish browser as sailfish[gecko]*/
+
         browsersCompatible: [{
-            id: "ie",
+            id: "msie",
             name: "Internet Explorer",
             min: 9,
             max: 11
         }, {
-            id: "ff",
+            id: "firefox",
             name: "Firefox",
             min: 17,
             max: 0 //0 means any
@@ -67,6 +83,16 @@ define(function() {
             id: "safari",
             name: "Safari",
             min: 5,
+            max: 0
+        }, {
+            id: "ios",
+            name: "Safari iOS",
+            min: 2,
+            max: 0
+        }, {
+            id: "android",
+            name: "Android Webkit",
+            min: 2,
             max: 0
         }],
 

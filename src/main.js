@@ -31,6 +31,8 @@
                 //async:true//random order
             }, {
                 src: pathPrefix + "app/js/libs/jquery-1.10.1.js"
+            }, {
+                src: pathPrefix + "app/js/libs/bowser.min.js"
             }]
 
         },

@@ -95,7 +95,16 @@ define(["core/config", "components/app/appModel", "core/toolkitController", "cor
                 onevent.windowResize();
             });
 
-            core.startModule(activeViewId);
+            var activeViewLink = {};
+
+            var deps = toolkit.arraySome(config.viewLinks, function(viewLink) {
+                if (viewLink.id === activeViewId) {
+                    activeViewLink = viewLink
+                    return true;
+                }
+            });
+
+            core.startModule(activeViewId, activeViewLink.deps);
 
         }
 

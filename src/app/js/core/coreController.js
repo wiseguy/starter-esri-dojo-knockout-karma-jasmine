@@ -1,4 +1,4 @@
-define(["exports", "core/config", "core/toolkitController", "core/hashController"], function(o, config, toolkit, hashController) {
+define(["exports", "core/config", "core/toolkitController", "core/hashController", "libs/bowser.min"], function(o, config, toolkit, hashController, bowser) {
 
     //var o = {};
 

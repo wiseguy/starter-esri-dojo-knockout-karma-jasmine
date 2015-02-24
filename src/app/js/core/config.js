@@ -41,11 +41,13 @@ define(function() {
         viewLinks: [{
             "id": "dashboard",
             "label": "Home",
-            "selected": false
+            "selected": false,
+            "deps": []
         }, {
             "id": "map",
             "label": "Map",
-            "selected": false
+            "selected": false,
+            "deps": ["tools"]
         }],
 
         /*chrome[webkit]

@@ -40,7 +40,7 @@ define(["exports", "core/config", "components/tools/toolsModel", "core/toolkitCo
 
                 o.createUI(html);
 
-
+                o._initialized = true;
 
             });
 

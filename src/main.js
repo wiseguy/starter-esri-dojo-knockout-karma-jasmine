@@ -26,13 +26,7 @@
                 pathPrefix + "app/css/joyride/mobile.css"
             ],
             "js": [{
-                src: "http://js.arcgis.com/" + esriVersion + "/"
-                //defer: true //order as given
-                //async:true//random order
-            }, {
-                src: pathPrefix + "app/js/libs/jquery-1.10.1.js"
-            }, {
-                src: pathPrefix + "app/js/libs/bowser.min.js"
+                src: "http://js.arcgis.com/" + esriVersion + "/" // if any script has AMD detection, include it in the deps for dojo, else here
             }]
 
         },
@@ -78,15 +72,22 @@
             ["bootstrap", "libs/bootstrap.min"]
         ],
         deps: [
-            "app/startup",
-            "libs/jquery.cookie",
+
             "libs/modernizr.mq",
-            "libs/jquery.joyride-2.1",
-            // "app/loader-optimized"
-            "dojo/domReady!"
+            "libs/jquery-1.10.1",
+
         ],
         callback: function() {
 
+            require(["app/startup",
+                "libs/jquery.cookie",
+                "libs/jquery.joyride-2.1",
+                "dojo/domReady!"
+            ], function() {
+
+
+
+            });
             //  coreController.startup();
 
         } // End callback

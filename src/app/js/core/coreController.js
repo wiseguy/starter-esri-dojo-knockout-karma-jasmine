@@ -196,11 +196,7 @@ define(["exports", "core/config", "core/toolkitController", "core/hashController
 
             } else {
 
-                module.startup().then(function(mid, theModule) {
-                    return function() {
-                        console.log(">>>>>>>>>>>>>>>>>> >>>>>>>>>>>>>>>>>> STARTED MODULE " + mid, theModule);
-                    }
-                }(moduleId, module));
+                module.startup();
 
             }
 
